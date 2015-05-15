@@ -1,0 +1,88 @@
+/* CSS Document */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: fantasy;
+}
+
+#cv {
+    width: 800px;
+    margin: 20px auto;
+}
+
+#head {
+    width: 800px;
+    height: 200px;
+    position: relative;
+}
+
+#head #logo {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    right: 10px;
+    top: 10px;
+    background: #ff8000
+}
+
+#logo p {
+    color: #FFF;
+    font-size: 50px;
+    margin-top: 20px;
+}
+
+#head #personal {
+    position: absolute;
+    width: 800px;
+    top: 80px;
+    padding-left: 150px;
+}
+
+#personal .name {
+    color: #ff8000;
+    font-size: 40px;
+}
+
+#personal p {
+    font-size: 12px;
+    color: #BBB;
+    margin-top: 5px;
+}
+
+#content {
+    width: 780px;
+    margin: 10px;
+}
+
+#content .modulo {
+    display: table;
+    margin-bottom: 20px;
+}
+
+#content .title {
+    color: #ff8000;
+    width: 120px;
+    float: left;
+    text-align: right;
+    padding-right: 20px;
+}
+
+#content .subcontent {
+    color: #BBB;
+    width: 640px;
+    float: left;
+}
+
+#content .subcontent .subtitle {
+    float: left;
+    width: 320px;
+    color: #555;
+}
+
+#content .subcontent .date {
+    float: left;
+    width: 320px;
+    color: #ff8000;
+    text-align: right;
+}

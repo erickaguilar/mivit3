@@ -1,0 +1,62 @@
+/* CSS Document */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: arial;
+}
+
+#cv {
+    width: 800px;
+    margin: 20px auto;
+}
+
+#head {
+    width: 800px;
+    height: 140px;
+    position: relative;
+}
+
+#head img {
+    position: absolute;
+    top: 5px;
+    left: 50px;
+    width: 130px;
+    z-index: 99;
+    background: #FFF;
+    border: 1px solid #DDD;
+}
+
+#head #personal {
+    position: absolute;
+    width: 780px;
+    height: 100px;
+    left: 10px;
+    top: 15px;
+    color: #FFF;
+    background: #34d951;
+    border-bottom: 10px solid #139d00;
+}
+
+#personal ul {
+    list-style: none;
+    text-align: right;
+    margin-right: 45px;
+}
+
+#content {
+    width: 700px;
+    margin-left: 50px;
+}
+
+#content .title {
+    margin-left: 15px;
+    color: #34d951;
+    font-size: 25px;
+    margin-top: 20px;
+}
+
+#content .subcontent {
+    color: #333;
+    margin: 10px 0px;
+}

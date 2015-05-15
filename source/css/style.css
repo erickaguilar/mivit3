@@ -1,0 +1,164 @@
+/* Document CSS */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: opensans;
+}
+
+header {
+	width: 100%;
+	height: 120px;
+	background: rgba(255, 255, 255, 0.2);
+	position: absolute;
+	z-index: 9999;
+}
+
+header div {
+    width: 1024px;
+    margin: 0px auto; 
+}
+
+.container {
+	width: 1024px;
+	margin: 0px auto;
+}
+
+section {
+    width: 100%;
+    margin-bottom: 40px;
+    display: table;
+}
+
+.col {
+	width: 33.33%;
+	float: left;
+}
+/****** Logo *********/
+
+#logo {
+	color: rgb(0, 0, 0);
+	width: 300px;
+	float: left;
+	margin-left: 20px;
+	position: fixed;
+	z-index: 999;
+}
+
+#logo h1 {
+	font-family: aliquam;
+	font-size: 50px;
+}
+#logo span {
+	font-family: aliquam;
+	font-size: 40px;
+}
+#logo b {
+    font-family: arkitek;
+	color: rgb(100,0,200);
+}
+#logo p {
+    font-family: aliquam;
+    margin-top: -15px;
+}
+
+/****** Navegacion ********/
+
+#nav {
+	position: fixed;
+	top: 15px;
+	width: 970px;
+	margin: 0px auto;
+	z-index: 9999;
+}
+
+#nav svg {
+	background: rgba(255, 255, 255, 0);
+	border-radius: 40px;
+	cursor: pointer;
+}
+
+#nav #svgMenu {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+#nav #svgTips {
+	position: absolute;
+	top: 33px;
+	right: 55px;
+}
+
+#nav #svgMivit3 {
+	position: absolute;
+	top: 5px;
+	right: 105px; 
+}
+
+#nav #svgHome {
+	position: absolute;
+	top: 33px;
+	right: 155px; 
+}
+
+/*********** Carrousel **********/
+
+#carrousel {
+    width: 1024px;
+    margin: 0px auto;
+}
+
+/*******************************************/
+
+#servicios {
+    width: 100%;
+    box-shadow: 0px 0px 5px 0px rgba(100, 0, 200, 1);
+}
+
+#tips {
+    width: 1024px;
+    margin: 0px auto;
+    display: table;
+}
+
+#tips div {
+    width: 33%;
+    height: 250px;
+    float: left;
+    text-align: center;
+}
+
+.content-inverse {
+	background: -webkit-gradient(linear,left top,left bottom,from(#1d232b),to(#2e3a48));
+	background: -webkit-linear-gradient(top,#1d232b,#2e3a48);
+	background: linear-gradient(top,#1d232b,#2e3a48);
+	background-color: #1d232b;
+}
+
+.content-inverse section {
+	width: 1024px;
+	margin: 0px auto;
+	color: #FFF;
+	padding: 30px;
+	ma
+}
+
+/*************************************/
+
+footer {
+    background: rgb(0, 0, 0);
+    color: rgb(251,251,251);
+    width: 100%;
+    height: 100px;
+}
+
+footer div {
+    width: 1024px;
+    margin: 0px auto;
+    text-align: center;
+}
+
+footer p {
+    padding-top: 20px;
+}

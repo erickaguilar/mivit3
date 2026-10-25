@@ -38,6 +38,13 @@
 - Grafito Oscuro (`#334155`)
 - Borgoña Elegante (`#881337`)
 
+### 📏 Paginación Dinámica A4, Densidad & Drag and Drop (Fase 1)
+- **Medidor de Altura de Página en Vivo:** Indicador en tiempo real de capacidad ocupada en hoja A4 (ej. `1 pág. (82%)`).
+- **Guías de Corte Visuales:** Líneas punteadas (`.page-break-guide`) que señalan el final exacto de cada página para garantizar una exportación a PDF sin elementos cortados a la mitad.
+- **Control de Densidad:** Modos *Compacto* (márgenes e interlineado estrechos), *Normal* y *Espacioso* para adaptar currículums extensos a una sola página.
+- **Alerta de Desbordamiento con Ajuste Automático:** Notificación cuando el texto supera una página por poco (101%-115%), permitiendo ajustarlo a modo compacto con un solo clic.
+- **Reordenamiento Modular (Drag & Drop):** Arrastra y suelta secciones completas o elementos individuales de empleo/educación para reordenarlos al instante.
+
 ### 🧩 Gestión Dinámica de Secciones
 - Añade o elimina empleos y grados académicos con un solo clic.
 - Agrega etiquetas interactivas de habilidades técnicas y blandas.

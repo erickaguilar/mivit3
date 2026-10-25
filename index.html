@@ -197,7 +197,7 @@
           <button class="pill-btn" data-template="template-alpha03" title="Plantilla Alpha 03: Monograma Editorial">03 Editorial</button>
         </div>
 
-        <span class="toolbar-label" style="margin-left: 12px;">Color:</span>
+        <span class="toolbar-label" style="margin-left: 10px;">Color:</span>
         <div class="color-palette">
           <button class="palette-swatch active" style="background:#6400c8;" data-accent="#6400c8" data-light="#f3e8ff" title="Púrpura miVIT3"></button>
           <button class="palette-swatch" style="background:#1e40af;" data-accent="#1e40af" data-light="#dbeafe" title="Azul Ejecutivo"></button>
@@ -205,9 +205,21 @@
           <button class="palette-swatch" style="background:#334155;" data-accent="#334155" data-light="#f1f5f9" title="Grafito Oscuro"></button>
           <button class="palette-swatch" style="background:#881337;" data-accent="#881337" data-light="#ffe4e6" title="Borgoña Elegante"></button>
         </div>
+
+        <span class="toolbar-label" style="margin-left: 10px;">Densidad:</span>
+        <div class="pill-selector">
+          <button class="pill-btn" data-density="density-compact" title="Márgenes estrechos y espaciado compacto (ideal para 1 página)">Compacto</button>
+          <button class="pill-btn active" data-density="density-normal" title="Espaciado estándar y equilibrado">Normal</button>
+          <button class="pill-btn" data-density="density-spacious" title="Márgenes amplios y mayor interlineado">Espacioso</button>
+        </div>
       </div>
 
       <div class="settings-right">
+        <div id="pageBadge" class="page-badge" title="Espacio ocupado en hoja A4">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          <span id="pageBadgeText">1 pág. (0%)</span>
+        </div>
+
         <div class="save-status">
           <span id="saveStatusDot" class="status-dot"></span>
           <span id="saveStatusText">Guardado en el navegador</span>
@@ -223,9 +235,17 @@
        Lienzo de Escritura tipo Word (Document Desk & A4 Paper)
        ========================================================================= -->
   <main class="document-desk">
-    <div id="cv-paper" class="cv-paper">
-      <div id="cv-document" class="cv-document template-alpha00">
-        <!-- El contenido editable es renderizado o restaurado por script.js -->
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <!-- Banner de advertencia si el contenido sobrepasa una página por poco -->
+      <div id="pageWarningBanner" class="page-warning-banner" style="display: none;">
+        <span>⚠️ Tu CV sobrepasa 1 página por poco (<strong id="overflowPercent">106%</strong>).</span>
+        <button id="btnAutoFitCompact" class="btn-fit-action">Ajustar a 1 página (Compacto)</button>
+      </div>
+
+      <div id="cv-paper" class="cv-paper">
+        <div id="cv-document" class="cv-document template-alpha00 density-normal">
+          <!-- El contenido editable es renderizado o restaurado por script.js -->
+        </div>
       </div>
     </div>
   </main>

@@ -7,6 +7,18 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
 
 ---
 
+## [2.1.0] - 2026-10-25
+
+### ✨ Añadido (Added)
+- **Fase 1 de Evolución — Paginación A4, Densidad & Drag and Drop**:
+  - **Paginación Dinámica A4 en Vivo:** Medidor continuo de altura del documento respecto a la proporción estándar A4 (210mm × 297mm), con indicador de páginas y porcentaje de capacidad ocupada en la barra de herramientas.
+  - **Líneas de Corte Visuales:** Guía punteada en rojo (`.page-break-guide`) que marca el final exacto de la primera página A4 y páginas subsecuentes.
+  - **Control de Densidad del Documento:** Selector de espaciado con tres modos (*Compacto*, *Normal* y *Espacioso*) que ajusta márgenes, interlineado y paddings mediante variables CSS.
+  - **Alerta Inteligente de Desbordamiento:** Si el contenido excede una página entre el 101% y 115%, aparece una sugerencia con botón de ajuste automático en un clic a modo Compacto.
+  - **Reordenamiento Modular (Drag & Drop):** Tiradores de arrastre (`drag-handle`) para reordenar secciones completas y elementos de experiencia/educación de forma intuitiva con HTML5 nativo y autoguardado.
+
+---
+
 ## [2.0.0] - 2026-10-25
 
 ### ✨ Añadido (Added)

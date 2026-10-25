@@ -228,6 +228,15 @@
     // Eventos de plantillas y colores
     setupSettingsBar();
 
+    // Control de Densidad y Espaciado (Fase 1)
+    setupDensityControls();
+
+    // Drag & Drop modular (Fase 1)
+    setupDragAndDrop();
+
+    // Paginación y medición en vivo A4 (Fase 1)
+    setupPageBreakObserver();
+
     // Eventos de carga de imagen
     setupAvatarUpload();
 
@@ -406,6 +415,229 @@
     document.documentElement.style.setProperty('--cv-accent-light', lightHex);
     saveSettings();
     showToast(`Color de acento actualizado`);
+  }
+
+  // =========================================================================
+  // Control de Densidad y Espaciado (Fase 1)
+  // =========================================================================
+  function setupDensityControls() {
+    const densityButtons = document.querySelectorAll('.pill-btn[data-density]');
+    densityButtons.forEach(btn => {
+      btn.addEventListener('click', function () {
+        setDensity(this.dataset.density);
+      });
+    });
+
+    const btnAutoFit = document.getElementById('btnAutoFitCompact');
+    if (btnAutoFit) {
+      btnAutoFit.addEventListener('click', function () {
+        setDensity('density-compact');
+      });
+    }
+  }
+
+  function setDensity(densityClass) {
+    if (!cvDocument) return;
+    cvDocument.classList.remove('density-compact', 'density-normal', 'density-spacious');
+    cvDocument.classList.add(densityClass);
+
+    document.querySelectorAll('.pill-btn[data-density]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.density === densityClass);
+    });
+
+    saveSettings();
+    updatePageBreakAndCapacity();
+
+    const densityNames = {
+      'density-compact': 'Compacto',
+      'density-normal': 'Normal',
+      'density-spacious': 'Espacioso'
+    };
+    showToast(`Densidad "${densityNames[densityClass] || densityClass}" activada`);
+  }
+
+  // =========================================================================
+  // Paginación Dinámica A4 & Medición en Vivo (Fase 1)
+  // =========================================================================
+  function setupPageBreakObserver() {
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(debounce(updatePageBreakAndCapacity, 80));
+      ro.observe(cvDocument);
+    } else {
+      window.addEventListener('resize', debounce(updatePageBreakAndCapacity, 150));
+    }
+    setTimeout(updatePageBreakAndCapacity, 200);
+  }
+
+  function updatePageBreakAndCapacity() {
+    const cvPaper = document.getElementById('cv-paper');
+    if (!cvPaper || !cvDocument) return;
+
+    const paperWidth = cvPaper.clientWidth || 794;
+    const a4HeightPx = Math.round((paperWidth / 210) * 297);
+    const docHeight = cvDocument.offsetHeight || cvDocument.scrollHeight;
+
+    const percent = Math.round((docHeight / a4HeightPx) * 100);
+    const numPages = Math.max(1, Math.ceil(docHeight / a4HeightPx));
+
+    const pageBadgeText = document.getElementById('pageBadgeText');
+    const pageBadge = document.getElementById('pageBadge');
+    if (pageBadgeText) {
+      pageBadgeText.textContent = `${numPages} ${numPages === 1 ? 'pág.' : 'págs.'} (${percent}%)`;
+    }
+    if (pageBadge) {
+      pageBadge.classList.toggle('badge-warning', percent > 100);
+    }
+
+    const banner = document.getElementById('pageWarningBanner');
+    const overflowPercent = document.getElementById('overflowPercent');
+    if (banner) {
+      if (percent > 100 && percent <= 115 && !cvDocument.classList.contains('density-compact')) {
+        banner.style.display = 'flex';
+        if (overflowPercent) overflowPercent.textContent = `${percent}%`;
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+
+    renderPageBreakGuides(cvPaper, a4HeightPx, numPages);
+  }
+
+  function renderPageBreakGuides(paper, a4HeightPx, numPages) {
+    paper.querySelectorAll('.page-break-guide').forEach(g => g.remove());
+
+    for (let p = 1; p < numPages; p++) {
+      const guide = document.createElement('div');
+      guide.className = 'page-break-guide';
+      guide.style.top = `${p * a4HeightPx}px`;
+      guide.innerHTML = `<span class="page-break-label">Límite Página ${p} (A4)</span>`;
+      paper.appendChild(guide);
+    }
+  }
+
+  // =========================================================================
+  // Drag & Drop Modular de Secciones y Elementos (Fase 1)
+  // =========================================================================
+  function setupDragAndDrop() {
+    ensureDragHandles();
+
+    let draggedEl = null;
+    let dragType = null; // 'section' | 'item'
+
+    cvDocument.addEventListener('dragstart', function (e) {
+      const handle = e.target.closest('.drag-handle');
+      if (!handle) return;
+
+      const item = handle.closest('.cv-item');
+      const section = handle.closest('.cv-section');
+
+      if (handle.classList.contains('item-drag-handle') && item) {
+        draggedEl = item;
+        dragType = 'item';
+      } else if (section) {
+        draggedEl = section;
+        dragType = 'section';
+      }
+
+      if (draggedEl) {
+        draggedEl.classList.add('is-dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', '');
+      }
+    });
+
+    cvDocument.addEventListener('dragover', function (e) {
+      if (!draggedEl) return;
+
+      const target = dragType === 'section'
+        ? e.target.closest('.cv-section')
+        : e.target.closest('.cv-item');
+
+      if (!target || target === draggedEl) return;
+
+      if (dragType === 'item' && target.closest('.cv-section') !== draggedEl.closest('.cv-section')) {
+        return;
+      }
+
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+
+      const rect = target.getBoundingClientRect();
+      const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+
+      target.classList.toggle('drag-over-top', !next);
+      target.classList.toggle('drag-over-bottom', next);
+    });
+
+    cvDocument.addEventListener('dragleave', function (e) {
+      const target = e.target.closest('.cv-section, .cv-item');
+      if (target) {
+        target.classList.remove('drag-over-top', 'drag-over-bottom');
+      }
+    });
+
+    cvDocument.addEventListener('drop', function (e) {
+      if (!draggedEl) return;
+
+      const target = dragType === 'section'
+        ? e.target.closest('.cv-section')
+        : e.target.closest('.cv-item');
+
+      if (!target || target === draggedEl) return;
+
+      e.preventDefault();
+      const rect = target.getBoundingClientRect();
+      const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
+
+      target.parentNode.insertBefore(draggedEl, next ? target.nextSibling : target);
+      target.classList.remove('drag-over-top', 'drag-over-bottom');
+
+      triggerAutoSave();
+      updatePageBreakAndCapacity();
+      showToast(dragType === 'section' ? 'Sección reordenada' : 'Elemento reordenado');
+    });
+
+    cvDocument.addEventListener('dragend', function () {
+      if (draggedEl) {
+        draggedEl.classList.remove('is-dragging');
+        draggedEl = null;
+        dragType = null;
+      }
+      cvDocument.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(el => {
+        el.classList.remove('drag-over-top', 'drag-over-bottom');
+      });
+      updatePageBreakAndCapacity();
+    });
+  }
+
+  function ensureDragHandles() {
+    if (!cvDocument) return;
+
+    // Secciones
+    cvDocument.querySelectorAll('.cv-section').forEach(section => {
+      const header = section.querySelector('.cv-section-header');
+      if (header && !header.querySelector('.drag-handle:not(.item-drag-handle)')) {
+        const handle = document.createElement('span');
+        handle.className = 'drag-handle';
+        handle.setAttribute('draggable', 'true');
+        handle.setAttribute('title', 'Arrastrar sección para reordenar');
+        handle.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>`;
+        header.insertBefore(handle, header.firstChild);
+      }
+    });
+
+    // Items individuales
+    cvDocument.querySelectorAll('.cv-item').forEach(item => {
+      const actions = item.querySelector('.item-actions');
+      if (actions && !actions.querySelector('.item-drag-handle')) {
+        const handle = document.createElement('span');
+        handle.className = 'drag-handle item-drag-handle';
+        handle.setAttribute('draggable', 'true');
+        handle.setAttribute('title', 'Arrastrar elemento para reordenar');
+        handle.innerHTML = `<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>`;
+        actions.insertBefore(handle, actions.firstChild);
+      }
+    });
   }
 
   // =========================================================================
@@ -613,12 +845,14 @@
   }
 
   function saveSettings() {
-    const currentTemplate = Array.from(cvDocument.classList).find(c => c.startsWith('template-')) || 'template-moderna';
+    const currentTemplate = Array.from(cvDocument.classList).find(c => c.startsWith('template-')) || 'template-alpha00';
+    const currentDensity = Array.from(cvDocument.classList).find(c => c.startsWith('density-')) || 'density-normal';
     const accent = getComputedStyle(document.documentElement).getPropertyValue('--cv-accent').trim();
     const accentLight = getComputedStyle(document.documentElement).getPropertyValue('--cv-accent-light').trim();
 
     const settings = {
       template: currentTemplate,
+      density: currentDensity,
       accent: accent,
       accentLight: accentLight
     };
@@ -639,11 +873,19 @@
       try {
         const settings = JSON.parse(savedSettingsRaw);
         if (settings.template) {
-          cvDocument.classList.remove('template-moderna', 'template-clasica', 'template-columnas', 'template-creativa');
+          cvDocument.classList.remove('template-alpha00', 'template-alpha01', 'template-alpha02', 'template-alpha03', 'template-moderna', 'template-clasica', 'template-columnas', 'template-creativa');
           cvDocument.classList.add(settings.template);
 
           document.querySelectorAll('.pill-btn[data-template]').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.template === settings.template);
+          });
+        }
+        if (settings.density) {
+          cvDocument.classList.remove('density-compact', 'density-normal', 'density-spacious');
+          cvDocument.classList.add(settings.density);
+
+          document.querySelectorAll('.pill-btn[data-density]').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.density === settings.density);
           });
         }
         if (settings.accent && settings.accentLight) {
@@ -659,6 +901,8 @@
       }
     }
 
+    ensureDragHandles();
+    updatePageBreakAndCapacity();
     updateSaveIndicator(true);
   }
 
@@ -826,15 +1070,17 @@
   }
 
   function exportToJson() {
-    const currentTemplate = Array.from(cvDocument.classList).find(c => c.startsWith('template-')) || 'template-moderna';
+    const currentTemplate = Array.from(cvDocument.classList).find(c => c.startsWith('template-')) || 'template-alpha00';
+    const currentDensity = Array.from(cvDocument.classList).find(c => c.startsWith('density-')) || 'density-normal';
     const accent = getComputedStyle(document.documentElement).getPropertyValue('--cv-accent').trim();
     const accentLight = getComputedStyle(document.documentElement).getPropertyValue('--cv-accent-light').trim();
 
     const data = {
       app: 'miVIT3',
-      version: '2.0.0',
+      version: '2.1.0',
       exportedAt: new Date().toISOString(),
       template: currentTemplate,
+      density: currentDensity,
       accent: accent,
       accentLight: accentLight,
       html: cvDocument.innerHTML
@@ -868,8 +1114,11 @@
 
         cvDocument.innerHTML = data.html;
         if (data.template) setTemplate(data.template);
+        if (data.density) setDensity(data.density);
         if (data.accent && data.accentLight) setAccentColor(data.accent, data.accentLight);
 
+        ensureDragHandles();
+        updatePageBreakAndCapacity();
         triggerAutoSave();
         showToast('CV restaurado correctamente desde archivo');
       } catch (err) {

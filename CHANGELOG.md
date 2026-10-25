@@ -7,6 +7,48 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
 
 ---
 
+## [2.5.0] - 2026-10-25
+
+### 🏗️ Arquitectura & Refactorización Modular (Refactor)
+- **Separación de Documentos Monolíticos por Funcionalidades (HTML, JS, CSS)**:
+  - **Modularización CSS (`source/css/modules/`)**:
+    - División del archivo monolítico `style.css` (~2,110 líneas) en 9 módulos temáticos independientes:
+      - `variables.css`: Propiedades personalizadas, tokens de diseño y reset base.
+      - `header.css`: Barra de cabecera, marca, acciones principales y estado de autoguardado.
+      - `toolbar.css`: Barra de herramientas estilo Word, tipografías, selector de colores y configuración.
+      - `desk.css`: Lienzo de trabajo A4, medición y guías dinámicas de corte de página.
+      - `cv-sections.css`: Estructura común de bloques, asas de arrastre, cabecera de perfil y tags.
+      - `templates.css`: Definición y estilos de las 4 plantillas Alpha (00, 01, 02, 03) y densidades.
+      - `ats-drawer.css`: Panel lateral deslizable del auditor ATS y comparador de vacantes.
+      - `dialogs.css`: Modales de tips, alertas/confirmaciones personalizadas y notificaciones toast.
+      - `print.css`: Estilos de optimización para impresión y exportación a PDF (`@media print`).
+    - `source/css/style.css` actúa como agregador maestro mediante `@import` nativo de Vanilla CSS.
+  - **Modularización JavaScript (`source/js/modules/`)**:
+    - División del archivo monolítico `script.js` (~2,370 líneas) en 10 módulos funcionales independientes:
+      - `dialogs.js`: Sistema de modales, alertas asíncronas, confirmaciones, prompts y notificaciones toast.
+      - `sample-data.js`: Objeto de datos de currículum profesional de ejemplo.
+      - `toolbar.js`: Formateo de texto enriquecido, comandos Word, atajos de teclado y carga de avatar.
+      - `templates.js`: Conmutador dinámico de plantillas y esquemas de color de acento.
+      - `pagination.js`: Medición geométrica A4 en tiempo real, observador de redimensionamiento y densidades.
+      - `drag-drop.js`: Motor de arrastrar y soltar HTML5 para secciones e ítems individuales.
+      - `ats-engine.js`: Auditor de puntaje ATS, detector de verbos de acción, fórmula STAR y comparador de vacantes.
+      - `storage.js`: Persistencia local continua (LocalStorage), respaldos y restauración JSON.
+      - `web-exporter.js`: Generador de portafolio web autónomo autocontenido (`cv-web.html`).
+      - `pwa.js`: Registro de Service Worker para funcionamiento sin conexión.
+    - Nuevo archivo orquestador principal `source/js/app.js` que coordina los ciclos de vida e inicialización.
+    - Mantenimiento de `source/js/script.js` como paquete consolidado para máxima compatibilidad retrospectiva.
+  - **Separación Semántica de Plantillas HTML (`<template>`)**:
+    - Extracción de las estructuras HTML que antes estaban embebidas en cadenas de JavaScript dentro de `index.html` mediante etiquetas `<template>` nativas:
+      - `#tpl-experience-item`: Estructura para nuevos puestos de trabajo.
+      - `#tpl-education-item`: Estructura para nuevos grados académicos.
+      - `#tpl-skill-tag`: Estructura para etiquetas de competencias.
+      - `#tpl-custom-section`: Estructura base para secciones personalizadas.
+    - Los métodos de adición ahora clonan los nodos del DOM (`cloneNode(true)`), permitiendo editar el marcado de elementos directamente en HTML sin tocar código JavaScript.
+  - **Actualización de Service Worker PWA (`sw.js`)**:
+    - Actualización de la caché a `mivit3-cache-v2.5.0` incluyendo todos los nuevos módulos CSS y JS para soporte offline completo.
+
+---
+
 ## [2.4.0] - 2026-10-25
 
 ### ✨ Añadido (Added)

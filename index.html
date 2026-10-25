@@ -477,7 +477,107 @@
     </div>
   </aside>
 
-  <!-- JavaScript 100% Vanilla (Sin jQuery) -->
-  <script src="source/js/script.js"></script>
+  <!-- =========================================================================
+       Plantillas HTML Semánticas Reutilizables (<template>)
+       Separación limpia de la estructura HTML respecto a la lógica JavaScript
+       ========================================================================= -->
+
+  <!-- Plantilla: Nuevo Elemento de Experiencia Laboral -->
+  <template id="tpl-experience-item">
+    <div class="cv-item" draggable="true">
+      <div class="item-actions">
+        <button class="action-btn btn-del" onclick="window.miVit3.deleteItem(this)" title="Eliminar empleo">✕</button>
+      </div>
+      <div class="cv-item-side">
+        <span class="cv-item-date" contenteditable="true">2023 — Presente</span>
+        <span class="cv-item-location" contenteditable="true">Ciudad, País</span>
+      </div>
+      <div class="cv-item-main">
+        <div class="cv-item-header">
+          <span class="cv-item-title" contenteditable="true">Puesto o Cargo</span> ·
+          <span class="cv-item-subtitle" contenteditable="true">Nombre de la Empresa</span>
+        </div>
+        <div class="cv-item-desc" contenteditable="true">
+          <ul>
+            <li>Describe tus responsabilidades clave y logros destacados con datos medibles.</li>
+            <li>Iniciativa o proyecto liderado con resultados positivos.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Plantilla: Nuevo Elemento de Educación -->
+  <template id="tpl-education-item">
+    <div class="cv-item" draggable="true">
+      <div class="item-actions">
+        <button class="action-btn btn-del" onclick="window.miVit3.deleteItem(this)" title="Eliminar estudio">✕</button>
+      </div>
+      <div class="cv-item-side">
+        <span class="cv-item-date" contenteditable="true">2018 — 2022</span>
+        <span class="cv-item-location" contenteditable="true">Ciudad, País</span>
+      </div>
+      <div class="cv-item-main">
+        <div class="cv-item-header">
+          <span class="cv-item-title" contenteditable="true">Título o Carrera</span> ·
+          <span class="cv-item-subtitle" contenteditable="true">Institución Educativa</span>
+        </div>
+        <div class="cv-item-desc" contenteditable="true">
+          Menciones, especializaciones, proyectos académicos o reconocimientos relevantes.
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Plantilla: Tag de Habilidad / Competencia -->
+  <template id="tpl-skill-tag">
+    <span class="cv-tag">
+      <span contenteditable="true">Nueva Habilidad</span>
+      <span class="cv-tag-del" onclick="this.parentElement.remove(); if (window.triggerAutoSave) window.triggerAutoSave();">✕</span>
+    </span>
+  </template>
+
+  <!-- Plantilla: Sección Personalizada Dinámica -->
+  <template id="tpl-custom-section">
+    <section class="cv-section" draggable="true">
+      <div class="cv-section-header">
+        <span class="cv-section-title" contenteditable="true">Nueva Sección</span>
+        <div class="section-actions">
+          <button class="action-btn" onclick="window.miVit3.addExperienceItem(this)">+ Añadir elemento</button>
+          <button class="action-btn btn-del" onclick="window.miVit3.deleteSection(this)">Eliminar sección</button>
+        </div>
+      </div>
+      <div class="cv-section-body">
+        <div class="cv-item" draggable="true">
+          <div class="item-actions">
+            <button class="action-btn btn-del" onclick="window.miVit3.deleteItem(this)">✕</button>
+          </div>
+          <div class="cv-item-header">
+            <div>
+              <span class="cv-item-title" contenteditable="true">Nombre del Elemento</span> ·
+              <span class="cv-item-subtitle" contenteditable="true">Subtítulo u Organización</span>
+            </div>
+            <span class="cv-item-date" contenteditable="true">2024</span>
+          </div>
+          <div class="cv-item-desc" contenteditable="true">
+            Descripción del proyecto, certificación o detalle relevante.
+          </div>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <!-- Módulos JavaScript Vanilla (Separación por Funcionalidad) -->
+  <script src="source/js/modules/dialogs.js"></script>
+  <script src="source/js/modules/sample-data.js"></script>
+  <script src="source/js/modules/toolbar.js"></script>
+  <script src="source/js/modules/templates.js"></script>
+  <script src="source/js/modules/pagination.js"></script>
+  <script src="source/js/modules/drag-drop.js"></script>
+  <script src="source/js/modules/ats-engine.js"></script>
+  <script src="source/js/modules/storage.js"></script>
+  <script src="source/js/modules/web-exporter.js"></script>
+  <script src="source/js/modules/pwa.js"></script>
+  <script src="source/js/app.js"></script>
 </body>
 </html>

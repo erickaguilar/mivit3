@@ -118,11 +118,21 @@ mivit3/
 ├── CHANGELOG.md            # Historial de cambios y versiones
 ├── source/
 │   ├── css/
-│   │   ├── normalize.css   # Reset estándar de estilos
-│   │   └── style.css       # Estilos del editor, ribbon, templates y print
-│   ├── img/                # Iconos vectoriales SVG (reemplazo de png/jpg)
+│   │   ├── normalize.css           # Reset estándar de estilos
+│   │   ├── style.css               # Agregador maestro (@import de módulos)
+│   │   └── modules/                # Módulos CSS separados por funcionalidad
+│   │       ├── variables.css       # Tokens, variables CSS y reset base
+│   │       ├── header.css          # Cabecera, marca, acciones y autoguardado
+│   │       ├── toolbar.css         # Cinta de opciones Word, selectores y colores
+│   │       ├── desk.css            # Lienzo A4, densidades y guías de corte
+│   │       ├── cv-sections.css     # Estructura común, drag handles, perfil y tags
+│   │       ├── templates.css       # 4 Plantillas Alpha (00, 01, 02, 03)
+│   │       ├── ats-drawer.css      # Panel lateral de auditoría ATS
+│   │       ├── dialogs.css         # Alertas, confirmaciones, modales y toasts
+│   │       └── print.css           # Reglas de impresión y PDF (@media print)
+│   ├── img/                        # Iconos vectoriales SVG (reemplazo de png/jpg)
 │   │   ├── home.svg
-│   │   ├── icon-pwa.svg    # Icono principal de la aplicación PWA
+│   │   ├── icon-pwa.svg            # Icono principal de la aplicación PWA
 │   │   ├── menu.svg
 │   │   ├── mivit3.svg
 │   │   ├── one.svg
@@ -131,8 +141,20 @@ mivit3/
 │   │   ├── tips.svg
 │   │   └── user.svg
 │   └── js/
-│       └── script.js       # Motor de edición Vanilla JS, plantillas, ATS y exportador Web
-└── alpha/                  # Prototipos y exploraciones visuales tempranas
+│       ├── app.js                  # Orquestador principal e integración de <template>
+│       ├── script.js               # Paquete compilado de compatibilidad retrospectiva
+│       └── modules/                # Módulos JavaScript independientes
+│           ├── dialogs.js          # Alertas asíncronas, confirm, prompt y toasts
+│           ├── sample-data.js      # Datos iniciales profesionales de muestra
+│           ├── toolbar.js          # Comandos Word, atajos de teclado y avatar
+│           ├── templates.js        # Cambio de plantillas Alpha y paletas de color
+│           ├── pagination.js       # Medición geométrica A4 y guías de página
+│           ├── drag-drop.js        # Reordenamiento drag & drop de secciones e ítems
+│           ├── ats-engine.js       # Auditor ATS, STAR method y keyword matcher
+│           ├── storage.js          # Persistencia LocalStorage y respaldos JSON
+│           ├── web-exporter.js     # Generador de mini-web portafolio (cv-web.html)
+│           └── pwa.js              # Registro de Service Worker para soporte offline
+└── alpha/                          # Prototipos y exploraciones visuales tempranas
     ├── index.html
     └── 00 ... 03/
 ```

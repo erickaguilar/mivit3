@@ -1,0 +1,133 @@
+/* ==========================================================================
+   Cabecera Principal (App Header)
+   ========================================================================== */
+
+.app-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-ui);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-light);
+  color: var(--primary);
+  border-radius: var(--radius-md);
+}
+
+.brand-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--primary);
+}
+
+.brand-text h1 {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  color: #0f172a;
+}
+
+.brand-text h1 span {
+  color: #334155;
+  font-weight: 400;
+}
+
+.brand-text h1 b {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.brand-tagline {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.brand-tagline b {
+  color: var(--primary);
+}
+
+/* Acciones en la cabecera */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-default {
+  background: #f1f5f9;
+  color: var(--text-main);
+  border: 1px solid var(--border-ui);
+}
+
+.btn-default:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-success {
+  background: #0f766e;
+  color: #ffffff;
+}
+
+.btn-success:hover {
+  background: #115e59;
+}
+

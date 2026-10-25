@@ -1,0 +1,311 @@
+/* ==========================================================================
+   Estructura Común de Secciones del CV & Drag and Drop
+   ========================================================================== */
+
+.cv-section {
+  margin-bottom: var(--cv-section-gap);
+  position: relative;
+  transition: transform 0.15s ease, opacity 0.15s ease, border-color 0.15s ease;
+}
+
+.cv-section:last-child {
+  margin-bottom: 0;
+}
+
+.cv-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  border-bottom: 2px solid var(--cv-accent);
+  padding-bottom: 4px;
+}
+
+.cv-section-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cv-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--cv-accent);
+  display: inline-block;
+}
+
+/* Drag Handle */
+.drag-handle {
+  cursor: grab;
+  color: var(--text-light);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  user-select: none;
+  opacity: 0.3;
+}
+
+.cv-section:hover .drag-handle,
+.cv-item:hover .drag-handle {
+  opacity: 1;
+}
+
+.drag-handle:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.cv-section.is-dragging,
+.cv-item.is-dragging {
+  opacity: 0.35 !important;
+  background-color: var(--primary-light) !important;
+  border: 1px dashed var(--primary) !important;
+  border-radius: var(--radius-sm);
+}
+
+.drag-over-top {
+  border-top: 3px solid var(--primary) !important;
+}
+
+.drag-over-bottom {
+  border-bottom: 3px solid var(--primary) !important;
+}
+
+/* Controles de sección flotantes al pasar cursor */
+.section-actions {
+  display: none;
+  align-items: center;
+  gap: 4px;
+}
+
+.cv-section:hover .section-actions,
+.cv-item:hover .item-actions {
+  display: flex;
+}
+
+.action-btn {
+  padding: 3px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  background: #f1f5f9;
+  color: var(--text-muted);
+  border: 1px solid var(--border-ui);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.action-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.action-btn.btn-del:hover {
+  background: #fee2e2;
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
+/* Items individuales dentro de una sección (trabajo, escuela, etc.) */
+.cv-item {
+  margin-bottom: var(--cv-item-gap);
+  position: relative;
+  transition: transform 0.15s ease, opacity 0.15s ease, border-color 0.15s ease;
+}
+
+.cv-item:last-child {
+  margin-bottom: 0;
+}
+
+.cv-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.cv-item-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.cv-item-subtitle {
+  font-weight: 600;
+  color: var(--cv-accent);
+  font-size: 13px;
+}
+
+.cv-item-date {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.cv-item-desc {
+  color: #334155;
+  margin-top: 4px;
+}
+
+.cv-item-desc ul {
+  padding-left: 20px;
+  margin: 4px 0;
+}
+
+.cv-item-desc li {
+  margin-bottom: 3px;
+}
+
+.item-actions {
+  display: none;
+  position: absolute;
+  top: -8px;
+  right: 0;
+  background: #ffffff;
+  padding: 2px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-ui);
+}
+
+/* ==========================================================================
+   Cabecera de Perfil (Avatar + Datos Personales)
+   ========================================================================== */
+
+.cv-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 24px;
+}
+
+.cv-avatar-wrap {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+}
+
+.cv-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--cv-accent);
+  background: #f1f5f9;
+  display: block;
+}
+
+.avatar-upload-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  background: var(--cv-accent);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.avatar-upload-btn:hover {
+  transform: scale(1.1);
+}
+
+.avatar-upload-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.cv-personal-details {
+  flex: 1;
+}
+
+.cv-name {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
+.cv-role {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cv-accent);
+  margin-bottom: 8px;
+}
+
+.cv-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  font-size: 12.5px;
+  color: #475569;
+  list-style: none;
+}
+
+.cv-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cv-contact-item svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--cv-accent);
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Badges y Tags de Habilidades e Idiomas
+   ========================================================================== */
+
+.cv-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cv-tag {
+  background: var(--cv-accent-light);
+  color: var(--cv-accent);
+  font-weight: 600;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cv-tag-del {
+  cursor: pointer;
+  opacity: 0.6;
+  font-size: 11px;
+}
+
+.cv-tag-del:hover {
+  opacity: 1;
+}
+

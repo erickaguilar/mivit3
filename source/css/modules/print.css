@@ -1,0 +1,71 @@
+/* ==========================================================================
+   ESTILOS DE IMPRESIÓN Y EXPORTACIÓN A PDF (@media print)
+   ========================================================================== */
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #000000 !important;
+    font-size: 12pt;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Ocultar barra superior, ribbon, botones de acción, modales y guías */
+  .app-header,
+  .word-toolbar-container,
+  .cv-settings-bar,
+  .section-actions,
+  .item-actions,
+  .drag-handle,
+  .page-break-guide,
+  .page-warning-banner,
+  .avatar-upload-btn,
+  .toast-notification,
+  .modal-backdrop,
+  .custom-dialog-backdrop,
+  .drawer-backdrop,
+  .drawer-panel,
+  .btn-add-section,
+  .btn-add-item {
+    display: none !important;
+  }
+
+  .document-desk {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  .cv-paper {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+    min-height: auto !important;
+    margin: 0 !important;
+  }
+
+  .cv-document {
+    padding: 12mm 15mm !important;
+  }
+
+  /* Evitar saltos de página partidos en medio de elementos */
+  .cv-section,
+  .cv-item {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  [contenteditable="true"] {
+    background: none !important;
+    box-shadow: none !important;
+  }
+}

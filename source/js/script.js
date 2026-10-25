@@ -1,11 +1,245 @@
 /**
- * miVIT3 — Procesador de CV estilo Word en Vanilla JavaScript
- * escoge · edita · envía
- * Cero dependencias externas (Sin jQuery)
+ * miVIT3 — Bundle Monolítico Compilado de Compatibilidad
+ * Contiene todos los módulos de source/js/modules/ en orden secuencial.
+ */
+
+/* --- Módulo: dialogs.js --- */
+/**
+ * miVIT3 — Módulo de Diálogos, Notificaciones y Utilidades UI
+ * Reemplazo 100% accesible y estilizado de alert, confirm y prompt nativos del navegador.
  */
 
 (function () {
   'use strict';
+
+  window.miVit3 = window.miVit3 || {};
+
+  let toastTimeout = null;
+  let savedRange = null;
+
+  /**
+   * Escapar caracteres HTML para prevención XSS
+   */
+  function escapeHtml(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  /**
+   * Función debounce para optimizar eventos de alto disparo
+   */
+  function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+
+  /**
+   * Guarda y restaura el rango de selección de texto para comandos Word
+   */
+  function saveSelection() {
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount > 0) {
+      savedRange = sel.getRangeAt(0);
+      return savedRange;
+    }
+    return null;
+  }
+
+  function restoreSelection(range) {
+    const targetRange = range || savedRange;
+    if (targetRange) {
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(targetRange);
+    }
+  }
+
+  /**
+   * Muestra un diálogo modal personalizado con soporte de teclado (Enter / Escape)
+   */
+  function showCustomDialog({
+    title = '',
+    message = '',
+    type = 'info', // 'info' | 'success' | 'warning' | 'danger'
+    confirmText = 'Aceptar',
+    cancelText = null,
+    showInput = false,
+    defaultValue = '',
+    placeholder = ''
+  }) {
+    return new Promise((resolve) => {
+      let backdrop = document.getElementById('customDialogBackdrop');
+      if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.id = 'customDialogBackdrop';
+        backdrop.className = 'custom-dialog-backdrop';
+        document.body.appendChild(backdrop);
+      }
+
+      const icons = {
+        info: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+        success: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+        warning: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>',
+        danger: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>'
+      };
+
+      const iconSvg = icons[type] || icons.info;
+      const confirmBtnClass = type === 'danger' ? 'dialog-btn btn-danger' : 'dialog-btn btn-confirm';
+
+      backdrop.innerHTML = `
+        <div class="custom-dialog-card" role="dialog" aria-modal="true">
+          <div class="dialog-header">
+            <div class="dialog-icon icon-${type}">
+              ${iconSvg}
+            </div>
+            <div class="dialog-title-wrap">
+              <h3>${escapeHtml(title)}</h3>
+              <p>${escapeHtml(message)}</p>
+            </div>
+          </div>
+          ${showInput ? `
+            <div class="dialog-input-wrap">
+              <input type="text" id="customDialogInput" class="dialog-input" value="${escapeHtml(defaultValue)}" placeholder="${escapeHtml(placeholder)}" autocomplete="off">
+            </div>
+          ` : ''}
+          <div class="dialog-actions">
+            ${cancelText ? `<button type="button" id="customDialogCancelBtn" class="dialog-btn btn-cancel">${escapeHtml(cancelText)}</button>` : ''}
+            <button type="button" id="customDialogConfirmBtn" class="${confirmBtnClass}">${escapeHtml(confirmText)}</button>
+          </div>
+        </div>
+      `;
+
+      backdrop.classList.add('show');
+
+      const input = document.getElementById('customDialogInput');
+      const confirmBtn = document.getElementById('customDialogConfirmBtn');
+      const cancelBtn = document.getElementById('customDialogCancelBtn');
+
+      if (input) {
+        input.focus();
+        input.select();
+      } else if (confirmBtn) {
+        confirmBtn.focus();
+      }
+
+      function cleanup(result) {
+        backdrop.classList.remove('show');
+        document.removeEventListener('keydown', onKeyDown);
+        setTimeout(() => {
+          backdrop.innerHTML = '';
+          resolve(result);
+        }, 220);
+      }
+
+      function onKeyDown(e) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          cleanup(showInput ? null : false);
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          const val = input ? input.value : true;
+          cleanup(val);
+        }
+      }
+
+      document.addEventListener('keydown', onKeyDown);
+
+      confirmBtn.addEventListener('click', () => {
+        const val = input ? input.value : true;
+        cleanup(val);
+      });
+
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => {
+          cleanup(showInput ? null : false);
+        });
+      }
+
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
+          cleanup(showInput ? null : false);
+        }
+      });
+    });
+  }
+
+  function customAlert(title, message, type = 'info') {
+    return showCustomDialog({ title, message, type, confirmText: 'Entendido' });
+  }
+
+  function customConfirm(title, message, type = 'warning', confirmText = 'Aceptar', cancelText = 'Cancelar') {
+    return showCustomDialog({ title, message, type, confirmText, cancelText });
+  }
+
+  function customPrompt(title, message, defaultValue = '', placeholder = '') {
+    return showCustomDialog({ title, message, type: 'info', showInput: true, defaultValue, placeholder, confirmText: 'Aceptar', cancelText: 'Cancelar' });
+  }
+
+  /**
+   * Notificación Toast flotante
+   */
+  function showToast(message, type = 'success') {
+    let toast = document.getElementById('toastNotification');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'toastNotification';
+      toast.className = 'toast-notification';
+      document.body.appendChild(toast);
+    }
+
+    const iconSvg = type === 'warning'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+    toast.innerHTML = `
+      ${iconSvg}
+      <span id="toastMsg">${escapeHtml(message)}</span>
+    `;
+
+    toast.classList.add('show');
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2500);
+  }
+
+  // Exportar a nivel global y en window.miVit3
+  window.escapeHtml = escapeHtml;
+  window.debounce = debounce;
+  window.saveSelection = saveSelection;
+  window.restoreSelection = restoreSelection;
+  window.customAlert = customAlert;
+  window.customConfirm = customConfirm;
+  window.customPrompt = customPrompt;
+  window.showToast = showToast;
+
+  window.miVit3.escapeHtml = escapeHtml;
+  window.miVit3.debounce = debounce;
+  window.miVit3.saveSelection = saveSelection;
+  window.miVit3.restoreSelection = restoreSelection;
+  window.miVit3.alert = customAlert;
+  window.miVit3.confirm = customConfirm;
+  window.miVit3.prompt = customPrompt;
+  window.miVit3.showToast = showToast;
+
+})();
+
+
+/* --- Módulo: sample-data.js --- */
+/**
+ * miVIT3 — Módulo de Datos de Ejemplo (Sample Data)
+ * Currículum vitae profesional inicial de muestra, optimizado para impacto y ATS.
+ */
+
+(function () {
+  'use strict';
+
+  window.miVit3 = window.miVit3 || {};
 
   // =========================================================================
   // Datos de Ejemplo Predefinidos
@@ -207,58 +441,32 @@
     `
   };
 
-  // =========================================================================
-  // Inicialización y Referencias DOM
-  // =========================================================================
-  let cvDocument = null;
-  let saveTimeout = null;
-  const STORAGE_KEY = 'mivit3_cv_content_v2';
-  const STORAGE_SETTINGS = 'mivit3_cv_settings_v2';
 
-  function init() {
-    cvDocument = document.getElementById('cv-document');
-    if (!cvDocument) return;
+  window.SAMPLE_DATA = SAMPLE_DATA;
+  window.miVit3.SAMPLE_DATA = SAMPLE_DATA;
 
-    // Cargar contenido guardado o datos de ejemplo
-    loadSavedContent();
+})();
 
-    // Eventos de barra de herramientas estilo Word
-    setupWordToolbar();
 
-    // Eventos de plantillas y colores
-    setupSettingsBar();
+/* --- Módulo: toolbar.js --- */
+/**
+ * miVIT3 — Módulo de Barra de Herramientas Word (Toolbar, Atajos y Avatar)
+ * Edición enriquecida en vivo (Rich Text Formatting), atajos de teclado y carga de fotos.
+ */
 
-    // Control de Densidad y Espaciado (Fase 1)
-    setupDensityControls();
+(function () {
+  'use strict';
 
-    // Drag & Drop modular (Fase 1)
-    setupDragAndDrop();
+  window.miVit3 = window.miVit3 || {};
 
-    // Paginación y medición en vivo A4 (Fase 1)
-    setupPageBreakObserver();
-
-    // Auditor ATS & Comparador de Vacante (Fase 2)
-    setupAtsEngine();
-
-    // Eventos de carga de imagen
-    setupAvatarUpload();
-
-    // Atajos de teclado (Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+S, Ctrl+P)
-    setupKeyboardShortcuts();
-
-    // Escuchar cambios para autoguardado
-    setupAutoSave();
-
-    // Botones de acción principales
-    setupMainActions();
-
-    // Soporte PWA Offline (Fase 3)
-    setupPwa();
+  function triggerAutoSave() {
+    if (typeof window.triggerAutoSave === 'function') {
+      window.triggerAutoSave();
+    } else if (window.miVit3 && typeof window.miVit3.triggerAutoSave === 'function') {
+      window.miVit3.triggerAutoSave();
+    }
   }
 
-  // =========================================================================
-  // Barra de Herramientas Estilo Word (Rich Text Formatting)
-  // =========================================================================
   function setupWordToolbar() {
     const toolbar = document.querySelector('.word-toolbar');
     if (!toolbar) return;
@@ -291,7 +499,6 @@
     const sizeSelect = document.getElementById('fontSizeSelect');
     if (sizeSelect) {
       sizeSelect.addEventListener('change', function () {
-        // En execCommand los tamaños son 1 a 7 o aplicamos tamaño vía span
         applyFontSize(this.value);
         triggerAutoSave();
       });
@@ -311,7 +518,8 @@
     if (textColorPicker) {
       textColorPicker.addEventListener('input', function () {
         executeFormatCommand('foreColor', this.value);
-        document.getElementById('textColorIndicator').style.backgroundColor = this.value;
+        const indicator = document.getElementById('textColorIndicator');
+        if (indicator) indicator.style.backgroundColor = this.value;
         triggerAutoSave();
       });
     }
@@ -321,26 +529,26 @@
     if (highlightColorPicker) {
       highlightColorPicker.addEventListener('input', function () {
         executeFormatCommand('hiliteColor', this.value);
-        document.getElementById('highlightColorIndicator').style.backgroundColor = this.value;
+        const indicator = document.getElementById('highlightColorIndicator');
+        if (indicator) indicator.style.backgroundColor = this.value;
         triggerAutoSave();
       });
     }
 
-    // Actualizar estado activo de botones al hacer clic o soltar tecla en el documento
-    document.addEventListener('selectionchange', debounce(updateToolbarState, 100));
+    // Actualizar estado activo de botones al cambiar selección
+    document.addEventListener('selectionchange', window.debounce ? window.debounce(updateToolbarState, 100) : updateToolbarState);
   }
 
   async function executeFormatCommand(command, value = null) {
     if (command === 'createLink') {
-      const savedRange = saveSelection();
-      const url = await customPrompt(
-        'Insertar Enlace Web',
-        'Ingresa la dirección URL para el texto seleccionado:',
-        'https://',
-        'https://ejemplo.com'
-      );
+      const savedRange = typeof window.saveSelection === 'function' ? window.saveSelection() : null;
+      const promptFn = window.customPrompt || (window.miVit3 && window.miVit3.prompt);
+      const url = promptFn
+        ? await promptFn('Insertar Enlace Web', 'Ingresa la dirección URL para el texto seleccionado:', 'https://', 'https://ejemplo.com')
+        : prompt('Ingresa la URL:', 'https://');
+
       if (url && url.trim() && url.trim() !== 'https://') {
-        restoreSelection(savedRange);
+        if (typeof window.restoreSelection === 'function') window.restoreSelection(savedRange);
         document.execCommand('createLink', false, url.trim());
         triggerAutoSave();
       }
@@ -352,12 +560,13 @@
   }
 
   function applyFontSize(sizeValue) {
-    // Usamos fontSize nativo o aplicamos estilo
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
     const selection = window.getSelection();
     if (!selection.rangeCount) return;
 
     document.execCommand('fontSize', false, '3');
-    const fontElements = cvDocument.getElementsByTagName('font');
+    const fontElements = cvDoc.getElementsByTagName('font');
     for (let i = 0; i < fontElements.length; i++) {
       if (fontElements[i].size === '3') {
         fontElements[i].removeAttribute('size');
@@ -384,9 +593,110 @@
     });
   }
 
-  // =========================================================================
-  // Plantillas & Colores de Acento
-  // =========================================================================
+  /**
+   * Carga de Fotografía de Perfil (Vanilla FileReader)
+   */
+  function setupAvatarUpload() {
+    const fileInput = document.getElementById('avatarFileInput');
+    if (!fileInput) return;
+
+    fileInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        const alertFn = window.customAlert || (window.miVit3 && window.miVit3.alert);
+        if (alertFn) {
+          alertFn('Archivo de imagen no válido', 'Por favor selecciona un archivo con formato de imagen válido (PNG, JPG, SVG o WebP).', 'warning');
+        }
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const avatarImg = document.getElementById('cvAvatar');
+        if (avatarImg) {
+          avatarImg.src = event.target.result;
+          triggerAutoSave();
+          if (window.showToast) window.showToast('Foto de perfil actualizada');
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /**
+   * Atajos de Teclado Estilo Word
+   */
+  function setupKeyboardShortcuts() {
+    document.addEventListener('keydown', function (e) {
+      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
+
+      if (!cmdOrCtrl) return;
+
+      switch (e.key.toLowerCase()) {
+        case 'b': // Negrita
+          e.preventDefault();
+          executeFormatCommand('bold');
+          updateToolbarState();
+          break;
+        case 'i': // Cursiva
+          e.preventDefault();
+          executeFormatCommand('italic');
+          updateToolbarState();
+          break;
+        case 'u': // Subrayado
+          e.preventDefault();
+          executeFormatCommand('underline');
+          updateToolbarState();
+          break;
+        case 's': // Guardar manual
+          e.preventDefault();
+          triggerAutoSave();
+          if (window.showToast) window.showToast('Guardado en el navegador');
+          break;
+        case 'p': // Imprimir / Exportar PDF
+          e.preventDefault();
+          window.print();
+          break;
+      }
+    });
+  }
+
+  // Exportar funciones
+  window.setupWordToolbar = setupWordToolbar;
+  window.setupAvatarUpload = setupAvatarUpload;
+  window.setupKeyboardShortcuts = setupKeyboardShortcuts;
+  window.executeFormatCommand = executeFormatCommand;
+  window.updateToolbarState = updateToolbarState;
+
+  window.miVit3.setupWordToolbar = setupWordToolbar;
+  window.miVit3.setupAvatarUpload = setupAvatarUpload;
+  window.miVit3.setupKeyboardShortcuts = setupKeyboardShortcuts;
+
+})();
+
+
+/* --- Módulo: templates.js --- */
+/**
+ * miVIT3 — Módulo de Plantillas & Paletas de Color
+ * Gestión y conmutación en tiempo real de los diseños fundacionales Alpha y colores de acento.
+ */
+
+(function () {
+  'use strict';
+
+  window.miVit3 = window.miVit3 || {};
+
+  function saveSettings() {
+    if (typeof window.saveSettings === 'function') {
+      window.saveSettings();
+    } else if (window.miVit3 && typeof window.miVit3.saveSettings === 'function') {
+      window.miVit3.saveSettings();
+    }
+  }
+
   function setupSettingsBar() {
     // Botones de plantilla
     const pillButtons = document.querySelectorAll('.pill-btn[data-template]');
@@ -410,9 +720,14 @@
   }
 
   function setTemplate(templateClass) {
-    if (!cvDocument) return;
-    cvDocument.classList.remove('template-alpha00', 'template-alpha01', 'template-alpha02', 'template-alpha03', 'template-moderna', 'template-clasica', 'template-columnas', 'template-creativa');
-    cvDocument.classList.add(templateClass);
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
+
+    cvDoc.classList.remove(
+      'template-alpha00', 'template-alpha01', 'template-alpha02', 'template-alpha03',
+      'template-moderna', 'template-clasica', 'template-columnas', 'template-creativa'
+    );
+    cvDoc.classList.add(templateClass);
     saveSettings();
 
     const templateNames = {
@@ -421,19 +736,53 @@
       'template-alpha02': '02 Banner',
       'template-alpha03': '03 Editorial'
     };
-    showToast(`Plantilla "${templateNames[templateClass] || templateClass}" activada`);
+
+    if (window.showToast) {
+      window.showToast(`Plantilla "${templateNames[templateClass] || templateClass}" activada`);
+    }
   }
 
   function setAccentColor(accentHex, lightHex) {
     document.documentElement.style.setProperty('--cv-accent', accentHex);
     document.documentElement.style.setProperty('--cv-accent-light', lightHex);
     saveSettings();
-    showToast(`Color de acento actualizado`);
+
+    if (window.showToast) {
+      window.showToast('Color de acento actualizado');
+    }
   }
 
-  // =========================================================================
-  // Control de Densidad y Espaciado (Fase 1)
-  // =========================================================================
+  // Exportar funciones
+  window.setupSettingsBar = setupSettingsBar;
+  window.setTemplate = setTemplate;
+  window.setAccentColor = setAccentColor;
+
+  window.miVit3.setupSettingsBar = setupSettingsBar;
+  window.miVit3.setTemplate = setTemplate;
+  window.miVit3.setAccentColor = setAccentColor;
+
+})();
+
+
+/* --- Módulo: pagination.js --- */
+/**
+ * miVIT3 — Módulo de Paginación Dinámica A4 y Control de Densidad (Fase 1)
+ * Medición geométrica A4 en tiempo real (relación 210x297mm), guías de corte y advertencia de desborde.
+ */
+
+(function () {
+  'use strict';
+
+  window.miVit3 = window.miVit3 || {};
+
+  function saveSettings() {
+    if (typeof window.saveSettings === 'function') {
+      window.saveSettings();
+    } else if (window.miVit3 && typeof window.miVit3.saveSettings === 'function') {
+      window.miVit3.saveSettings();
+    }
+  }
+
   function setupDensityControls() {
     const densityButtons = document.querySelectorAll('.pill-btn[data-density]');
     densityButtons.forEach(btn => {
@@ -451,9 +800,11 @@
   }
 
   function setDensity(densityClass) {
-    if (!cvDocument) return;
-    cvDocument.classList.remove('density-compact', 'density-normal', 'density-spacious');
-    cvDocument.classList.add(densityClass);
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
+
+    cvDoc.classList.remove('density-compact', 'density-normal', 'density-spacious');
+    cvDoc.classList.add(densityClass);
 
     document.querySelectorAll('.pill-btn[data-density]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.density === densityClass);
@@ -467,29 +818,33 @@
       'density-normal': 'Normal',
       'density-spacious': 'Espacioso'
     };
-    showToast(`Densidad "${densityNames[densityClass] || densityClass}" activada`);
+    if (window.showToast) {
+      window.showToast(`Densidad "${densityNames[densityClass] || densityClass}" activada`);
+    }
   }
 
-  // =========================================================================
-  // Paginación Dinámica A4 & Medición en Vivo (Fase 1)
-  // =========================================================================
   function setupPageBreakObserver() {
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
+
+    const debounceFn = window.debounce || ((fn) => fn);
     if (window.ResizeObserver) {
-      const ro = new ResizeObserver(debounce(updatePageBreakAndCapacity, 80));
-      ro.observe(cvDocument);
+      const ro = new ResizeObserver(debounceFn(updatePageBreakAndCapacity, 80));
+      ro.observe(cvDoc);
     } else {
-      window.addEventListener('resize', debounce(updatePageBreakAndCapacity, 150));
+      window.addEventListener('resize', debounceFn(updatePageBreakAndCapacity, 150));
     }
     setTimeout(updatePageBreakAndCapacity, 200);
   }
 
   function updatePageBreakAndCapacity() {
     const cvPaper = document.getElementById('cv-paper');
-    if (!cvPaper || !cvDocument) return;
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvPaper || !cvDoc) return;
 
     const paperWidth = cvPaper.clientWidth || 794;
     const a4HeightPx = Math.round((paperWidth / 210) * 297);
-    const docHeight = cvDocument.offsetHeight || cvDocument.scrollHeight;
+    const docHeight = cvDoc.offsetHeight || cvDoc.scrollHeight;
 
     const percent = Math.round((docHeight / a4HeightPx) * 100);
     const numPages = Math.max(1, Math.ceil(docHeight / a4HeightPx));
@@ -506,7 +861,7 @@
     const banner = document.getElementById('pageWarningBanner');
     const overflowPercent = document.getElementById('overflowPercent');
     if (banner) {
-      if (percent > 100 && percent <= 115 && !cvDocument.classList.contains('density-compact')) {
+      if (percent > 100 && percent <= 115 && !cvDoc.classList.contains('density-compact')) {
         banner.style.display = 'flex';
         if (overflowPercent) overflowPercent.textContent = `${percent}%`;
       } else {
@@ -529,16 +884,58 @@
     }
   }
 
-  // =========================================================================
-  // Drag & Drop Modular de Secciones y Elementos (Fase 1)
-  // =========================================================================
+  // Exportar funciones
+  window.setupDensityControls = setupDensityControls;
+  window.setDensity = setDensity;
+  window.setupPageBreakObserver = setupPageBreakObserver;
+  window.updatePageBreakAndCapacity = updatePageBreakAndCapacity;
+  window.renderPageBreakGuides = renderPageBreakGuides;
+
+  window.miVit3.setupDensityControls = setupDensityControls;
+  window.miVit3.setDensity = setDensity;
+  window.miVit3.setupPageBreakObserver = setupPageBreakObserver;
+  window.miVit3.updatePageBreakAndCapacity = updatePageBreakAndCapacity;
+
+})();
+
+
+/* --- Módulo: drag-drop.js --- */
+/**
+ * miVIT3 — Módulo de Arrastrar y Soltar (HTML5 Drag & Drop - Fase 1)
+ * Reordenamiento fluido y modular de bloques de sección e ítems individuales con asas dedicadas.
+ */
+
+(function () {
+  'use strict';
+
+  window.miVit3 = window.miVit3 || {};
+
+  function triggerAutoSave() {
+    if (typeof window.triggerAutoSave === 'function') {
+      window.triggerAutoSave();
+    } else if (window.miVit3 && typeof window.miVit3.triggerAutoSave === 'function') {
+      window.miVit3.triggerAutoSave();
+    }
+  }
+
+  function updatePageBreakAndCapacity() {
+    if (typeof window.updatePageBreakAndCapacity === 'function') {
+      window.updatePageBreakAndCapacity();
+    } else if (window.miVit3 && typeof window.miVit3.updatePageBreakAndCapacity === 'function') {
+      window.miVit3.updatePageBreakAndCapacity();
+    }
+  }
+
   function setupDragAndDrop() {
     ensureDragHandles();
+
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
 
     let draggedEl = null;
     let dragType = null; // 'section' | 'item'
 
-    cvDocument.addEventListener('dragstart', function (e) {
+    cvDoc.addEventListener('dragstart', function (e) {
       const handle = e.target.closest('.drag-handle');
       if (!handle) return;
 
@@ -560,7 +957,7 @@
       }
     });
 
-    cvDocument.addEventListener('dragover', function (e) {
+    cvDoc.addEventListener('dragover', function (e) {
       if (!draggedEl) return;
 
       const target = dragType === 'section'
@@ -583,14 +980,14 @@
       target.classList.toggle('drag-over-bottom', next);
     });
 
-    cvDocument.addEventListener('dragleave', function (e) {
+    cvDoc.addEventListener('dragleave', function (e) {
       const target = e.target.closest('.cv-section, .cv-item');
       if (target) {
         target.classList.remove('drag-over-top', 'drag-over-bottom');
       }
     });
 
-    cvDocument.addEventListener('drop', function (e) {
+    cvDoc.addEventListener('drop', function (e) {
       if (!draggedEl) return;
 
       const target = dragType === 'section'
@@ -608,16 +1005,18 @@
 
       triggerAutoSave();
       updatePageBreakAndCapacity();
-      showToast(dragType === 'section' ? 'Sección reordenada' : 'Elemento reordenado');
+      if (window.showToast) {
+        window.showToast(dragType === 'section' ? 'Sección reordenada' : 'Elemento reordenado');
+      }
     });
 
-    cvDocument.addEventListener('dragend', function () {
+    cvDoc.addEventListener('dragend', function () {
       if (draggedEl) {
         draggedEl.classList.remove('is-dragging');
         draggedEl = null;
         dragType = null;
       }
-      cvDocument.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(el => {
+      cvDoc.querySelectorAll('.drag-over-top, .drag-over-bottom').forEach(el => {
         el.classList.remove('drag-over-top', 'drag-over-bottom');
       });
       updatePageBreakAndCapacity();
@@ -625,10 +1024,11 @@
   }
 
   function ensureDragHandles() {
-    if (!cvDocument) return;
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
 
     // Secciones
-    cvDocument.querySelectorAll('.cv-section').forEach(section => {
+    cvDoc.querySelectorAll('.cv-section').forEach(section => {
       const header = section.querySelector('.cv-section-header');
       if (header && !header.querySelector('.drag-handle:not(.item-drag-handle)')) {
         const handle = document.createElement('span');
@@ -641,7 +1041,7 @@
     });
 
     // Items individuales
-    cvDocument.querySelectorAll('.cv-item').forEach(item => {
+    cvDoc.querySelectorAll('.cv-item').forEach(item => {
       const actions = item.querySelector('.item-actions');
       if (actions && !actions.querySelector('.item-drag-handle')) {
         const handle = document.createElement('span');
@@ -654,7 +1054,27 @@
     });
   }
 
-  // =========================================================================
+  // Exportar funciones
+  window.setupDragAndDrop = setupDragAndDrop;
+  window.ensureDragHandles = ensureDragHandles;
+
+  window.miVit3.setupDragAndDrop = setupDragAndDrop;
+  window.miVit3.ensureDragHandles = ensureDragHandles;
+
+})();
+
+
+/* --- Módulo: ats-engine.js --- */
+/**
+ * miVIT3 — Módulo del Motor Auditor ATS & Comparador de Vacante (Fase 2)
+ * Puntuación algorítmica 0-100, fórmula STAR de logros cuantificables y matching de palabras clave.
+ */
+
+(function () {
+  'use strict';
+
+  window.miVit3 = window.miVit3 || {};
+
   // Auditor ATS, Impacto STAR y Comparador de Vacante (Fase 2)
   // =========================================================================
 
@@ -1118,218 +1538,53 @@
     runJobMatch();
   }, 200);
 
-  // =========================================================================
-  // Carga de Fotografía de Perfil (Vanilla FileReader)
-  // =========================================================================
-  function setupAvatarUpload() {
-    const fileInput = document.getElementById('avatarFileInput');
-    if (!fileInput) return;
 
-    fileInput.addEventListener('change', function (e) {
-      const file = e.target.files[0];
-      if (!file) return;
+  // Exportar funciones
+  window.setupAtsEngine = setupAtsEngine;
+  window.openAtsDrawer = openAtsDrawer;
+  window.closeAtsDrawer = closeAtsDrawer;
+  window.auditCvForAts = auditCvForAts;
+  window.auditKeywordsAgainstJob = auditKeywordsAgainstJob;
+  window.debouncedAudit = debouncedAudit;
 
-      if (!file.type.startsWith('image/')) {
-        customAlert('Archivo de imagen no válido', 'Por favor selecciona un archivo con formato de imagen válido (PNG, JPG, SVG o WebP).', 'warning');
-        return;
-      }
+  window.miVit3.setupAtsEngine = setupAtsEngine;
+  window.miVit3.openAtsDrawer = openAtsDrawer;
+  window.miVit3.closeAtsDrawer = closeAtsDrawer;
+  window.miVit3.auditCvForAts = auditCvForAts;
+  window.miVit3.auditKeywordsAgainstJob = auditKeywordsAgainstJob;
+  window.miVit3.debouncedAudit = debouncedAudit;
 
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        const avatarImg = document.getElementById('cvAvatar');
-        if (avatarImg) {
-          avatarImg.src = event.target.result;
-          triggerAutoSave();
-          showToast('Foto de perfil actualizada');
-        }
-      };
-      reader.readAsDataURL(file);
-    });
+})();
+
+
+/* --- Módulo: storage.js --- */
+/**
+ * miVIT3 — Módulo de Persistencia y Almacenamiento (LocalStorage y JSON)
+ * Autoguardado reactivo continuo, respaldos JSON y restauración de estados.
+ */
+
+(function () {
+  'use strict';
+
+  window.miVit3 = window.miVit3 || {};
+
+  const STORAGE_KEY = 'mivit3_cv_content_v2';
+  const STORAGE_SETTINGS = 'mivit3_cv_settings_v2';
+  let saveTimeout = null;
+
+  function debouncedAudit() {
+    if (typeof window.debouncedAudit === 'function') {
+      window.debouncedAudit();
+    } else if (window.miVit3 && typeof window.miVit3.debouncedAudit === 'function') {
+      window.miVit3.debouncedAudit();
+    }
   }
 
-  // =========================================================================
-  // Gestión Dinámica de Secciones & Elementos (Add/Delete)
-  // =========================================================================
-  window.miVit3 = {
-    // Añadir nuevo empleo
-    addExperienceItem: function (btn) {
-      const section = btn.closest('.cv-section');
-      const body = section.querySelector('.cv-section-body') || section;
-      const newItem = document.createElement('div');
-      newItem.className = 'cv-item';
-      newItem.innerHTML = `
-        <div class="item-actions">
-          <button class="action-btn btn-del" onclick="window.miVit3.deleteItem(this)" title="Eliminar empleo">✕</button>
-        </div>
-        <div class="cv-item-side">
-          <span class="cv-item-date" contenteditable="true">2023 — Presente</span>
-          <span class="cv-item-location" contenteditable="true">Ciudad, País</span>
-        </div>
-        <div class="cv-item-main">
-          <div class="cv-item-header">
-            <span class="cv-item-title" contenteditable="true">Puesto o Cargo</span> · 
-            <span class="cv-item-subtitle" contenteditable="true">Nombre de la Empresa</span>
-          </div>
-          <div class="cv-item-desc" contenteditable="true">
-            <ul>
-              <li>Describe tus responsabilidades clave y logros destacados con datos medibles.</li>
-              <li>Iniciativa o proyecto liderado con resultados positivos.</li>
-            </ul>
-          </div>
-        </div>
-      `;
-      body.appendChild(newItem);
-      triggerAutoSave();
-      newItem.querySelector('.cv-item-title').focus();
-    },
-
-    // Añadir nuevo estudio
-    addEducationItem: function (btn) {
-      const section = btn.closest('.cv-section');
-      const body = section.querySelector('.cv-section-body') || section;
-      const newItem = document.createElement('div');
-      newItem.className = 'cv-item';
-      newItem.innerHTML = `
-        <div class="item-actions">
-          <button class="action-btn btn-del" onclick="window.miVit3.deleteItem(this)" title="Eliminar estudio">✕</button>
-        </div>
-        <div class="cv-item-side">
-          <span class="cv-item-date" contenteditable="true">2018 — 2022</span>
-          <span class="cv-item-location" contenteditable="true">Ciudad, País</span>
-        </div>
-        <div class="cv-item-main">
-          <div class="cv-item-header">
-            <span class="cv-item-title" contenteditable="true">Título o Carrera</span> · 
-            <span class="cv-item-subtitle" contenteditable="true">Institución Educativa</span>
-          </div>
-          <div class="cv-item-desc" contenteditable="true">
-            Menciones, especializaciones, proyectos académicos o reconocimientos relevantes.
-          </div>
-        </div>
-      `;
-      body.appendChild(newItem);
-      triggerAutoSave();
-      newItem.querySelector('.cv-item-title').focus();
-    },
-
-    // Añadir tag de habilidad
-    addSkillTag: function (btn) {
-      const section = btn.closest('.cv-section');
-      const wrap = section.querySelector('.cv-tags-wrap');
-      if (!wrap) return;
-
-      const newTag = document.createElement('span');
-      newTag.className = 'cv-tag';
-      newTag.innerHTML = `
-        <span contenteditable="true">Nueva Habilidad</span>
-        <span class="cv-tag-del" onclick="this.parentElement.remove()">✕</span>
-      `;
-      wrap.appendChild(newTag);
-      triggerAutoSave();
-      const editable = newTag.querySelector('[contenteditable]');
-      editable.focus();
-      document.execCommand('selectAll', false, null);
-    },
-
-    // Añadir idioma
-    addLanguageItem: function (btn) {
-      const section = btn.closest('.cv-section');
-      const desc = section.querySelector('.cv-item-desc');
-      if (!desc) return;
-
-      desc.innerHTML += ' &nbsp;|&nbsp; <strong>Nuevo Idioma:</strong> Nivel';
-      triggerAutoSave();
-    },
-
-    // Eliminar item individual
-    deleteItem: function (btn) {
-      const item = btn.closest('.cv-item');
-      if (item) {
-        item.remove();
-        triggerAutoSave();
-        showToast('Elemento eliminado');
-      }
-    },
-
-    // Eliminar sección completa
-    deleteSection: async function (btn) {
-      const section = btn.closest('.cv-section');
-      if (!section) return;
-
-      const confirmed = await customConfirm(
-        '¿Eliminar sección completa?',
-        'Esta acción eliminará el encabezado y todos los elementos o registros contenidos en esta sección.',
-        'danger',
-        'Sí, eliminar',
-        'Cancelar'
-      );
-
-      if (confirmed) {
-        section.remove();
-        triggerAutoSave();
-        debouncedAudit();
-        showToast('Sección eliminada');
-      }
-    },
-
-    // Añadir sección personalizada
-    addCustomSection: async function () {
-      const title = await customPrompt(
-        'Nueva Sección Personalizada',
-        'Ingresa el título de la nueva sección que deseas añadir:',
-        'Proyectos Destacados',
-        'ej: Certificaciones, Voluntariado, Premios...'
-      );
-      if (!title || !title.trim()) return;
-
-      const cleanTitle = title.trim();
-      const section = document.createElement('section');
-      section.className = 'cv-section';
-      section.innerHTML = `
-        <div class="cv-section-header">
-          <span class="cv-section-title" contenteditable="true">${escapeHtml(cleanTitle)}</span>
-          <div class="section-actions">
-            <button class="action-btn" onclick="window.miVit3.addExperienceItem(this)">+ Añadir elemento</button>
-            <button class="action-btn btn-del" onclick="window.miVit3.deleteSection(this)">Eliminar sección</button>
-          </div>
-        </div>
-        <div class="cv-section-body">
-          <div class="cv-item">
-            <div class="item-actions">
-              <button class="action-btn btn-del" onclick="window.miVit3.deleteItem(this)">✕</button>
-            </div>
-            <div class="cv-item-header">
-              <div>
-                <span class="cv-item-title" contenteditable="true">Nombre del Elemento</span> · 
-                <span class="cv-item-subtitle" contenteditable="true">Subtítulo u Organización</span>
-              </div>
-              <span class="cv-item-date" contenteditable="true">2024</span>
-            </div>
-            <div class="cv-item-desc" contenteditable="true">
-              Descripción del proyecto, certificación o detalle relevante.
-            </div>
-          </div>
-        </div>
-      `;
-      cvDocument.appendChild(section);
-      ensureDragHandles();
-      triggerAutoSave();
-      debouncedAudit();
-      section.scrollIntoView({ behavior: 'smooth' });
-      showToast(`Sección "${cleanTitle}" añadida`);
-    },
-
-    // Sistema de Alertas Personalizadas
-    alert: (title, message, type) => customAlert(title, message, type),
-    confirm: (title, message, type, confirmText, cancelText) => customConfirm(title, message, type, confirmText, cancelText),
-    prompt: (title, message, defVal, placeholder) => customPrompt(title, message, defVal, placeholder)
-  };
-
-  // =========================================================================
-  // Autoguardado & Persistencia Local (LocalStorage)
-  // =========================================================================
   function setupAutoSave() {
-    cvDocument.addEventListener('input', function () {
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
+
+    cvDoc.addEventListener('input', function () {
       triggerAutoSave();
       debouncedAudit();
     });
@@ -1340,8 +1595,10 @@
     updateSaveIndicator(false);
 
     saveTimeout = setTimeout(function () {
-      if (!cvDocument) return;
-      localStorage.setItem(STORAGE_KEY, cvDocument.innerHTML);
+      const cvDoc = document.getElementById('cv-document');
+      if (!cvDoc) return;
+
+      localStorage.setItem(STORAGE_KEY, cvDoc.innerHTML);
       saveSettings();
       updateSaveIndicator(true);
       debouncedAudit();
@@ -1349,8 +1606,11 @@
   }
 
   function saveSettings() {
-    const currentTemplate = Array.from(cvDocument.classList).find(c => c.startsWith('template-')) || 'template-alpha00';
-    const currentDensity = Array.from(cvDocument.classList).find(c => c.startsWith('density-')) || 'density-normal';
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
+
+    const currentTemplate = Array.from(cvDoc.classList).find(c => c.startsWith('template-')) || 'template-alpha00';
+    const currentDensity = Array.from(cvDoc.classList).find(c => c.startsWith('density-')) || 'density-normal';
     const accent = getComputedStyle(document.documentElement).getPropertyValue('--cv-accent').trim();
     const accentLight = getComputedStyle(document.documentElement).getPropertyValue('--cv-accent-light').trim();
 
@@ -1364,11 +1624,14 @@
   }
 
   function loadSavedContent() {
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
+
     const savedHtml = localStorage.getItem(STORAGE_KEY);
     const savedSettingsRaw = localStorage.getItem(STORAGE_SETTINGS);
 
     if (savedHtml && savedHtml.trim().length > 100) {
-      cvDocument.innerHTML = savedHtml;
+      cvDoc.innerHTML = savedHtml;
     } else {
       loadSampleData(false);
     }
@@ -1377,16 +1640,19 @@
       try {
         const settings = JSON.parse(savedSettingsRaw);
         if (settings.template) {
-          cvDocument.classList.remove('template-alpha00', 'template-alpha01', 'template-alpha02', 'template-alpha03', 'template-moderna', 'template-clasica', 'template-columnas', 'template-creativa');
-          cvDocument.classList.add(settings.template);
+          cvDoc.classList.remove(
+            'template-alpha00', 'template-alpha01', 'template-alpha02', 'template-alpha03',
+            'template-moderna', 'template-clasica', 'template-columnas', 'template-creativa'
+          );
+          cvDoc.classList.add(settings.template);
 
           document.querySelectorAll('.pill-btn[data-template]').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.template === settings.template);
           });
         }
         if (settings.density) {
-          cvDocument.classList.remove('density-compact', 'density-normal', 'density-spacious');
-          cvDocument.classList.add(settings.density);
+          cvDoc.classList.remove('density-compact', 'density-normal', 'density-spacious');
+          cvDoc.classList.add(settings.density);
 
           document.querySelectorAll('.pill-btn[data-density]').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.density === settings.density);
@@ -1405,8 +1671,8 @@
       }
     }
 
-    ensureDragHandles();
-    updatePageBreakAndCapacity();
+    if (typeof window.ensureDragHandles === 'function') window.ensureDragHandles();
+    if (typeof window.updatePageBreakAndCapacity === 'function') window.updatePageBreakAndCapacity();
     updateSaveIndicator(true);
   }
 
@@ -1424,147 +1690,38 @@
     }
   }
 
-  // =========================================================================
-  // Botones Principales (Ejemplo, Limpiar, JSON, Imprimir, Tips)
-  // =========================================================================
-  function setupMainActions() {
-    // Cargar datos de ejemplo
-    const btnSample = document.getElementById('btnSampleData');
-    if (btnSample) {
-      btnSample.addEventListener('click', async function () {
-        const confirmed = await customConfirm(
-          '¿Cargar currículum de ejemplo?',
-          'Se reemplazará el contenido actual con los datos profesionales de muestra. Si tienes información personal escrita, te recomendamos descargar un respaldo JSON primero.',
-          'warning',
-          'Cargar ejemplo',
-          'Cancelar'
-        );
-        if (confirmed) {
-          loadSampleData(true);
-        }
-      });
-    }
-
-    // Limpiar documento
-    const btnClear = document.getElementById('btnClearData');
-    if (btnClear) {
-      btnClear.addEventListener('click', async function () {
-        const confirmed = await customConfirm(
-          '¿Vaciar currículum completo?',
-          '¿Estás seguro de que deseas vaciar el documento para empezar a redactar desde una hoja en blanco?',
-          'danger',
-          'Sí, vaciar',
-          'Cancelar'
-        );
-        if (confirmed) {
-          clearDocument();
-        }
-      });
-    }
-
-    // Exportar a JSON
-    const btnExport = document.getElementById('btnExportJson');
-    if (btnExport) {
-      btnExport.addEventListener('click', exportToJson);
-    }
-
-    // Importar desde JSON
-    const jsonFileInput = document.getElementById('jsonFileInput');
-    const btnImport = document.getElementById('btnImportJson');
-    if (btnImport && jsonFileInput) {
-      btnImport.addEventListener('click', () => jsonFileInput.click());
-      jsonFileInput.addEventListener('change', importFromJson);
-    }
-
-    // Exportar a Portafolio Web HTML (Fase 3)
-    const btnExportWeb = document.getElementById('btnExportWeb');
-    if (btnExportWeb) {
-      btnExportWeb.addEventListener('click', exportToWebHtml);
-    }
-
-    // Modal de Guía de Publicación (Fase 3)
-    const btnShowPublish = document.getElementById('btnShowPublishGuide');
-    const modalPublish = document.getElementById('publishModal');
-    const btnClosePublish = document.getElementById('btnClosePublish');
-    const btnQuickExport = document.getElementById('btnQuickExportFromModal');
-
-    if (btnShowPublish && modalPublish) {
-      btnShowPublish.addEventListener('click', function () {
-        modalPublish.classList.add('show');
-      });
-      if (btnClosePublish) {
-        btnClosePublish.addEventListener('click', function () {
-          modalPublish.classList.remove('show');
-        });
-      }
-      modalPublish.addEventListener('click', function (e) {
-        if (e.target === modalPublish) {
-          modalPublish.classList.remove('show');
-        }
-      });
-      if (btnQuickExport) {
-        btnQuickExport.addEventListener('click', function () {
-          modalPublish.classList.remove('show');
-          exportToWebHtml();
-        });
-      }
-    }
-
-    // Imprimir / Exportar a PDF
-    const btnPrint = document.getElementById('btnPrintPdf');
-    if (btnPrint) {
-      btnPrint.addEventListener('click', function () {
-        window.print();
-      });
-    }
-
-    // Añadir sección personalizada
-    const btnAddSection = document.getElementById('btnAddSection');
-    if (btnAddSection) {
-      btnAddSection.addEventListener('click', window.miVit3.addCustomSection);
-    }
-
-    // Modal de Tips
-    const btnTips = document.getElementById('btnShowTips');
-    const modalTips = document.getElementById('tipsModal');
-    const btnCloseTips = document.getElementById('btnCloseTips');
-    if (btnTips && modalTips) {
-      btnTips.addEventListener('click', function () {
-        modalTips.classList.add('show');
-      });
-      if (btnCloseTips) {
-        btnCloseTips.addEventListener('click', function () {
-          modalTips.classList.remove('show');
-        });
-      }
-      modalTips.addEventListener('click', function (e) {
-        if (e.target === modalTips) {
-          modalTips.classList.remove('show');
-        }
-      });
-    }
-  }
-
   function loadSampleData(withNotification = true) {
-    cvDocument.innerHTML = SAMPLE_DATA.html;
-    setTemplate(SAMPLE_DATA.template);
-    setAccentColor(SAMPLE_DATA.accent, SAMPLE_DATA.accentLight);
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
+
+    const sample = window.SAMPLE_DATA || (window.miVit3 && window.miVit3.SAMPLE_DATA);
+    if (!sample) return;
+
+    cvDoc.innerHTML = sample.html;
+    if (typeof window.setTemplate === 'function') window.setTemplate(sample.template);
+    if (typeof window.setAccentColor === 'function') window.setAccentColor(sample.accent, sample.accentLight);
 
     document.querySelectorAll('.pill-btn[data-template]').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.template === SAMPLE_DATA.template);
+      btn.classList.toggle('active', btn.dataset.template === sample.template);
     });
     document.querySelectorAll('.palette-swatch').forEach(s => {
-      s.classList.toggle('active', s.dataset.accent.toLowerCase() === SAMPLE_DATA.accent.toLowerCase());
+      s.classList.toggle('active', s.dataset.accent.toLowerCase() === sample.accent.toLowerCase());
     });
 
+    if (typeof window.ensureDragHandles === 'function') window.ensureDragHandles();
+    if (typeof window.updatePageBreakAndCapacity === 'function') window.updatePageBreakAndCapacity();
     triggerAutoSave();
-    if (withNotification) {
-      showToast('Datos de ejemplo cargados exitosamente');
+
+    if (withNotification && window.showToast) {
+      window.showToast('Datos de ejemplo cargados exitosamente');
     }
   }
 
   function clearDocument() {
-    cvDocument.innerHTML = `
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
+
+    cvDoc.innerHTML = `
       <header class="cv-profile-header">
         <div class="cv-avatar-wrap">
           <img id="cvAvatar" class="cv-avatar" src="source/img/user.svg" alt="Foto de perfil">
@@ -1617,25 +1774,33 @@
         </div>
       </section>
     `;
+    if (typeof window.ensureDragHandles === 'function') window.ensureDragHandles();
+    if (typeof window.updatePageBreakAndCapacity === 'function') window.updatePageBreakAndCapacity();
     triggerAutoSave();
-    showToast('Documento en blanco listo para editar');
+
+    if (window.showToast) {
+      window.showToast('Documento en blanco listo para editar');
+    }
   }
 
   function exportToJson() {
-    const currentTemplate = Array.from(cvDocument.classList).find(c => c.startsWith('template-')) || 'template-alpha00';
-    const currentDensity = Array.from(cvDocument.classList).find(c => c.startsWith('density-')) || 'density-normal';
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
+
+    const currentTemplate = Array.from(cvDoc.classList).find(c => c.startsWith('template-')) || 'template-alpha00';
+    const currentDensity = Array.from(cvDoc.classList).find(c => c.startsWith('density-')) || 'density-normal';
     const accent = getComputedStyle(document.documentElement).getPropertyValue('--cv-accent').trim();
     const accentLight = getComputedStyle(document.documentElement).getPropertyValue('--cv-accent-light').trim();
 
     const data = {
       app: 'miVIT3',
-      version: '2.1.0',
+      version: '2.5.0',
       exportedAt: new Date().toISOString(),
       template: currentTemplate,
       density: currentDensity,
       accent: accent,
       accentLight: accentLight,
-      html: cvDocument.innerHTML
+      html: cvDoc.innerHTML
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -1648,40 +1813,87 @@
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    showToast('Archivo JSON descargado exitosamente');
+    if (window.showToast) {
+      window.showToast('Archivo JSON descargado exitosamente');
+    }
   }
 
   function importFromJson(e) {
     const file = e.target.files[0];
     if (!file) return;
 
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
+
     const reader = new FileReader();
     reader.onload = function (event) {
       try {
         const data = JSON.parse(event.target.result);
         if (!data.html) {
-          customAlert('Formato de archivo no válido', 'El archivo seleccionado no tiene la estructura de datos requerida por miVIT3.', 'warning');
+          const alertFn = window.customAlert || (window.miVit3 && window.miVit3.alert);
+          if (alertFn) alertFn('Formato de archivo no válido', 'El archivo seleccionado no tiene la estructura de datos requerida por miVIT3.', 'warning');
           return;
         }
 
-        cvDocument.innerHTML = data.html;
-        if (data.template) setTemplate(data.template);
-        if (data.density) setDensity(data.density);
-        if (data.accent && data.accentLight) setAccentColor(data.accent, data.accentLight);
+        cvDoc.innerHTML = data.html;
+        if (data.template && typeof window.setTemplate === 'function') window.setTemplate(data.template);
+        if (data.density && typeof window.setDensity === 'function') window.setDensity(data.density);
+        if (data.accent && data.accentLight && typeof window.setAccentColor === 'function') {
+          window.setAccentColor(data.accent, data.accentLight);
+        }
 
-        ensureDragHandles();
-        updatePageBreakAndCapacity();
+        if (typeof window.ensureDragHandles === 'function') window.ensureDragHandles();
+        if (typeof window.updatePageBreakAndCapacity === 'function') window.updatePageBreakAndCapacity();
         triggerAutoSave();
-        showToast('CV restaurado correctamente desde archivo');
+
+        if (window.showToast) {
+          window.showToast('CV restaurado correctamente desde archivo');
+        }
       } catch (err) {
-        customAlert('Error al importar', 'No se pudo leer el archivo JSON: ' + err.message, 'danger');
+        const alertFn = window.customAlert || (window.miVit3 && window.miVit3.alert);
+        if (alertFn) alertFn('Error al importar', 'No se pudo leer el archivo JSON: ' + err.message, 'danger');
       }
     };
     reader.readAsText(file);
     e.target.value = '';
   }
 
-  // =========================================================================
+  // Exportar funciones
+  window.STORAGE_KEY = STORAGE_KEY;
+  window.STORAGE_SETTINGS = STORAGE_SETTINGS;
+  window.setupAutoSave = setupAutoSave;
+  window.triggerAutoSave = triggerAutoSave;
+  window.saveSettings = saveSettings;
+  window.loadSavedContent = loadSavedContent;
+  window.updateSaveIndicator = updateSaveIndicator;
+  window.loadSampleData = loadSampleData;
+  window.clearDocument = clearDocument;
+  window.exportToJson = exportToJson;
+  window.importFromJson = importFromJson;
+
+  window.miVit3.setupAutoSave = setupAutoSave;
+  window.miVit3.triggerAutoSave = triggerAutoSave;
+  window.miVit3.saveSettings = saveSettings;
+  window.miVit3.loadSavedContent = loadSavedContent;
+  window.miVit3.loadSampleData = loadSampleData;
+  window.miVit3.clearDocument = clearDocument;
+  window.miVit3.exportToJson = exportToJson;
+  window.miVit3.importFromJson = importFromJson;
+
+})();
+
+
+/* --- Módulo: web-exporter.js --- */
+/**
+ * miVIT3 — Módulo de Exportación a Mini-Web Autocontenida (Fase 3)
+ * Genera un archivo cv-web.html autónomo, responsivo, con dark mode, SEO semántico y cero dependencias.
+ */
+
+(function () {
+  'use strict';
+
+  window.miVit3 = window.miVit3 || {};
+
   // Exportador a "Mini-Web" Autocontenida (cv-web.html) & PWA (Fase 3)
   // =========================================================================
   function exportToWebHtml() {
@@ -2135,6 +2347,25 @@
     }
   }
 
+
+  // Exportar funciones
+  window.exportToWebHtml = exportToWebHtml;
+  window.miVit3.exportToWebHtml = exportToWebHtml;
+
+})();
+
+
+/* --- Módulo: pwa.js --- */
+/**
+ * miVIT3 — Módulo PWA & Soporte Offline (Fase 3)
+ * Registro del Service Worker para capacidades sin conexión y caching local.
+ */
+
+(function () {
+  'use strict';
+
+  window.miVit3 = window.miVit3 || {};
+
   function setupPwa() {
     if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
       window.addEventListener('load', () => {
@@ -2149,224 +2380,454 @@
     }
   }
 
-  // =========================================================================
-  // Atajos de Teclado Estilo Word
-  // =========================================================================
-  function setupKeyboardShortcuts() {
-    document.addEventListener('keydown', function (e) {
-      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
+  // Exportar funciones
+  window.setupPwa = setupPwa;
+  window.miVit3.setupPwa = setupPwa;
 
-      if (!cmdOrCtrl) return;
+})();
 
-      switch (e.key.toLowerCase()) {
-        case 'b': // Negrita
-          e.preventDefault();
-          executeFormatCommand('bold');
-          updateToolbarState();
-          break;
-        case 'i': // Cursiva
-          e.preventDefault();
-          executeFormatCommand('italic');
-          updateToolbarState();
-          break;
-        case 'u': // Subrayado
-          e.preventDefault();
-          executeFormatCommand('underline');
-          updateToolbarState();
-          break;
-        case 's': // Guardar manual
-          e.preventDefault();
-          triggerAutoSave();
-          showToast('Guardado en el navegador');
-          break;
-        case 'p': // Imprimir / Exportar PDF
-          e.preventDefault();
-          window.print();
-          break;
-      }
-    });
-  }
+
+/* --- Módulo: ../app.js --- */
+/**
+ * miVIT3 — Orquestador Principal de la Aplicación (App Bootstrap)
+ * Conecta los módulos funcionales, gestiona adición/eliminación de secciones con plantillas semánticas HTML5 (<template>)
+ * y coordina la inicialización sin dependencias externas.
+ */
+
+(function () {
+  'use strict';
+
+  window.miVit3 = window.miVit3 || {};
+
+  let cvDocument = null;
 
   // =========================================================================
-  // Sistema de Alertas, Confirmaciones y Prompts Personalizados (Sin native alert/confirm)
+  // Gestión Dinámica de Secciones & Elementos (Add/Delete) usando <template>
   // =========================================================================
-  function saveSelection() {
-    const sel = window.getSelection();
-    if (sel && sel.rangeCount > 0) {
-      return sel.getRangeAt(0);
-    }
-    return null;
-  }
 
-  function restoreSelection(range) {
-    if (range) {
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }
-  }
+  window.miVit3.addExperienceItem = function (btn) {
+    const section = btn.closest('.cv-section');
+    const body = section.querySelector('.cv-section-body') || section;
+    const tpl = document.getElementById('tpl-experience-item');
+    let newItem;
 
-  function showCustomDialog({
-    title = '',
-    message = '',
-    type = 'info', // 'info' | 'success' | 'warning' | 'danger'
-    confirmText = 'Aceptar',
-    cancelText = null,
-    showInput = false,
-    defaultValue = '',
-    placeholder = ''
-  }) {
-    return new Promise((resolve) => {
-      let backdrop = document.getElementById('customDialogBackdrop');
-      if (!backdrop) {
-        backdrop = document.createElement('div');
-        backdrop.id = 'customDialogBackdrop';
-        backdrop.className = 'custom-dialog-backdrop';
-        document.body.appendChild(backdrop);
-      }
-
-      const icons = {
-        info: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
-        success: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>',
-        warning: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>',
-        danger: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>'
-      };
-
-      const iconSvg = icons[type] || icons.info;
-      const confirmBtnClass = type === 'danger' ? 'dialog-btn btn-danger' : 'dialog-btn btn-confirm';
-
-      backdrop.innerHTML = `
-        <div class="custom-dialog-card" role="dialog" aria-modal="true">
-          <div class="dialog-header">
-            <div class="dialog-icon icon-${type}">
-              ${iconSvg}
-            </div>
-            <div class="dialog-title-wrap">
-              <h3>${escapeHtml(title)}</h3>
-              <p>${escapeHtml(message)}</p>
-            </div>
+    if (tpl && tpl.content && tpl.content.firstElementChild) {
+      newItem = tpl.content.firstElementChild.cloneNode(true);
+    } else {
+      newItem = document.createElement('div');
+      newItem.className = 'cv-item';
+      newItem.innerHTML = `
+        <div class="item-actions">
+          <button class="action-btn btn-del" onclick="window.miVit3.deleteItem(this)" title="Eliminar empleo">✕</button>
+        </div>
+        <div class="cv-item-side">
+          <span class="cv-item-date" contenteditable="true">2023 — Presente</span>
+          <span class="cv-item-location" contenteditable="true">Ciudad, País</span>
+        </div>
+        <div class="cv-item-main">
+          <div class="cv-item-header">
+            <span class="cv-item-title" contenteditable="true">Puesto o Cargo</span> ·
+            <span class="cv-item-subtitle" contenteditable="true">Nombre de la Empresa</span>
           </div>
-          ${showInput ? `
-            <div class="dialog-input-wrap">
-              <input type="text" id="customDialogInput" class="dialog-input" value="${escapeHtml(defaultValue)}" placeholder="${escapeHtml(placeholder)}" autocomplete="off">
-            </div>
-          ` : ''}
-          <div class="dialog-actions">
-            ${cancelText ? `<button type="button" id="customDialogCancelBtn" class="dialog-btn btn-cancel">${escapeHtml(cancelText)}</button>` : ''}
-            <button type="button" id="customDialogConfirmBtn" class="${confirmBtnClass}">${escapeHtml(confirmText)}</button>
+          <div class="cv-item-desc" contenteditable="true">
+            <ul>
+              <li>Describe tus responsabilidades clave y logros destacados con datos medibles.</li>
+              <li>Iniciativa o proyecto liderado con resultados positivos.</li>
+            </ul>
           </div>
         </div>
       `;
-
-      backdrop.classList.add('show');
-
-      const input = document.getElementById('customDialogInput');
-      const confirmBtn = document.getElementById('customDialogConfirmBtn');
-      const cancelBtn = document.getElementById('customDialogCancelBtn');
-
-      if (input) {
-        input.focus();
-        input.select();
-      } else if (confirmBtn) {
-        confirmBtn.focus();
-      }
-
-      function cleanup(result) {
-        backdrop.classList.remove('show');
-        document.removeEventListener('keydown', onKeyDown);
-        setTimeout(() => {
-          backdrop.innerHTML = '';
-          resolve(result);
-        }, 220);
-      }
-
-      function onKeyDown(e) {
-        if (e.key === 'Escape') {
-          e.preventDefault();
-          cleanup(showInput ? null : false);
-        } else if (e.key === 'Enter') {
-          e.preventDefault();
-          const val = input ? input.value : true;
-          cleanup(val);
-        }
-      }
-
-      document.addEventListener('keydown', onKeyDown);
-
-      confirmBtn.addEventListener('click', () => {
-        const val = input ? input.value : true;
-        cleanup(val);
-      });
-
-      if (cancelBtn) {
-        cancelBtn.addEventListener('click', () => {
-          cleanup(showInput ? null : false);
-        });
-      }
-
-      backdrop.addEventListener('click', (e) => {
-        if (e.target === backdrop) {
-          cleanup(showInput ? null : false);
-        }
-      });
-    });
-  }
-
-  function customAlert(title, message, type = 'info') {
-    return showCustomDialog({ title, message, type, confirmText: 'Entendido' });
-  }
-
-  function customConfirm(title, message, type = 'warning', confirmText = 'Aceptar', cancelText = 'Cancelar') {
-    return showCustomDialog({ title, message, type, confirmText, cancelText });
-  }
-
-  function customPrompt(title, message, defaultValue = '', placeholder = '') {
-    return showCustomDialog({ title, message, type: 'info', showInput: true, defaultValue, placeholder, confirmText: 'Aceptar', cancelText: 'Cancelar' });
-  }
-
-  // =========================================================================
-  // Notificaciones Toast Mejoradas
-  // =========================================================================
-  let toastTimeout = null;
-  function showToast(message, type = 'success') {
-    let toast = document.getElementById('toastNotification');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.id = 'toastNotification';
-      toast.className = 'toast-notification';
-      document.body.appendChild(toast);
     }
 
-    const iconSvg = type === 'warning'
-      ? '<svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
-      : '<svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    body.appendChild(newItem);
+    if (typeof window.ensureDragHandles === 'function') window.ensureDragHandles();
+    if (typeof window.triggerAutoSave === 'function') window.triggerAutoSave();
+    if (typeof window.debouncedAudit === 'function') window.debouncedAudit();
 
-    toast.innerHTML = `
-      ${iconSvg}
-      <span id="toastMsg">${escapeHtml(message)}</span>
-    `;
+    const titleEl = newItem.querySelector('.cv-item-title');
+    if (titleEl) titleEl.focus();
+  };
 
-    toast.classList.add('show');
-    clearTimeout(toastTimeout);
-    toastTimeout = setTimeout(() => {
-      toast.classList.remove('show');
-    }, 2500);
+  window.miVit3.addEducationItem = function (btn) {
+    const section = btn.closest('.cv-section');
+    const body = section.querySelector('.cv-section-body') || section;
+    const tpl = document.getElementById('tpl-education-item');
+    let newItem;
+
+    if (tpl && tpl.content && tpl.content.firstElementChild) {
+      newItem = tpl.content.firstElementChild.cloneNode(true);
+    } else {
+      newItem = document.createElement('div');
+      newItem.className = 'cv-item';
+      newItem.innerHTML = `
+        <div class="item-actions">
+          <button class="action-btn btn-del" onclick="window.miVit3.deleteItem(this)" title="Eliminar estudio">✕</button>
+        </div>
+        <div class="cv-item-side">
+          <span class="cv-item-date" contenteditable="true">2018 — 2022</span>
+          <span class="cv-item-location" contenteditable="true">Ciudad, País</span>
+        </div>
+        <div class="cv-item-main">
+          <div class="cv-item-header">
+            <span class="cv-item-title" contenteditable="true">Título o Carrera</span> ·
+            <span class="cv-item-subtitle" contenteditable="true">Institución Educativa</span>
+          </div>
+          <div class="cv-item-desc" contenteditable="true">
+            Menciones, especializaciones, proyectos académicos o reconocimientos relevantes.
+          </div>
+        </div>
+      `;
+    }
+
+    body.appendChild(newItem);
+    if (typeof window.ensureDragHandles === 'function') window.ensureDragHandles();
+    if (typeof window.triggerAutoSave === 'function') window.triggerAutoSave();
+    if (typeof window.debouncedAudit === 'function') window.debouncedAudit();
+
+    const titleEl = newItem.querySelector('.cv-item-title');
+    if (titleEl) titleEl.focus();
+  };
+
+  window.miVit3.addSkillTag = function (btn) {
+    const section = btn.closest('.cv-section');
+    const wrap = section.querySelector('.cv-tags-wrap');
+    if (!wrap) return;
+
+    const tpl = document.getElementById('tpl-skill-tag');
+    let newTag;
+
+    if (tpl && tpl.content && tpl.content.firstElementChild) {
+      newTag = tpl.content.firstElementChild.cloneNode(true);
+    } else {
+      newTag = document.createElement('span');
+      newTag.className = 'cv-tag';
+      newTag.innerHTML = `
+        <span contenteditable="true">Nueva Habilidad</span>
+        <span class="cv-tag-del" onclick="this.parentElement.remove(); if (window.triggerAutoSave) window.triggerAutoSave();">✕</span>
+      `;
+    }
+
+    wrap.appendChild(newTag);
+    if (typeof window.triggerAutoSave === 'function') window.triggerAutoSave();
+    if (typeof window.debouncedAudit === 'function') window.debouncedAudit();
+
+    const editable = newTag.querySelector('[contenteditable]');
+    if (editable) {
+      editable.focus();
+      document.execCommand('selectAll', false, null);
+    }
+  };
+
+  window.miVit3.addLanguageItem = function (btn) {
+    const section = btn.closest('.cv-section');
+    const desc = section.querySelector('.cv-item-desc');
+    if (!desc) return;
+
+    desc.innerHTML += ' &nbsp;|&nbsp; <strong>Nuevo Idioma:</strong> Nivel';
+    if (typeof window.triggerAutoSave === 'function') window.triggerAutoSave();
+    if (typeof window.debouncedAudit === 'function') window.debouncedAudit();
+  };
+
+  window.miVit3.deleteItem = function (btn) {
+    const item = btn.closest('.cv-item');
+    if (item) {
+      item.remove();
+      if (typeof window.triggerAutoSave === 'function') window.triggerAutoSave();
+      if (typeof window.updatePageBreakAndCapacity === 'function') window.updatePageBreakAndCapacity();
+      if (typeof window.debouncedAudit === 'function') window.debouncedAudit();
+      if (window.showToast) window.showToast('Elemento eliminado');
+    }
+  };
+
+  window.miVit3.deleteSection = async function (btn) {
+    const section = btn.closest('.cv-section');
+    if (!section) return;
+
+    const confirmFn = window.customConfirm || (window.miVit3 && window.miVit3.confirm);
+    const confirmed = confirmFn
+      ? await confirmFn(
+          '¿Eliminar sección completa?',
+          'Esta acción eliminará el encabezado y todos los elementos contenidos en esta sección.',
+          'danger',
+          'Sí, eliminar',
+          'Cancelar'
+        )
+      : confirm('¿Eliminar sección completa?');
+
+    if (confirmed) {
+      section.remove();
+      if (typeof window.triggerAutoSave === 'function') window.triggerAutoSave();
+      if (typeof window.updatePageBreakAndCapacity === 'function') window.updatePageBreakAndCapacity();
+      if (typeof window.debouncedAudit === 'function') window.debouncedAudit();
+      if (window.showToast) window.showToast('Sección eliminada');
+    }
+  };
+
+  window.miVit3.addCustomSection = async function () {
+    const promptFn = window.customPrompt || (window.miVit3 && window.miVit3.prompt);
+    const title = promptFn
+      ? await promptFn(
+          'Nueva Sección Personalizada',
+          'Ingresa el título de la nueva sección que deseas añadir:',
+          'Proyectos Destacados',
+          'ej: Certificaciones, Voluntariado, Premios...'
+        )
+      : prompt('Título de la nueva sección:', 'Proyectos Destacados');
+
+    if (!title || !title.trim()) return;
+
+    const cleanTitle = title.trim();
+    const cvDoc = document.getElementById('cv-document');
+    if (!cvDoc) return;
+
+    const tpl = document.getElementById('tpl-custom-section');
+    let section;
+
+    if (tpl && tpl.content && tpl.content.firstElementChild) {
+      section = tpl.content.firstElementChild.cloneNode(true);
+      const titleEl = section.querySelector('.cv-section-title');
+      if (titleEl) titleEl.textContent = cleanTitle;
+    } else {
+      section = document.createElement('section');
+      section.className = 'cv-section';
+      section.innerHTML = `
+        <div class="cv-section-header">
+          <span class="cv-section-title" contenteditable="true">${window.escapeHtml ? window.escapeHtml(cleanTitle) : cleanTitle}</span>
+          <div class="section-actions">
+            <button class="action-btn" onclick="window.miVit3.addExperienceItem(this)">+ Añadir elemento</button>
+            <button class="action-btn btn-del" onclick="window.miVit3.deleteSection(this)">Eliminar sección</button>
+          </div>
+        </div>
+        <div class="cv-section-body">
+          <div class="cv-item">
+            <div class="item-actions">
+              <button class="action-btn btn-del" onclick="window.miVit3.deleteItem(this)">✕</button>
+            </div>
+            <div class="cv-item-header">
+              <div>
+                <span class="cv-item-title" contenteditable="true">Nombre del Elemento</span> ·
+                <span class="cv-item-subtitle" contenteditable="true">Subtítulo u Organización</span>
+              </div>
+              <span class="cv-item-date" contenteditable="true">2024</span>
+            </div>
+            <div class="cv-item-desc" contenteditable="true">
+              Descripción del proyecto, certificación o detalle relevante.
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    cvDoc.appendChild(section);
+    if (typeof window.ensureDragHandles === 'function') window.ensureDragHandles();
+    if (typeof window.triggerAutoSave === 'function') window.triggerAutoSave();
+    if (typeof window.updatePageBreakAndCapacity === 'function') window.updatePageBreakAndCapacity();
+    if (typeof window.debouncedAudit === 'function') window.debouncedAudit();
+
+    section.scrollIntoView({ behavior: 'smooth' });
+    if (window.showToast) window.showToast(`Sección "${cleanTitle}" añadida`);
+  };
+
+  // =========================================================================
+  // Configuración de Acciones Principales y Modales
+  // =========================================================================
+
+  function setupMainActions() {
+    // Cargar datos de ejemplo
+    const btnSample = document.getElementById('btnSampleData');
+    if (btnSample) {
+      btnSample.addEventListener('click', async function () {
+        const confirmFn = window.customConfirm || (window.miVit3 && window.miVit3.confirm);
+        const confirmed = confirmFn
+          ? await confirmFn(
+              '¿Cargar currículum de ejemplo?',
+              'Se reemplazará el contenido actual con los datos profesionales de muestra. Si tienes información personal escrita, te recomendamos descargar un respaldo JSON primero.',
+              'warning',
+              'Cargar ejemplo',
+              'Cancelar'
+            )
+          : confirm('¿Cargar currículum de ejemplo?');
+
+        if (confirmed && typeof window.loadSampleData === 'function') {
+          window.loadSampleData(true);
+        }
+      });
+    }
+
+    // Limpiar documento
+    const btnClear = document.getElementById('btnClearData');
+    if (btnClear) {
+      btnClear.addEventListener('click', async function () {
+        const confirmFn = window.customConfirm || (window.miVit3 && window.miVit3.confirm);
+        const confirmed = confirmFn
+          ? await confirmFn(
+              '¿Vaciar currículum completo?',
+              '¿Estás seguro de que deseas vaciar el documento para empezar a redactar desde una hoja en blanco?',
+              'danger',
+              'Sí, vaciar',
+              'Cancelar'
+            )
+          : confirm('¿Vaciar currículum completo?');
+
+        if (confirmed && typeof window.clearDocument === 'function') {
+          window.clearDocument();
+        }
+      });
+    }
+
+    // Exportar a JSON
+    const btnExport = document.getElementById('btnExportJson');
+    if (btnExport && typeof window.exportToJson === 'function') {
+      btnExport.addEventListener('click', window.exportToJson);
+    }
+
+    // Importar desde JSON
+    const jsonFileInput = document.getElementById('jsonFileInput');
+    const btnImport = document.getElementById('btnImportJson');
+    if (btnImport && jsonFileInput && typeof window.importFromJson === 'function') {
+      btnImport.addEventListener('click', () => jsonFileInput.click());
+      jsonFileInput.addEventListener('change', window.importFromJson);
+    }
+
+    // Exportar a Portafolio Web HTML (Fase 3)
+    const btnExportWeb = document.getElementById('btnExportWeb');
+    if (btnExportWeb && typeof window.exportToWebHtml === 'function') {
+      btnExportWeb.addEventListener('click', window.exportToWebHtml);
+    }
+
+    // Modal de Guía de Publicación (Fase 3)
+    const btnShowPublish = document.getElementById('btnShowPublishGuide');
+    const modalPublish = document.getElementById('publishModal');
+    const btnClosePublish = document.getElementById('btnClosePublish');
+    const btnQuickExport = document.getElementById('btnQuickExportFromModal');
+
+    if (btnShowPublish && modalPublish) {
+      btnShowPublish.addEventListener('click', function () {
+        modalPublish.classList.add('show');
+      });
+      if (btnClosePublish) {
+        btnClosePublish.addEventListener('click', function () {
+          modalPublish.classList.remove('show');
+        });
+      }
+      modalPublish.addEventListener('click', function (e) {
+        if (e.target === modalPublish) {
+          modalPublish.classList.remove('show');
+        }
+      });
+    }
+
+    if (btnQuickExport && typeof window.exportToWebHtml === 'function') {
+      btnQuickExport.addEventListener('click', function () {
+        if (modalPublish) modalPublish.classList.remove('show');
+        window.exportToWebHtml();
+      });
+    }
+
+    // Imprimir / Guardar en PDF
+    const btnPrint = document.getElementById('btnPrintPdf');
+    if (btnPrint) {
+      btnPrint.addEventListener('click', function () {
+        window.print();
+      });
+    }
+
+    // Añadir sección personalizada
+    const btnAddSection = document.getElementById('btnAddSection');
+    if (btnAddSection) {
+      btnAddSection.addEventListener('click', window.miVit3.addCustomSection);
+    }
+
+    // Modal de Tips
+    const btnTips = document.getElementById('btnShowTips');
+    const modalTips = document.getElementById('tipsModal');
+    const btnCloseTips = document.getElementById('btnCloseTips');
+    if (btnTips && modalTips) {
+      btnTips.addEventListener('click', function () {
+        modalTips.classList.add('show');
+      });
+      if (btnCloseTips) {
+        btnCloseTips.addEventListener('click', function () {
+          modalTips.classList.remove('show');
+        });
+      }
+      modalTips.addEventListener('click', function (e) {
+        if (e.target === modalTips) {
+          modalTips.classList.remove('show');
+        }
+      });
+    }
   }
 
-  function debounce(func, wait) {
-    let timeout;
-    return function (...args) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, args), wait);
-    };
+  // =========================================================================
+  // Inicialización Global de la Aplicación
+  // =========================================================================
+
+  function init() {
+    cvDocument = document.getElementById('cv-document');
+    if (!cvDocument) return;
+
+    // Cargar contenido guardado o datos de ejemplo
+    if (typeof window.loadSavedContent === 'function') {
+      window.loadSavedContent();
+    }
+
+    // Eventos de barra de herramientas estilo Word
+    if (typeof window.setupWordToolbar === 'function') {
+      window.setupWordToolbar();
+    }
+
+    // Eventos de plantillas y colores
+    if (typeof window.setupSettingsBar === 'function') {
+      window.setupSettingsBar();
+    }
+
+    // Control de Densidad y Espaciado (Fase 1)
+    if (typeof window.setupDensityControls === 'function') {
+      window.setupDensityControls();
+    }
+
+    // Drag & Drop modular (Fase 1)
+    if (typeof window.setupDragAndDrop === 'function') {
+      window.setupDragAndDrop();
+    }
+
+    // Paginación y medición en vivo A4 (Fase 1)
+    if (typeof window.setupPageBreakObserver === 'function') {
+      window.setupPageBreakObserver();
+    }
+
+    // Auditor ATS & Comparador de Vacante (Fase 2)
+    if (typeof window.setupAtsEngine === 'function') {
+      window.setupAtsEngine();
+    }
+
+    // Eventos de carga de imagen de avatar
+    if (typeof window.setupAvatarUpload === 'function') {
+      window.setupAvatarUpload();
+    }
+
+    // Atajos de teclado (Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+S, Ctrl+P)
+    if (typeof window.setupKeyboardShortcuts === 'function') {
+      window.setupKeyboardShortcuts();
+    }
+
+    // Escuchar cambios para autoguardado
+    if (typeof window.setupAutoSave === 'function') {
+      window.setupAutoSave();
+    }
+
+    // Botones de acción principales
+    setupMainActions();
+
+    // Soporte PWA Offline (Fase 3)
+    if (typeof window.setupPwa === 'function') {
+      window.setupPwa();
+    }
   }
 
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
+  window.init = init;
+  window.miVit3.init = init;
 
   // Ejecutar al cargar el DOM
   if (document.readyState === 'loading') {
@@ -2376,3 +2837,4 @@
   }
 
 })();
+

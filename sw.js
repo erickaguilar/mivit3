@@ -3,7 +3,7 @@
  * Cero dependencias externas
  */
 
-const CACHE_NAME = 'mivit3-cache-v2.3.0';
+const CACHE_NAME = 'mivit3-cache-v2.5.0';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -11,6 +11,26 @@ const ASSETS_TO_CACHE = [
   './manifest.webmanifest',
   './source/css/normalize.css',
   './source/css/style.css',
+  './source/css/modules/variables.css',
+  './source/css/modules/header.css',
+  './source/css/modules/toolbar.css',
+  './source/css/modules/desk.css',
+  './source/css/modules/cv-sections.css',
+  './source/css/modules/templates.css',
+  './source/css/modules/ats-drawer.css',
+  './source/css/modules/dialogs.css',
+  './source/css/modules/print.css',
+  './source/js/modules/dialogs.js',
+  './source/js/modules/sample-data.js',
+  './source/js/modules/toolbar.js',
+  './source/js/modules/templates.js',
+  './source/js/modules/pagination.js',
+  './source/js/modules/drag-drop.js',
+  './source/js/modules/ats-engine.js',
+  './source/js/modules/storage.js',
+  './source/js/modules/web-exporter.js',
+  './source/js/modules/pwa.js',
+  './source/js/app.js',
   './source/js/script.js',
   './source/img/home.svg',
   './source/img/menu.svg',

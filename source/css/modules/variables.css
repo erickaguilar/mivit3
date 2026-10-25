@@ -1,0 +1,83 @@
+/* ==========================================================================
+   miVIT3 — Estilos Principales & Procesador de CV estilo Word
+   escoge · edita · envía
+   100% Vanilla CSS — Sin dependencias externas
+   ========================================================================== */
+
+:root {
+  /* Paleta MiVIT3 */
+  --primary: #6400c8;
+  --primary-hover: #5000a3;
+  --primary-light: #f3e8ff;
+  --primary-border: #d8b4fe;
+
+  /* Color de acento del CV (dinámico) */
+  --cv-accent: #6400c8;
+  --cv-accent-light: #f3e8ff;
+  --cv-accent-text: #ffffff;
+
+  /* Neutros & UI */
+  --bg-desk: #e9eef5;
+  --bg-surface: #ffffff;
+  --bg-toolbar: #f8fafc;
+  --border-ui: #e2e8f0;
+  --border-focus: #6400c8;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+
+  /* Dimensiones del papel A4 */
+  --paper-width: 210mm;
+  --paper-min-height: 297mm;
+  --paper-padding: 16mm 18mm;
+
+  /* Control de Densidad y Espaciado (Fase 1) */
+  --cv-line-height: 1.5;
+  --cv-section-gap: 20px;
+  --cv-item-gap: 12px;
+  --cv-font-base: 13.5px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-paper: 0 10px 25px -5px rgba(15, 23, 42, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+  /* Transición */
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* ==========================================================================
+   Reset y Base
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-desk);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+

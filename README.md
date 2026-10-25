@@ -45,6 +45,17 @@
 - **Alerta de Desbordamiento con Ajuste Automático:** Notificación cuando el texto supera una página por poco (101%-115%), permitiendo ajustarlo a modo compacto con un solo clic.
 - **Reordenamiento Modular (Drag & Drop):** Arrastra y suelta secciones completas o elementos individuales de empleo/educación para reordenarlos al instante.
 
+### 🎯 Auditoría ATS en Tiempo Real & Comparador de Vacante (Fase 2)
+- **Puntaje Global ATS (0 a 100):** Medición instantánea en la cabecera e interior del panel lateral con tarjeta diagnóstica visual.
+- **Verificación de Datos Críticos:** Detección automática de nombre completo, correo con formato válido, teléfono y ubicación o enlaces a portafolio.
+- **Secciones Fundamentales:** Validación de presencia de Perfil Profesional, Experiencia Laboral, Formación y Habilidades.
+- **Impacto de Redacción (Fórmula STAR):**
+  - Conteo y listado de verbos de acción fuertes en español (*lideré, optimicé, implementé, diseñé, coordiné, automaticé, etc.*).
+  - Alerta de frases pasivas y clichés (*responsable de, encargado de, tareas de*).
+  - Identificación de resultados numéricos cuantificables (*%, $, cifras numéricas*).
+- **Control de Extensión:** Conteo de palabras en vivo calibrado para el rango recomendado de 1 página (350 - 650 palabras).
+- **Comparador de Vacantes (Job Description Keyword Matcher):** Pega cualquier oferta laboral para calcular el porcentaje de coincidencia en tiempo real, visualizar palabras clave detectadas y recibir sugerencias de términos clave faltantes.
+
 ### 🧩 Gestión Dinámica de Secciones
 - Añade o elimina empleos y grados académicos con un solo clic.
 - Agrega etiquetas interactivas de habilidades técnicas y blandas.

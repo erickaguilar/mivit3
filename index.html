@@ -58,6 +58,12 @@
           Tips
         </button>
 
+        <button id="btnToggleAts" class="btn btn-default btn-ats" title="Auditoría ATS en tiempo real y optimizador de vacante">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline><path d="M22 12h-4"></path><path d="M6 12H2"></path><path d="M12 6V2"></path><path d="M12 22v-4"></path></svg>
+          Auditoría ATS
+          <span id="headerAtsBadge" class="ats-badge-score">--</span>
+        </button>
+
         <button id="btnPrintPdf" class="btn btn-primary" title="Imprimir o guardar en PDF (Ctrl+P)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
           Exportar a PDF
@@ -283,6 +289,123 @@
       </div>
     </div>
   </div>
+
+  <!-- =========================================================================
+       Panel Lateral Desplegable: Auditoría ATS & Comparador de Vacante (Fase 2)
+       ========================================================================= -->
+  <div id="atsDrawerBackdrop" class="drawer-backdrop"></div>
+  <aside id="atsDrawer" class="drawer-panel" aria-label="Auditoría ATS">
+    <div class="drawer-header">
+      <div class="drawer-title-wrap">
+        <div class="drawer-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline><path d="M22 12h-4"></path><path d="M6 12H2"></path><path d="M12 6V2"></path><path d="M12 22v-4"></path></svg>
+        </div>
+        <div>
+          <h2>Auditoría ATS en Vivo</h2>
+          <p>Optimiza tu CV para filtros automáticos</p>
+        </div>
+      </div>
+      <button id="btnCloseAts" class="modal-close" title="Cerrar panel">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Tarjeta de Puntaje Global -->
+      <div class="ats-score-card">
+        <div class="score-circle" id="atsScoreCircle">
+          <span id="atsScoreNumber">--</span>
+          <small>/ 100</small>
+        </div>
+        <div class="score-summary">
+          <h3 id="atsScoreTitle">Analizando CV...</h3>
+          <p id="atsScoreDesc">Calculando métricas de legibilidad y compatibilidad con filtros ATS.</p>
+        </div>
+      </div>
+
+      <!-- Pestañas del Panel: Diagnóstico vs Vacante -->
+      <div class="ats-tabs">
+        <button id="tabBtnAudit" class="ats-tab-btn active">Diagnóstico del CV</button>
+        <button id="tabBtnJobMatch" class="ats-tab-btn">Comparador de Vacante</button>
+      </div>
+
+      <!-- Contenido 1: Diagnóstico del CV -->
+      <div id="tabContentAudit" class="ats-tab-pane active">
+        <!-- Diagnóstico: Contacto & Datos -->
+        <div class="ats-audit-group">
+          <h4>Datos de Contacto Clave</h4>
+          <ul id="atsContactChecklist" class="ats-checklist">
+            <!-- Rellenado dinámicamente por script.js -->
+          </ul>
+        </div>
+
+        <!-- Diagnóstico: Secciones Críticas -->
+        <div class="ats-audit-group">
+          <h4>Secciones Fundamentales</h4>
+          <ul id="atsSectionsChecklist" class="ats-checklist">
+            <!-- Rellenado dinámicamente por script.js -->
+          </ul>
+        </div>
+
+        <!-- Diagnóstico: Redacción & Fórmula STAR -->
+        <div class="ats-audit-group">
+          <h4>Impacto de Redacción (Fórmula STAR)</h4>
+          <div class="ats-metric-row">
+            <span>Verbos de acción fuertes detectados:</span>
+            <strong id="atsActionVerbsCount">0</strong>
+          </div>
+          <div class="ats-tags-preview" id="atsActionVerbsList"></div>
+
+          <div class="ats-metric-row" style="margin-top: 10px;">
+            <span>Logros cuantificables (%, $, cifras):</span>
+            <strong id="atsMetricsCount">0</strong>
+          </div>
+          <p class="ats-hint-text" id="atsMetricsHint">Procura que al menos 2 empleos incluyan resultados numéricos medibles.</p>
+
+          <div class="ats-metric-row" style="margin-top: 10px;">
+            <span>Frases pasivas o débiles a mejorar:</span>
+            <strong id="atsWeakWordsCount">0</strong>
+          </div>
+          <div class="ats-tags-preview" id="atsWeakWordsList"></div>
+        </div>
+
+        <!-- Diagnóstico: Longitud -->
+        <div class="ats-audit-group">
+          <h4>Extensión y Densidad</h4>
+          <div class="ats-metric-row">
+            <span>Total de palabras:</span>
+            <strong id="atsWordCount">0 palabras</strong>
+          </div>
+          <div class="ats-metric-progress">
+            <div id="atsWordProgressBar" class="metric-bar-fill"></div>
+          </div>
+          <p class="ats-hint-text" id="atsWordCountHint">Rango sugerido para 1 página: 350 - 650 palabras.</p>
+        </div>
+      </div>
+
+      <!-- Contenido 2: Comparador de Vacante (Keyword Matcher) -->
+      <div id="tabContentJobMatch" class="ats-tab-pane">
+        <p class="ats-tab-desc">Pega la descripción o requisitos del empleo que te interesa para comparar palabras clave en tiempo real:</p>
+        <textarea id="jobDescriptionInput" class="job-desc-textarea" rows="4" placeholder="Pega aquí el texto de la vacante (ej: 'Buscamos Ingeniero de Software con experiencia en JavaScript, React, CSS3, APIs REST, metodologías ágiles...')..."></textarea>
+
+        <div class="job-match-results" id="jobMatchResults" style="display: none;">
+          <div class="match-rate-card">
+            <span>Coincidencia de Palabras Clave:</span>
+            <strong id="matchRatePercent">0%</strong>
+          </div>
+
+          <div class="ats-audit-group">
+            <h4 style="color:#0f766e;">Palabras Clave Encontradas (<span id="matchedKeywordsCount">0</span>)</h4>
+            <div class="ats-tags-preview" id="matchedKeywordsList"></div>
+          </div>
+
+          <div class="ats-audit-group">
+            <h4 style="color:#b45309;">Palabras Clave Sugeridas Faltantes (<span id="missingKeywordsCount">0</span>)</h4>
+            <div class="ats-tags-preview" id="missingKeywordsList"></div>
+            <p class="ats-hint-text">Consejo: Incorpora estas palabras de forma natural en tu Perfil, Habilidades o Experiencia para superar el filtro ATS.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
 
   <!-- JavaScript 100% Vanilla (Sin jQuery) -->
   <script src="source/js/script.js"></script>

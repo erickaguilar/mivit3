@@ -7,6 +7,23 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
 
 ---
 
+## [2.2.0] - 2026-10-25
+
+### ✨ Añadido (Added)
+- **Fase 2 de Evolución — Auditor ATS, Analizador STAR & Comparador de Vacante**:
+  - **Auditor ATS en Tiempo Real con Puntaje (0-100):** Algoritmo heurístico client-side que califica la estructura del currículum, legibilidad y compatibilidad con sistemas de seguimiento de candidatos de RRHH.
+  - **Insignia Dinámica en Header:** Botón con indicador visual de puntaje ATS en tiempo real en la cabecera superior con código de color dinámico (verde para ≥80, ámbar para 60-79, rojo para <60).
+  - **Panel Lateral Desplegable (Drawer Panel):** Interfaz deslizable con desenfoque de fondo (`backdrop-filter`) y navegación por pestañas (*Diagnóstico del CV* y *Comparador de Vacante*).
+  - **Verificación de Datos de Contacto y Secciones Fundamentales:** Validación automática de nombre completo, correo electrónico, teléfono, ubicación y presencia de secciones clave (*Perfil, Experiencia, Educación, Habilidades*).
+  - **Analizador de Impacto de Redacción (Fórmula STAR):**
+    - Detección de verbos de acción fuertes en español (*lideré, optimicé, implementé, diseñé, coordiné, automaticé, etc.*).
+    - Identificación y alerta de frases pasivas débiles o clichés (*responsable de, encargado de, ayudé en, tareas de*).
+    - Detección de métricas numéricas cuantificables (*%, $, multiplicadores y números de impacto*).
+  - **Diagnóstico de Extensión y Densidad:** Conteo de palabras en tiempo real con barra de avance calibrada para el rango óptimo de 1 página (350 a 650 palabras).
+  - **Comparador de Vacantes (Job Description Keyword Matcher):** Analizador de coincidencia de palabras clave que extrae los términos relevantes de cualquier oferta de empleo pegada por el usuario, calcula el porcentaje de compatibilidad y sugiere las palabras clave faltantes a incorporar.
+
+---
+
 ## [2.1.0] - 2026-10-25
 
 ### ✨ Añadido (Added)

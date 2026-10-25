@@ -81,6 +81,7 @@
         const settings = JSON.parse(savedSettingsRaw);
         if (settings.template) {
           cvDoc.classList.remove(
+            'template-tech', 'template-executive', 'template-timeline', 'template-nordic',
             'template-alpha00', 'template-alpha01', 'template-alpha02', 'template-alpha03',
             'template-moderna', 'template-clasica', 'template-columnas', 'template-creativa'
           );

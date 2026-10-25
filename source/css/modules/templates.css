@@ -396,5 +396,597 @@
   font-weight: 600;
 }
 
+/* ==========================================================================
+   NUEVAS PLANTILLAS DE ALTO IMPACTO (Fase 4: Mercado Laboral Moderno)
+   ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   5. PLANTILLA: TECH MINIMALISTA (Silicon Valley Style)
+   Optimizado para perfiles de Tecnología, Producto, Ingeniería y Startups
+   -------------------------------------------------------------------------- */
+.template-tech {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #1e293b;
+}
 
+.template-tech .cv-profile-header {
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 20px;
+  margin-bottom: 22px;
+  position: relative;
+}
+
+.template-tech .cv-profile-header::before {
+  content: "";
+  position: absolute;
+  top: -16mm;
+  left: -18mm;
+  right: -18mm;
+  height: 4px;
+  background: var(--cv-accent);
+}
+
+.template-tech .cv-header-main {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.template-tech .cv-avatar-wrap {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.template-tech .cv-avatar {
+  border-radius: 50%;
+  border: none;
+}
+
+.template-tech .cv-name {
+  font-size: 27px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+}
+
+.template-tech .cv-role {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--cv-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 3px;
+  margin-bottom: 8px;
+}
+
+.template-tech .cv-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.template-tech .cv-contact-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11.5px;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.15s ease;
+}
+
+.template-tech .cv-contact-item svg {
+  stroke: var(--cv-accent);
+  width: 13px;
+  height: 13px;
+}
+
+.template-tech .cv-section {
+  margin-bottom: 20px;
+}
+
+.template-tech .cv-section-header {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+}
+
+.template-tech .cv-section-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.template-tech .cv-section-title::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 15px;
+  background: var(--cv-accent);
+  border-radius: 2px;
+}
+
+.template-tech .cv-item {
+  margin-bottom: 15px;
+  padding-left: 2px;
+}
+
+.template-tech .cv-item-side {
+  margin-bottom: 3px;
+}
+
+.template-tech .cv-item-date {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.template-tech .cv-item-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.template-tech .cv-item-subtitle {
+  color: var(--cv-accent);
+  font-weight: 600;
+  font-size: 13.5px;
+}
+
+.template-tech .cv-item-desc {
+  font-size: 12.5px;
+  color: #334155;
+  line-height: 1.55;
+  margin-top: 4px;
+}
+
+.template-tech .cv-item-desc ul {
+  padding-left: 18px;
+  margin: 4px 0 0 0;
+}
+
+.template-tech .cv-item-desc li {
+  margin-bottom: 4px;
+}
+
+.template-tech .cv-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.template-tech .cv-tag {
+  background: var(--cv-accent-light);
+  color: var(--cv-accent);
+  font-weight: 600;
+  font-size: 11.5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* --------------------------------------------------------------------------
+   6. PLANTILLA: EJECUTIVO HARVARD (Corporate Leadership)
+   Diseño clásico formal para Directores, Finanzas, Legal, Consultoría y Gerencia
+   -------------------------------------------------------------------------- */
+.template-executive {
+  font-family: "Georgia", "Times New Roman", Garamond, serif;
+  color: #1e293b;
+}
+
+.template-executive .cv-profile-header {
+  text-align: center;
+  border-bottom: 2px solid #0f172a;
+  padding-bottom: 16px;
+  margin-bottom: 22px;
+}
+
+.template-executive .cv-header-main {
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.template-executive .cv-avatar-wrap {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 2px solid var(--cv-accent);
+  padding: 2px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 4px;
+}
+
+.template-executive .cv-avatar {
+  border-radius: 50%;
+}
+
+.template-executive .cv-name {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.template-executive .cv-role {
+  font-size: 13.5px;
+  color: #475569;
+  font-style: italic;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+}
+
+.template-executive .cv-contact-list {
+  justify-content: center;
+  gap: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11.5px;
+}
+
+.template-executive .cv-contact-item svg {
+  stroke: var(--cv-accent);
+  width: 13px;
+  height: 13px;
+}
+
+.template-executive .cv-section {
+  margin-bottom: 20px;
+}
+
+.template-executive .cv-section-header {
+  border-bottom: 1.5px solid #0f172a;
+  padding-bottom: 3px;
+  margin-bottom: 12px;
+}
+
+.template-executive .cv-section-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.template-executive .cv-item {
+  margin-bottom: 16px;
+}
+
+.template-executive .cv-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.template-executive .cv-item-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.template-executive .cv-item-subtitle {
+  color: #475569;
+  font-style: italic;
+  font-size: 13.5px;
+}
+
+.template-executive .cv-item-date {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.template-executive .cv-item-desc {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12.5px;
+  color: #334155;
+  line-height: 1.55;
+  margin-top: 4px;
+}
+
+.template-executive .cv-tag {
+  background: #f8fafc;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   7. PLANTILLA: LÍNEA DE TIEMPO (Visual Career Path)
+   Destaca progresión profesional, promociones y continuidad en el puesto
+   -------------------------------------------------------------------------- */
+.template-timeline {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1e293b;
+}
+
+.template-timeline .cv-profile-header {
+  background: #f8fafc;
+  margin: -16mm -18mm 20px -18mm;
+  padding: 16mm 18mm 16px 18mm;
+  border-bottom: 2px solid var(--cv-accent);
+}
+
+.template-timeline .cv-header-main {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.template-timeline .cv-avatar-wrap {
+  width: 86px;
+  height: 86px;
+  border-radius: 12px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+
+.template-timeline .cv-avatar {
+  border-radius: 10px;
+}
+
+.template-timeline .cv-name {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+}
+
+.template-timeline .cv-role {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--cv-accent);
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+.template-timeline .cv-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 11.5px;
+  color: #475569;
+}
+
+.template-timeline .cv-contact-item svg {
+  stroke: var(--cv-accent);
+}
+
+.template-timeline .cv-section {
+  margin-bottom: 22px;
+}
+
+.template-timeline .cv-section-header {
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 5px;
+  margin-bottom: 14px;
+}
+
+.template-timeline .cv-section-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--cv-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Conector vertical continuo estilo Timeline */
+.template-timeline .cv-section[data-section-type="experience"] .cv-section-body,
+.template-timeline .cv-section[data-section-type="education"] .cv-section-body {
+  position: relative;
+  padding-left: 20px;
+  margin-left: 10px;
+  border-left: 2px solid #e2e8f0;
+}
+
+.template-timeline .cv-section[data-section-type="experience"] .cv-item,
+.template-timeline .cv-section[data-section-type="education"] .cv-item {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.template-timeline .cv-section[data-section-type="experience"] .cv-item::before,
+.template-timeline .cv-section[data-section-type="education"] .cv-item::before {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2.5px solid var(--cv-accent);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04);
+  z-index: 2;
+}
+
+.template-timeline .cv-item-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.template-timeline .cv-item-subtitle {
+  color: var(--cv-accent);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.template-timeline .cv-item-date {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 600;
+  background: #f1f5f9;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.template-timeline .cv-tag {
+  background: #ffffff;
+  border: 1px solid var(--cv-accent);
+  color: var(--cv-accent);
+  font-weight: 600;
+  font-size: 11.5px;
+  border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   8. PLANTILLA: NORDIC SWISS (Contemporary Product Minimal)
+   Geometría limpia, alto contraste y estética de diseño escandinavo/suizo
+   -------------------------------------------------------------------------- */
+.template-nordic {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  color: #0f172a;
+}
+
+.template-nordic .cv-profile-header {
+  border-bottom: 3px solid #0f172a;
+  padding-bottom: 18px;
+  margin-bottom: 22px;
+}
+
+.template-nordic .cv-header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.template-nordic .cv-avatar-wrap {
+  width: 82px;
+  height: 82px;
+  border-radius: 6px;
+  border: 1px solid #0f172a;
+  flex-shrink: 0;
+}
+
+.template-nordic .cv-avatar {
+  border-radius: 5px;
+}
+
+.template-nordic .cv-name {
+  font-size: 30px;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -1.2px;
+  line-height: 1.05;
+}
+
+.template-nordic .cv-role {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cv-accent);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-top: 4px;
+}
+
+.template-nordic .cv-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  color: #334155;
+  margin-top: 10px;
+}
+
+.template-nordic .cv-contact-item svg {
+  stroke: #0f172a;
+  width: 12px;
+  height: 12px;
+}
+
+.template-nordic .cv-section {
+  margin-bottom: 20px;
+}
+
+.template-nordic .cv-section-header {
+  border-bottom: 1.5px solid #0f172a;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+
+.template-nordic .cv-section-title {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.template-nordic .cv-section-title::before {
+  content: "// ";
+  color: var(--cv-accent);
+  font-family: ui-monospace, monospace;
+  font-weight: 800;
+}
+
+.template-nordic .cv-item {
+  margin-bottom: 15px;
+}
+
+.template-nordic .cv-item-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.2px;
+}
+
+.template-nordic .cv-item-subtitle {
+  color: var(--cv-accent);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.template-nordic .cv-item-date {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.template-nordic .cv-tag {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1.5px solid #0f172a;
+  font-weight: 700;
+  border-radius: 4px;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  transition: all 0.15s ease;
+}
+
+.template-nordic .cv-tag:hover {
+  background: var(--cv-accent);
+  color: #ffffff;
+  border-color: var(--cv-accent);
+}

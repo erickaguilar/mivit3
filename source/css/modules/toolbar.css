@@ -152,6 +152,13 @@
   padding: 2px;
   border-radius: var(--radius-md);
   gap: 2px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.pill-selector::-webkit-scrollbar {
+  display: none;
 }
 
 .pill-btn {
@@ -161,6 +168,8 @@
   border-radius: 6px;
   color: var(--text-muted);
   transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .pill-btn:hover {

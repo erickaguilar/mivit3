@@ -7,6 +7,35 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
 
 ---
 
+## [2.6.0] - 2026-10-25
+
+### ✨ Añadido (Added)
+- **Nuevas Plantillas de Alto Impacto para Búsqueda de Empleo**:
+  - **🚀 Tech Minimalista (`template-tech`)**:
+    - Inspirada en la estética contemporánea de Silicon Valley y empresas tecnológicas líderes (Meta, Stripe, Vercel).
+    - Tipografía moderna basada en la pila del sistema (`system-ui`), avatar circular con halo sutil, barra indicadora de color de acento superior y datos de contacto organizados en cápsulas suaves (*chips*).
+    - Títulos de sección con barra vertical de acento izquierda y badges de fecha redondeados (`cv-item-date`).
+    - Etiquetas de habilidades (*skills*) estilizadas como insignias de tecnología con fondo suave y tipografía seminegrita de alta legibilidad para reclutadores técnicos y filtros ATS.
+  - **💼 Ejecutivo Harvard (`template-executive`)**:
+    - Diseñada para directores, gerentes, consultores, finanzas, legal y puestos de liderazgo senior.
+    - Tipografía clásica serif de alta distinción (`Georgia / Merriweather`), cabecera centrada formal con avatar enmarcado, división de líneas finas de equilibrio y datos personales en versalitas.
+    - Secciones con títulos en mayúsculas sobrias y subrayado de alto contraste. Formato cronológico clásico con viñetas elegantes.
+  - **⏱️ Línea de Tiempo / Career Path (`template-timeline`)**:
+    - Línea de progresión cronológica vertical con nodos circulares de acento (`::before`) que unen visualmente cada empleo y grado educativo.
+    - Diseñada específicamente para capturar la atención en los primeros 6 segundos de escaneo del reclutador, evidenciando estabilidad, promociones y crecimiento profesional constante.
+    - Cabecera en tarjeta contemporánea y etiquetas de habilidades con borde de acento.
+  - **📐 Nordic Clean (`template-nordic`)**:
+    - Estética minimalista suizo-escandinava de alto contraste, inspirada en diseño de producto digital (Figma, Linear).
+    - Cabecera asimétrica de gran impacto visual con nombre en tipografía grotesca negra de 30px, metadatos en fuente monoespaciada moderna (`ui-monospace`) y prefijo de barra doble `// ` en los títulos de sección.
+    - Etiquetas de competencias en cápsulas monocromáticas con micro-interacción al pasar el cursor.
+- **Selector de Plantillas Expandido en Interfaz**:
+  - Incorporación de los botones de acceso rápido para las 8 plantillas en la barra secundaria del editor con scroll horizontal optimizado y micro-animaciones.
+  - Notificaciones flotantes contextuales al activar cada plantilla.
+- **Actualización de Service Worker PWA (`sw.js`)**:
+  - Incremento de versión de caché a `mivit3-cache-v2.6.0` garantizando la disponibilidad offline inmediata de las nuevas plantillas.
+
+---
+
 ## [2.5.0] - 2026-10-25
 
 ### 🏗️ Arquitectura & Refactorización Modular (Refactor)

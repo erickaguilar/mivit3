@@ -724,6 +724,7 @@
     if (!cvDoc) return;
 
     cvDoc.classList.remove(
+      'template-tech', 'template-executive', 'template-timeline', 'template-nordic',
       'template-alpha00', 'template-alpha01', 'template-alpha02', 'template-alpha03',
       'template-moderna', 'template-clasica', 'template-columnas', 'template-creativa'
     );
@@ -731,9 +732,13 @@
     saveSettings();
 
     const templateNames = {
+      'template-tech': 'Tech Minimalista (Silicon Valley)',
+      'template-executive': 'Ejecutivo Harvard (Liderazgo)',
+      'template-timeline': 'Línea de Tiempo (Trayectoria)',
+      'template-nordic': 'Nordic Clean (Suizo)',
       'template-alpha00': '00 Bicolor',
       'template-alpha01': '01 Columnas ATS',
-      'template-alpha02': '02 Banner',
+      'template-alpha02': '02 Banner Credencial',
       'template-alpha03': '03 Editorial'
     };
 
@@ -1641,6 +1646,7 @@
         const settings = JSON.parse(savedSettingsRaw);
         if (settings.template) {
           cvDoc.classList.remove(
+            'template-tech', 'template-executive', 'template-timeline', 'template-nordic',
             'template-alpha00', 'template-alpha01', 'template-alpha02', 'template-alpha03',
             'template-moderna', 'template-clasica', 'template-columnas', 'template-creativa'
           );

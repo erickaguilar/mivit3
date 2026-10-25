@@ -1,0 +1,20 @@
+{
+  "name": "miVIT3 — Editor de Currículum Vitae",
+  "short_name": "miVIT3",
+  "description": "Editor interactivo de CV profesional estilo Word, con plantillas ATS, exportación a PDF y Web. Cero dependencias y 100% privado.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#6400c8",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "source/img/icon-pwa.svg",
+      "sizes": "192x192 512x512 any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"]
+}

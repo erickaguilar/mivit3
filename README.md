@@ -56,6 +56,13 @@
 - **Control de Extensión:** Conteo de palabras en vivo calibrado para el rango recomendado de 1 página (350 - 650 palabras).
 - **Comparador de Vacantes (Job Description Keyword Matcher):** Pega cualquier oferta laboral para calcular el porcentaje de coincidencia en tiempo real, visualizar palabras clave detectadas y recibir sugerencias de términos clave faltantes.
 
+### 🌐 Exportación como Portafolio Web & PWA Offline (Fase 3)
+- **Portafolio Web Autocontenido (`cv-web.html`):** Genera y descarga un sitio web personal en un solo archivo HTML (~25 KB) sin dependencias externas, completamente responsivo para smartphones y pantallas grandes.
+- **Modo Oscuro / Claro en el Portafolio:** Detecta automáticamente el tema del sistema (`prefers-color-scheme`) y cuenta con conmutador manual interactivo con memoria.
+- **Acciones Rápidas del Portafolio:** Botón para imprimir/PDF en 1 clic, envío de correo directo (`mailto:`) y enlaces automáticos a redes y teléfono.
+- **Guía de Publicación Gratuita Integrada:** Modal con instrucciones paso a paso para publicar online gratis en menos de 2 minutos mediante Netlify Drop (arrastrar y soltar) o GitHub Pages con HTTPS.
+- **Soporte PWA (Progressive Web App):** Instalable como aplicación nativa en Windows, macOS, Linux, Android e iOS con `manifest.webmanifest`, icono PWA vectorial y soporte de edición 100% offline con Service Worker (`sw.js`).
+
 ### 🧩 Gestión Dinámica de Secciones
 - Añade o elimina empleos y grados académicos con un solo clic.
 - Agrega etiquetas interactivas de habilidades técnicas y blandas.
@@ -88,6 +95,7 @@
 - **HTML5 Semántico:** Estructura accesible y modular.
 - **CSS3 Moderno:** Variables CSS (`custom properties`), Flexbox, CSS Grid y optimizaciones de impresión `@media print`.
 - **Vanilla JavaScript (ES6+):** Sin librerías externas, sin jQuery, sin Bootstrap JS.
+- **Progressive Web App (PWA):** `ServiceWorker` para funcionamiento 100% offline y `Web App Manifest` para instalación en escritorio y móviles.
 - **SVG Nativo:** Iconos vectoriales nítidos en cualquier pantalla, sin archivos PNG ni JPG.
 - **Web Storage API (`localStorage`) & File API (`FileReader`):** Procesamiento de imágenes y datos localmente en el cliente.
 
@@ -98,6 +106,8 @@
 ```text
 mivit3/
 ├── index.html              # Aplicación principal y editor estilo Word
+├── manifest.webmanifest    # Manifiesto PWA para instalación de la app
+├── sw.js                   # Service Worker para soporte offline
 ├── README.md               # Documentación general del proyecto
 ├── CHANGELOG.md            # Historial de cambios y versiones
 ├── source/
@@ -106,6 +116,7 @@ mivit3/
 │   │   └── style.css       # Estilos del editor, ribbon, templates y print
 │   ├── img/                # Iconos vectoriales SVG (reemplazo de png/jpg)
 │   │   ├── home.svg
+│   │   ├── icon-pwa.svg    # Icono principal de la aplicación PWA
 │   │   ├── menu.svg
 │   │   ├── mivit3.svg
 │   │   ├── one.svg
@@ -114,7 +125,7 @@ mivit3/
 │   │   ├── tips.svg
 │   │   └── user.svg
 │   └── js/
-│       └── script.js       # Motor de edición Vanilla JS, plantillas y almacenamiento
+│       └── script.js       # Motor de edición Vanilla JS, plantillas, ATS y exportador Web
 └── alpha/                  # Prototipos y exploraciones visuales tempranas
     ├── index.html
     └── 00 ... 03/

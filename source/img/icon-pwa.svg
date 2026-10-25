@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#0f172a" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <!-- Fondo con esquinas redondeadas para PWA y Maskable Icon -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)"/>
+  
+  <!-- Hoja de documento con sombra -->
+  <g filter="url(#shadow)">
+    <!-- Cuerpo del papel -->
+    <path d="M156 96 h140 l80 80 v220 a20 20 0 0 1 -20 20 h-200 a20 20 0 0 1 -20 -20 v-280 a20 20 0 0 1 20 -20 z" fill="#ffffff"/>
+    <!-- Esquina doblada -->
+    <path d="M296 96 v64 a16 16 0 0 0 16 16 h64 z" fill="#e2e8f0"/>
+  </g>
+
+  <!-- Líneas de texto estilo CV -->
+  <rect x="180" y="210" width="100" height="14" rx="7" fill="#6400c8"/>
+  <rect x="180" y="244" width="152" height="10" rx="5" fill="#94a3b8"/>
+  <rect x="180" y="270" width="130" height="10" rx="5" fill="#cbd5e1"/>
+  
+  <line x1="180" y1="310" x2="332" y2="310" stroke="#e2e8f0" stroke-width="3" stroke-linecap="round"/>
+  
+  <rect x="180" y="332" width="70" height="12" rx="6" fill="#0f766e"/>
+  <rect x="180" y="358" width="140" height="8" rx="4" fill="#94a3b8"/>
+  <rect x="180" y="376" width="120" height="8" rx="4" fill="#cbd5e1"/>
+
+  <!-- Badge 3 flotante -->
+  <circle cx="356" cy="376" r="42" fill="#f59e0b" filter="url(#shadow)"/>
+  <text x="356" y="392" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="900" fill="#ffffff" text-anchor="middle">3</text>
+</svg>

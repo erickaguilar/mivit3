@@ -7,6 +7,21 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
 
 ---
 
+## [2.3.0] - 2026-10-25
+
+### ✨ Añadido (Added)
+- **Fase 3 de Evolución — Exportación como Portafolio Web Interactivo & PWA Offline**:
+  - **Exportador a "Mini-Web" Autocontenida (`cv-web.html`):** Generación automática en el navegador de un sitio web de portafolio personal independiente, 100% responsivo y sin dependencias externas, listo para hospedar o enviar a reclutadores.
+  - **Modo Oscuro / Claro en el Portafolio Web:** Soporte nativo para preferencia de tema del sistema operativo (`prefers-color-scheme`) y botón conmutador de tema interactivo con persistencia local.
+  - **Barra de Acciones en la Web Generada:** Botones rápidos para impresión o guardado directo a PDF (`window.print()`), envío de correo directo (`mailto:`), llamada (`tel:`) y enlaces sociales.
+  - **Modal de Guía de Publicación Gratuita:** Diálogo interactivo con guías paso a paso para publicar el portafolio en 2 minutos con Netlify Drop (arrastrar y soltar), GitHub Pages o adjunto directo.
+  - **Soporte PWA (Progressive Web App):**
+    - Manifiesto de aplicación web `manifest.webmanifest` con metadatos para instalación en dispositivos de escritorio y móviles.
+    - Icono de aplicación PWA vectorial de alta definición (`source/img/icon-pwa.svg`).
+    - Service Worker (`sw.js`) con almacenamiento en caché estratégico para soporte de edición y navegación 100% offline.
+
+---
+
 ## [2.2.0] - 2026-10-25
 
 ### ✨ Añadido (Added)

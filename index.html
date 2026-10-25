@@ -3,7 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Editor interactivo de Currículum Vitae profesional estilo Word, con plantillas ATS, exportación a PDF y Web. Cero dependencias y 100% privado.">
+  <meta name="theme-color" content="#6400c8">
   <title>miVIT3 — Editor de Currículum Vitae estilo Word</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="source/img/icon-pwa.svg">
+  <link rel="apple-touch-icon" href="source/img/icon-pwa.svg">
   <link rel="stylesheet" href="source/css/normalize.css">
   <link rel="stylesheet" href="source/css/style.css">
 </head>
@@ -53,9 +58,19 @@
         </button>
         <input type="file" id="jsonFileInput" accept=".json,application/json" style="display:none">
 
+        <button id="btnExportWeb" class="btn btn-default" title="Exportar como Portafolio Web interactivo (.html) para publicar o compartir">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          Exportar Web
+        </button>
+
         <button id="btnShowTips" class="btn btn-default" title="Consejos y mejores prácticas para tu CV">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
           Tips
+        </button>
+
+        <button id="btnShowPublishGuide" class="btn btn-default" title="Guía para publicar tu CV gratis en la web (GitHub Pages, Netlify)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          Publicar
         </button>
 
         <button id="btnToggleAts" class="btn btn-default btn-ats" title="Auditoría ATS en tiempo real y optimizador de vacante">
@@ -286,6 +301,61 @@
           <li><strong>Ctrl + S:</strong> Guardar respaldo en navegador</li>
           <li><strong>Ctrl + P:</strong> Imprimir o Exportar a PDF</li>
         </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       Modal de Guía de Publicación Web (Fase 3: GitHub Pages, Netlify Drop, Vercel)
+       ========================================================================= -->
+  <div id="publishModal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#6400c8" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          Publica tu CV como Portafolio Web Gratis
+        </h2>
+        <button id="btnClosePublish" class="modal-close" title="Cerrar modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom:14px;color:#475569;">Al hacer clic en <strong>"Exportar Web"</strong> descargas un archivo <code>cv-web.html</code> 100% responsivo, con selector de modo oscuro y ligero (~25 KB). Puedes compartirlo o publicarlo gratis en internet en 2 minutos:</p>
+
+        <div class="publish-cards-grid">
+          <div class="publish-card">
+            <div class="publish-badge">Opción 1 · Más Rápida</div>
+            <h4>Netlify Drop (Sin registro ni comandos)</h4>
+            <ol>
+              <li>Renombra tu archivo descargado a <code>index.html</code>.</li>
+              <li>Entra en <a href="https://app.netlify.com/drop" target="_blank" rel="noopener">app.netlify.com/drop</a> en tu navegador.</li>
+              <li>Arrastra la carpeta que contiene tu <code>index.html</code>.</li>
+              <li>¡Listo! Obtendrás un enlace público instantáneo con HTTPS (ej: <code>tu-nombre.netlify.app</code>).</li>
+            </ol>
+          </div>
+
+          <div class="publish-card">
+            <div class="publish-badge">Opción 2 · Profesional</div>
+            <h4>GitHub Pages</h4>
+            <ol>
+              <li>Crea un repositorio en GitHub (ej: <code>mi-cv</code> o <code>usuario.github.io</code>).</li>
+              <li>Sube el archivo renombrado como <code>index.html</code>.</li>
+              <li>Ve a <strong>Settings → Pages</strong> y selecciona la rama principal como fuente.</li>
+              <li>Tu CV estará online en <code>https://usuario.github.io/mi-cv</code>.</li>
+            </ol>
+          </div>
+
+          <div class="publish-card">
+            <div class="publish-badge">Opción 3 · Directa</div>
+            <h4>Adjunto Interactivo para Reclutadores</h4>
+            <p>Puedes adjuntar <code>cv-web.html</code> directamente en un correo a empresas o clientes. Cualquier persona puede abrirlo con doble clic en su navegador, con diseño moderno adaptado a móviles y sin conexión a internet.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;text-align:right;">
+          <button id="btnQuickExportFromModal" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            Descargar cv-web.html ahora
+          </button>
+        </div>
       </div>
     </div>
   </div>

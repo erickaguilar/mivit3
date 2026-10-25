@@ -28,9 +28,12 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
     - Estética minimalista suizo-escandinava de alto contraste, inspirada en diseño de producto digital (Figma, Linear).
     - Cabecera asimétrica de gran impacto visual con nombre en tipografía grotesca negra de 30px, metadatos en fuente monoespaciada moderna (`ui-monospace`) y prefijo de barra doble `// ` en los títulos de sección.
     - Etiquetas de competencias en cápsulas monocromáticas con micro-interacción al pasar el cursor.
-- **Selector de Plantillas Expandido en Interfaz**:
-  - Incorporación de los botones de acceso rápido para las 8 plantillas en la barra secundaria del editor con scroll horizontal optimizado y micro-animaciones.
-  - Notificaciones flotantes contextuales al activar cada plantilla.
+- **Nuevo Selector de Plantillas tipo Menú Lista (Dropdown Menu List)**:
+  - Eliminación de números redundantes (00, 01...) e iconos/emojis para lograr un diseño sobrio, formal y minimalista.
+  - Transformación del selector en un menú desplegable compacto (`.template-dropdown`) que muestra el nombre de la plantilla activa y se despliega al hacer clic.
+  - Opciones organizadas en dos categorías limpias: *Alto Impacto Laboral* y *Clásicas y Estructuradas*, con indicador de selección activa (✓).
+  - Soporte de accesibilidad con cierre automático al hacer clic fuera o presionar la tecla `Escape`.
+  - Notificaciones flotantes contextuales al activar cada diseño.
 - **Actualización de Service Worker PWA (`sw.js`)**:
   - Incremento de versión de caché a `mivit3-cache-v2.6.0` garantizando la disponibilidad offline inmediata de las nuevas plantillas.
 

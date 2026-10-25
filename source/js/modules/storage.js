@@ -87,9 +87,24 @@
           );
           cvDoc.classList.add(settings.template);
 
-          document.querySelectorAll('.pill-btn[data-template]').forEach(btn => {
+          document.querySelectorAll('[data-template]').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.template === settings.template);
           });
+
+          const currentNameEl = document.getElementById('currentTemplateName');
+          const templateNames = {
+            'template-tech': 'Tech Minimalista',
+            'template-executive': 'Ejecutivo Harvard',
+            'template-timeline': 'Línea de Tiempo',
+            'template-nordic': 'Nordic Clean',
+            'template-alpha00': 'Bicolor Moderno',
+            'template-alpha01': 'Columnas ATS',
+            'template-alpha02': 'Banner Credencial',
+            'template-alpha03': 'Editorial Monograma'
+          };
+          if (currentNameEl && templateNames[settings.template]) {
+            currentNameEl.textContent = templateNames[settings.template];
+          }
         }
         if (settings.density) {
           cvDoc.classList.remove('density-compact', 'density-normal', 'density-spacious');
@@ -142,7 +157,7 @@
     if (typeof window.setTemplate === 'function') window.setTemplate(sample.template);
     if (typeof window.setAccentColor === 'function') window.setAccentColor(sample.accent, sample.accentLight);
 
-    document.querySelectorAll('.pill-btn[data-template]').forEach(btn => {
+    document.querySelectorAll('[data-template]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.template === sample.template);
     });
     document.querySelectorAll('.palette-swatch').forEach(s => {

@@ -697,14 +697,55 @@
     }
   }
 
+  const TEMPLATE_NAMES = {
+    'template-tech': 'Tech Minimalista',
+    'template-executive': 'Ejecutivo Harvard',
+    'template-timeline': 'Línea de Tiempo',
+    'template-nordic': 'Nordic Clean',
+    'template-alpha00': 'Bicolor Moderno',
+    'template-alpha01': 'Columnas ATS',
+    'template-alpha02': 'Banner Credencial',
+    'template-alpha03': 'Editorial Monograma'
+  };
+
   function setupSettingsBar() {
-    // Botones de plantilla
-    const pillButtons = document.querySelectorAll('.pill-btn[data-template]');
-    pillButtons.forEach(btn => {
-      btn.addEventListener('click', function () {
-        pillButtons.forEach(b => b.classList.remove('active'));
+    // Dropdown menú de plantillas
+    const dropdown = document.getElementById('templateDropdown');
+    const dropdownBtn = document.getElementById('templateDropdownBtn');
+
+    if (dropdown && dropdownBtn) {
+      dropdownBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('open');
+        dropdownBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('open');
+          dropdownBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && dropdown.classList.contains('open')) {
+          dropdown.classList.remove('open');
+          dropdownBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // Elementos del menú de plantilla
+    const templateItems = document.querySelectorAll('[data-template]');
+    templateItems.forEach(item => {
+      item.addEventListener('click', function () {
+        templateItems.forEach(b => b.classList.remove('active'));
         this.classList.add('active');
         setTemplate(this.dataset.template);
+        if (dropdown) {
+          dropdown.classList.remove('open');
+          if (dropdownBtn) dropdownBtn.setAttribute('aria-expanded', 'false');
+        }
       });
     });
 
@@ -731,19 +772,20 @@
     cvDoc.classList.add(templateClass);
     saveSettings();
 
-    const templateNames = {
-      'template-tech': 'Tech Minimalista (Silicon Valley)',
-      'template-executive': 'Ejecutivo Harvard (Liderazgo)',
-      'template-timeline': 'Línea de Tiempo (Trayectoria)',
-      'template-nordic': 'Nordic Clean (Suizo)',
-      'template-alpha00': '00 Bicolor',
-      'template-alpha01': '01 Columnas ATS',
-      'template-alpha02': '02 Banner Credencial',
-      'template-alpha03': '03 Editorial'
-    };
+    // Actualizar texto del botón dropdown
+    const currentNameEl = document.getElementById('currentTemplateName');
+    const readableName = TEMPLATE_NAMES[templateClass] || templateClass;
+    if (currentNameEl) {
+      currentNameEl.textContent = readableName;
+    }
+
+    // Actualizar estado activo en los items
+    document.querySelectorAll('[data-template]').forEach(el => {
+      el.classList.toggle('active', el.dataset.template === templateClass);
+    });
 
     if (window.showToast) {
-      window.showToast(`Plantilla "${templateNames[templateClass] || templateClass}" activada`);
+      window.showToast(`Plantilla "${readableName}" activada`);
     }
   }
 
@@ -1652,9 +1694,24 @@
           );
           cvDoc.classList.add(settings.template);
 
-          document.querySelectorAll('.pill-btn[data-template]').forEach(btn => {
+          document.querySelectorAll('[data-template]').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.template === settings.template);
           });
+
+          const currentNameEl = document.getElementById('currentTemplateName');
+          const templateNames = {
+            'template-tech': 'Tech Minimalista',
+            'template-executive': 'Ejecutivo Harvard',
+            'template-timeline': 'Línea de Tiempo',
+            'template-nordic': 'Nordic Clean',
+            'template-alpha00': 'Bicolor Moderno',
+            'template-alpha01': 'Columnas ATS',
+            'template-alpha02': 'Banner Credencial',
+            'template-alpha03': 'Editorial Monograma'
+          };
+          if (currentNameEl && templateNames[settings.template]) {
+            currentNameEl.textContent = templateNames[settings.template];
+          }
         }
         if (settings.density) {
           cvDoc.classList.remove('density-compact', 'density-normal', 'density-spacious');
@@ -1707,7 +1764,7 @@
     if (typeof window.setTemplate === 'function') window.setTemplate(sample.template);
     if (typeof window.setAccentColor === 'function') window.setAccentColor(sample.accent, sample.accentLight);
 
-    document.querySelectorAll('.pill-btn[data-template]').forEach(btn => {
+    document.querySelectorAll('[data-template]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.template === sample.template);
     });
     document.querySelectorAll('.palette-swatch').forEach(s => {

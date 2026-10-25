@@ -211,15 +211,26 @@
     <div class="cv-settings-inner">
       <div class="settings-left">
         <span class="toolbar-label">Plantilla:</span>
-        <div class="pill-selector">
-          <button class="pill-btn" data-template="template-tech" title="Tech Minimalista: Estilo Silicon Valley, insignias de habilidades y diseño ultra limpio ATS">🚀 Tech</button>
-          <button class="pill-btn" data-template="template-executive" title="Ejecutivo Harvard: Tipografía serif clásica refinada, líneas de balance y liderazgo">💼 Ejecutivo</button>
-          <button class="pill-btn" data-template="template-timeline" title="Línea de Tiempo: Visualización cronológica con nodos de progresión profesional">⏱️ Línea de Tiempo</button>
-          <button class="pill-btn" data-template="template-nordic" title="Nordic Clean: Estética suiza/nórdica de alto impacto y contraste">📐 Nordic</button>
-          <button class="pill-btn active" data-template="template-alpha00" title="Plantilla Alpha 00: Bicolor">00 Bicolor</button>
-          <button class="pill-btn" data-template="template-alpha01" title="Plantilla Alpha 01: Cronológica en Columnas">01 Columnas ATS</button>
-          <button class="pill-btn" data-template="template-alpha02" title="Plantilla Alpha 02: Banner Credencial">02 Banner</button>
-          <button class="pill-btn" data-template="template-alpha03" title="Plantilla Alpha 03: Monograma Editorial">03 Editorial</button>
+        <div class="template-dropdown" id="templateDropdown">
+          <button type="button" class="template-dropdown-btn" id="templateDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Cambiar diseño de plantilla">
+            <span class="template-dropdown-current" id="currentTemplateName">Bicolor Moderno</span>
+            <svg class="chevron-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="template-menu-list" id="templateMenuList" role="menu">
+            <div class="template-menu-group-label">Alto Impacto Laboral</div>
+            <button type="button" class="template-menu-item" data-template="template-tech" role="menuitem">Tech Minimalista</button>
+            <button type="button" class="template-menu-item" data-template="template-executive" role="menuitem">Ejecutivo Harvard</button>
+            <button type="button" class="template-menu-item" data-template="template-timeline" role="menuitem">Línea de Tiempo</button>
+            <button type="button" class="template-menu-item" data-template="template-nordic" role="menuitem">Nordic Clean</button>
+
+            <div class="template-menu-divider"></div>
+
+            <div class="template-menu-group-label">Clásicas y Estructuradas</div>
+            <button type="button" class="template-menu-item active" data-template="template-alpha00" role="menuitem">Bicolor Moderno</button>
+            <button type="button" class="template-menu-item" data-template="template-alpha01" role="menuitem">Columnas ATS</button>
+            <button type="button" class="template-menu-item" data-template="template-alpha02" role="menuitem">Banner Credencial</button>
+            <button type="button" class="template-menu-item" data-template="template-alpha03" role="menuitem">Editorial Monograma</button>
+          </div>
         </div>
 
         <span class="toolbar-label" style="margin-left: 10px;">Color:</span>

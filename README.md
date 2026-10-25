@@ -63,6 +63,12 @@
 - **Guía de Publicación Gratuita Integrada:** Modal con instrucciones paso a paso para publicar online gratis en menos de 2 minutos mediante Netlify Drop (arrastrar y soltar) o GitHub Pages con HTTPS.
 - **Soporte PWA (Progressive Web App):** Instalable como aplicación nativa en Windows, macOS, Linux, Android e iOS con `manifest.webmanifest`, icono PWA vectorial y soporte de edición 100% offline con Service Worker (`sw.js`).
 
+### 🔔 Sistema de Alertas y Diálogos Personalizados
+- **Cero Diálogos Nativos Bloqueantes:** Todos los avisos, confirmaciones y preguntas de texto usan modales personalizados visualmente integrados, asíncronos y no invasivos.
+- **Iconos Contextuales por Estado:** Indicadores visuales para *Información* (azul), *Éxito* (verde), *Advertencia* (ámbar) y *Peligro* (rojo).
+- **Accesibilidad y Atajos de Teclado:** Confirmar con `Enter`, cancelar con `Escape` o clic en el telón de fondo.
+- **Notificaciones Toast Dinámicas:** Mensajes flotantes temporales con retroalimentación inmediata de acciones.
+
 ### 🧩 Gestión Dinámica de Secciones
 - Añade o elimina empleos y grados académicos con un solo clic.
 - Agrega etiquetas interactivas de habilidades técnicas y blandas.

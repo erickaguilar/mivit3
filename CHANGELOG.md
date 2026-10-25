@@ -7,6 +7,19 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
 
 ---
 
+## [2.4.0] - 2026-10-25
+
+### ✨ Añadido (Added)
+- **Sistema de Alertas, Confirmaciones y Prompts Personalizados**:
+  - Reemplazo total de los diálogos nativos del navegador (`alert`, `confirm`, `prompt`) por un sistema modal personalizado basado en `Promise` y 100% Vanilla JS.
+  - Diseño visual integrado con la interfaz: tarjeta flotante con sombras suaves, telón de desenfoque (`backdrop-filter`), animaciones fluidas y cuatro estados temáticos (*información, éxito, advertencia y peligro*).
+  - Diálogos interactivos con soporte de teclado accesible: tecla `Enter` para confirmar y tecla `Escape` para cancelar o cerrar.
+  - Campos de entrada con auto-enfoque y selección de texto en los diálogos de tipo *prompt* (ej. añadir secciones o insertar enlaces web con preservación del rango seleccionado).
+  - Notificaciones *toast* mejoradas con iconos de verificación e indicación contextual.
+  - API pública expuesta en `window.miVit3.alert()`, `window.miVit3.confirm()` y `window.miVit3.prompt()`.
+
+---
+
 ## [2.3.0] - 2026-10-25
 
 ### ✨ Añadido (Added)

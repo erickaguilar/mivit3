@@ -330,11 +330,19 @@
     document.addEventListener('selectionchange', debounce(updateToolbarState, 100));
   }
 
-  function executeFormatCommand(command, value = null) {
+  async function executeFormatCommand(command, value = null) {
     if (command === 'createLink') {
-      const url = prompt('Ingresa el enlace URL (ejemplo: https://github.com/usuario):', 'https://');
-      if (url) {
-        document.execCommand('createLink', false, url);
+      const savedRange = saveSelection();
+      const url = await customPrompt(
+        'Insertar Enlace Web',
+        'Ingresa la dirección URL para el texto seleccionado:',
+        'https://',
+        'https://ejemplo.com'
+      );
+      if (url && url.trim() && url.trim() !== 'https://') {
+        restoreSelection(savedRange);
+        document.execCommand('createLink', false, url.trim());
+        triggerAutoSave();
       }
       return;
     }
@@ -1122,7 +1130,7 @@
       if (!file) return;
 
       if (!file.type.startsWith('image/')) {
-        alert('Por favor selecciona un archivo de imagen válido.');
+        customAlert('Archivo de imagen no válido', 'Por favor selecciona un archivo con formato de imagen válido (PNG, JPG, SVG o WebP).', 'warning');
         return;
       }
 
@@ -1244,25 +1252,42 @@
     },
 
     // Eliminar sección completa
-    deleteSection: function (btn) {
+    deleteSection: async function (btn) {
       const section = btn.closest('.cv-section');
-      if (section && confirm('¿Estás seguro de que deseas eliminar esta sección completa?')) {
+      if (!section) return;
+
+      const confirmed = await customConfirm(
+        '¿Eliminar sección completa?',
+        'Esta acción eliminará el encabezado y todos los elementos o registros contenidos en esta sección.',
+        'danger',
+        'Sí, eliminar',
+        'Cancelar'
+      );
+
+      if (confirmed) {
         section.remove();
         triggerAutoSave();
+        debouncedAudit();
         showToast('Sección eliminada');
       }
     },
 
     // Añadir sección personalizada
-    addCustomSection: function () {
-      const title = prompt('Ingresa el título de la nueva sección (ej: Proyectos, Certificaciones, Referencias):', 'Proyectos Destacados');
-      if (!title) return;
+    addCustomSection: async function () {
+      const title = await customPrompt(
+        'Nueva Sección Personalizada',
+        'Ingresa el título de la nueva sección que deseas añadir:',
+        'Proyectos Destacados',
+        'ej: Certificaciones, Voluntariado, Premios...'
+      );
+      if (!title || !title.trim()) return;
 
+      const cleanTitle = title.trim();
       const section = document.createElement('section');
       section.className = 'cv-section';
       section.innerHTML = `
         <div class="cv-section-header">
-          <span class="cv-section-title" contenteditable="true">${escapeHtml(title)}</span>
+          <span class="cv-section-title" contenteditable="true">${escapeHtml(cleanTitle)}</span>
           <div class="section-actions">
             <button class="action-btn" onclick="window.miVit3.addExperienceItem(this)">+ Añadir elemento</button>
             <button class="action-btn btn-del" onclick="window.miVit3.deleteSection(this)">Eliminar sección</button>
@@ -1287,10 +1312,17 @@
         </div>
       `;
       cvDocument.appendChild(section);
+      ensureDragHandles();
       triggerAutoSave();
+      debouncedAudit();
       section.scrollIntoView({ behavior: 'smooth' });
-      showToast(`Sección "${title}" añadida`);
-    }
+      showToast(`Sección "${cleanTitle}" añadida`);
+    },
+
+    // Sistema de Alertas Personalizadas
+    alert: (title, message, type) => customAlert(title, message, type),
+    confirm: (title, message, type, confirmText, cancelText) => customConfirm(title, message, type, confirmText, cancelText),
+    prompt: (title, message, defVal, placeholder) => customPrompt(title, message, defVal, placeholder)
   };
 
   // =========================================================================
@@ -1399,8 +1431,15 @@
     // Cargar datos de ejemplo
     const btnSample = document.getElementById('btnSampleData');
     if (btnSample) {
-      btnSample.addEventListener('click', function () {
-        if (confirm('¿Deseas reemplazar el contenido actual con los datos de ejemplo profesionales?')) {
+      btnSample.addEventListener('click', async function () {
+        const confirmed = await customConfirm(
+          '¿Cargar currículum de ejemplo?',
+          'Se reemplazará el contenido actual con los datos profesionales de muestra. Si tienes información personal escrita, te recomendamos descargar un respaldo JSON primero.',
+          'warning',
+          'Cargar ejemplo',
+          'Cancelar'
+        );
+        if (confirmed) {
           loadSampleData(true);
         }
       });
@@ -1409,8 +1448,15 @@
     // Limpiar documento
     const btnClear = document.getElementById('btnClearData');
     if (btnClear) {
-      btnClear.addEventListener('click', function () {
-        if (confirm('¿Estás seguro de vaciar el CV para empezar desde cero?')) {
+      btnClear.addEventListener('click', async function () {
+        const confirmed = await customConfirm(
+          '¿Vaciar currículum completo?',
+          '¿Estás seguro de que deseas vaciar el documento para empezar a redactar desde una hoja en blanco?',
+          'danger',
+          'Sí, vaciar',
+          'Cancelar'
+        );
+        if (confirmed) {
           clearDocument();
         }
       });
@@ -1614,7 +1660,7 @@
       try {
         const data = JSON.parse(event.target.result);
         if (!data.html) {
-          alert('El archivo seleccionado no tiene un formato válido de miVIT3.');
+          customAlert('Formato de archivo no válido', 'El archivo seleccionado no tiene la estructura de datos requerida por miVIT3.', 'warning');
           return;
         }
 
@@ -1628,7 +1674,7 @@
         triggerAutoSave();
         showToast('CV restaurado correctamente desde archivo');
       } catch (err) {
-        alert('Error al leer el archivo JSON: ' + err.message);
+        customAlert('Error al importar', 'No se pudo leer el archivo JSON: ' + err.message, 'danger');
       }
     };
     reader.readAsText(file);
@@ -2143,26 +2189,163 @@
   }
 
   // =========================================================================
-  // Utilidades (Toast, Debounce, Escapar HTML)
+  // Sistema de Alertas, Confirmaciones y Prompts Personalizados (Sin native alert/confirm)
+  // =========================================================================
+  function saveSelection() {
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount > 0) {
+      return sel.getRangeAt(0);
+    }
+    return null;
+  }
+
+  function restoreSelection(range) {
+    if (range) {
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  }
+
+  function showCustomDialog({
+    title = '',
+    message = '',
+    type = 'info', // 'info' | 'success' | 'warning' | 'danger'
+    confirmText = 'Aceptar',
+    cancelText = null,
+    showInput = false,
+    defaultValue = '',
+    placeholder = ''
+  }) {
+    return new Promise((resolve) => {
+      let backdrop = document.getElementById('customDialogBackdrop');
+      if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.id = 'customDialogBackdrop';
+        backdrop.className = 'custom-dialog-backdrop';
+        document.body.appendChild(backdrop);
+      }
+
+      const icons = {
+        info: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+        success: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+        warning: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>',
+        danger: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>'
+      };
+
+      const iconSvg = icons[type] || icons.info;
+      const confirmBtnClass = type === 'danger' ? 'dialog-btn btn-danger' : 'dialog-btn btn-confirm';
+
+      backdrop.innerHTML = `
+        <div class="custom-dialog-card" role="dialog" aria-modal="true">
+          <div class="dialog-header">
+            <div class="dialog-icon icon-${type}">
+              ${iconSvg}
+            </div>
+            <div class="dialog-title-wrap">
+              <h3>${escapeHtml(title)}</h3>
+              <p>${escapeHtml(message)}</p>
+            </div>
+          </div>
+          ${showInput ? `
+            <div class="dialog-input-wrap">
+              <input type="text" id="customDialogInput" class="dialog-input" value="${escapeHtml(defaultValue)}" placeholder="${escapeHtml(placeholder)}" autocomplete="off">
+            </div>
+          ` : ''}
+          <div class="dialog-actions">
+            ${cancelText ? `<button type="button" id="customDialogCancelBtn" class="dialog-btn btn-cancel">${escapeHtml(cancelText)}</button>` : ''}
+            <button type="button" id="customDialogConfirmBtn" class="${confirmBtnClass}">${escapeHtml(confirmText)}</button>
+          </div>
+        </div>
+      `;
+
+      backdrop.classList.add('show');
+
+      const input = document.getElementById('customDialogInput');
+      const confirmBtn = document.getElementById('customDialogConfirmBtn');
+      const cancelBtn = document.getElementById('customDialogCancelBtn');
+
+      if (input) {
+        input.focus();
+        input.select();
+      } else if (confirmBtn) {
+        confirmBtn.focus();
+      }
+
+      function cleanup(result) {
+        backdrop.classList.remove('show');
+        document.removeEventListener('keydown', onKeyDown);
+        setTimeout(() => {
+          backdrop.innerHTML = '';
+          resolve(result);
+        }, 220);
+      }
+
+      function onKeyDown(e) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          cleanup(showInput ? null : false);
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          const val = input ? input.value : true;
+          cleanup(val);
+        }
+      }
+
+      document.addEventListener('keydown', onKeyDown);
+
+      confirmBtn.addEventListener('click', () => {
+        const val = input ? input.value : true;
+        cleanup(val);
+      });
+
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => {
+          cleanup(showInput ? null : false);
+        });
+      }
+
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) {
+          cleanup(showInput ? null : false);
+        }
+      });
+    });
+  }
+
+  function customAlert(title, message, type = 'info') {
+    return showCustomDialog({ title, message, type, confirmText: 'Entendido' });
+  }
+
+  function customConfirm(title, message, type = 'warning', confirmText = 'Aceptar', cancelText = 'Cancelar') {
+    return showCustomDialog({ title, message, type, confirmText, cancelText });
+  }
+
+  function customPrompt(title, message, defaultValue = '', placeholder = '') {
+    return showCustomDialog({ title, message, type: 'info', showInput: true, defaultValue, placeholder, confirmText: 'Aceptar', cancelText: 'Cancelar' });
+  }
+
+  // =========================================================================
+  // Notificaciones Toast Mejoradas
   // =========================================================================
   let toastTimeout = null;
-  function showToast(message) {
+  function showToast(message, type = 'success') {
     let toast = document.getElementById('toastNotification');
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'toastNotification';
       toast.className = 'toast-notification';
-      toast.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="20 6 9 17 4 12"></polyline>
-        </svg>
-        <span id="toastMsg"></span>
-      `;
       document.body.appendChild(toast);
     }
 
-    const toastMsg = document.getElementById('toastMsg');
-    if (toastMsg) toastMsg.textContent = message;
+    const iconSvg = type === 'warning'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+    toast.innerHTML = `
+      ${iconSvg}
+      <span id="toastMsg">${escapeHtml(message)}</span>
+    `;
 
     toast.classList.add('show');
     clearTimeout(toastTimeout);

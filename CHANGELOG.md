@@ -33,9 +33,10 @@ y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.
   - Transformación del selector en un menú desplegable compacto (`.template-dropdown`) que muestra el nombre de la plantilla activa y se despliega al hacer clic.
   - Opciones organizadas en dos categorías limpias: *Alto Impacto Laboral* y *Clásicas y Estructuradas*, con indicador de selección activa (✓).
   - Soporte de accesibilidad con cierre automático al hacer clic fuera o presionar la tecla `Escape`.
-  - Notificaciones flotantes contextuales al activar cada diseño.
-- **Actualización de Service Worker PWA (`sw.js`)**:
-  - Incremento de versión de caché a `mivit3-cache-v2.6.0` garantizando la disponibilidad offline inmediata de las nuevas plantillas.
+- **Configuración y Soporte para Despliegue en Vercel**:
+  - Incorporación de [`vercel.json`](file:///home/erickaguilar/Documentos/mivit3/vercel.json) con directivas `cleanUrls: true`, reglas de seguridad (`X-Frame-Options`, `X-Content-Type-Options`) y cabeceras `Cache-Control` calibradas para invalidación inmediata de `sw.js` y `manifest.webmanifest`.
+  - Integración de opción Vercel en el modal de publicación web (`publishModal`).
+  - Documentación de despliegue mediante GitHub y Vercel CLI (`npx vercel`) con botón 1-click deploy en el README.
 
 ---
 

@@ -122,6 +122,7 @@ mivit3/
 ├── index.html              # Aplicación principal y editor estilo Word
 ├── manifest.webmanifest    # Manifiesto PWA para instalación de la app
 ├── sw.js                   # Service Worker para soporte offline
+├── vercel.json             # Configuración optimizada de despliegue y caché para Vercel
 ├── README.md               # Documentación general del proyecto
 ├── CHANGELOG.md            # Historial de cambios y versiones
 ├── source/
@@ -186,6 +187,31 @@ mivit3/
    - Escribe y da formato a tu texto con la barra superior.
    - Escoge tu plantilla favorita y el color de acento.
    - Haz clic en **"Exportar a PDF"** (`Ctrl + P`), selecciona "Guardar como PDF" y ¡listo!
+
+---
+
+## ⚡ Despliegue en Vercel (Producción)
+
+El proyecto incluye el archivo [`vercel.json`](file:///home/erickaguilar/Documentos/mivit3/vercel.json) preconfigurado con encabezados de seguridad, tipos MIME de PWA y reglas de control de caché (`Cache-Control`) para que el Service Worker y los recursos estáticos funcionen de manera óptima en la red global de Vercel.
+
+### Método 1: Desde el Dashboard de Vercel (Recomendado y Automático)
+1. Inicia sesión en [Vercel](https://vercel.com) con tu cuenta de GitHub.
+2. Haz clic en **"Add New... → Project"**.
+3. Selecciona tu repositorio `mivit3` (o `erickaguilar/mivit3`).
+4. Vercel detectará el proyecto estático automáticamente. No necesitas configurar variables de entorno ni comandos de build.
+5. Haz clic en **"Deploy"**. En ~15 segundos tu app estará activa en `https://mivit3.vercel.app` (o el nombre que elijas) con SSL gratuito y despliegues automáticos en cada `git push`.
+
+### Método 2: Desde la Terminal (Vercel CLI)
+Si prefieres desplegar directamente desde tu terminal local:
+```bash
+# Despliegue de prueba (Preview)
+npx vercel
+
+# Despliegue a producción
+npx vercel --prod
+```
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/erickaguilar/mivit3)
 
 ---
 

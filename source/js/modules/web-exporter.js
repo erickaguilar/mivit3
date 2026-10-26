@@ -11,6 +11,7 @@
   // Exportador a "Mini-Web" Autocontenida (cv-web.html) & PWA (Fase 3)
   // =========================================================================
   function exportToWebHtml() {
+    const cvDocument = document.getElementById('cv-document');
     if (!cvDocument) return;
 
     // 1. Datos Personales

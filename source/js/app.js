@@ -287,22 +287,34 @@
 
     // Exportar a JSON
     const btnExport = document.getElementById('btnExportJson');
-    if (btnExport && typeof window.exportToJson === 'function') {
-      btnExport.addEventListener('click', window.exportToJson);
+    if (btnExport) {
+      btnExport.addEventListener('click', function () {
+        if (typeof window.exportToJson === 'function') {
+          window.exportToJson();
+        }
+      });
     }
 
     // Importar desde JSON
     const jsonFileInput = document.getElementById('jsonFileInput');
     const btnImport = document.getElementById('btnImportJson');
-    if (btnImport && jsonFileInput && typeof window.importFromJson === 'function') {
+    if (btnImport && jsonFileInput) {
       btnImport.addEventListener('click', () => jsonFileInput.click());
-      jsonFileInput.addEventListener('change', window.importFromJson);
+      jsonFileInput.addEventListener('change', function (e) {
+        if (typeof window.importFromJson === 'function') {
+          window.importFromJson(e);
+        }
+      });
     }
 
     // Exportar a Portafolio Web HTML (Fase 3)
     const btnExportWeb = document.getElementById('btnExportWeb');
-    if (btnExportWeb && typeof window.exportToWebHtml === 'function') {
-      btnExportWeb.addEventListener('click', window.exportToWebHtml);
+    if (btnExportWeb) {
+      btnExportWeb.addEventListener('click', function () {
+        if (typeof window.exportToWebHtml === 'function') {
+          window.exportToWebHtml();
+        }
+      });
     }
 
     // Modal de Guía de Publicación (Fase 3)
@@ -327,17 +339,20 @@
       });
     }
 
-    if (btnQuickExport && typeof window.exportToWebHtml === 'function') {
+    if (btnQuickExport) {
       btnQuickExport.addEventListener('click', function () {
         if (modalPublish) modalPublish.classList.remove('show');
-        window.exportToWebHtml();
+        if (typeof window.exportToWebHtml === 'function') {
+          window.exportToWebHtml();
+        }
       });
     }
 
     // Imprimir / Guardar en PDF
     const btnPrint = document.getElementById('btnPrintPdf');
     if (btnPrint) {
-      btnPrint.addEventListener('click', function () {
+      btnPrint.addEventListener('click', function (e) {
+        if (e) e.preventDefault();
         window.print();
       });
     }
@@ -375,64 +390,113 @@
 
   function init() {
     cvDocument = document.getElementById('cv-document');
+    window.cvDocument = cvDocument;
     if (!cvDocument) return;
 
-    // Cargar contenido guardado o datos de ejemplo
-    if (typeof window.loadSavedContent === 'function') {
-      window.loadSavedContent();
+    // 1. Botones de acción principales (PDF, Datos Ejemplo, Limpiar, JSON, Web, Tips, Publicar)
+    try {
+      setupMainActions();
+    } catch (e) {
+      console.error('Error inicializando acciones principales:', e);
     }
 
-    // Eventos de barra de herramientas estilo Word
-    if (typeof window.setupWordToolbar === 'function') {
-      window.setupWordToolbar();
+    // 2. Cargar contenido guardado o datos de ejemplo
+    try {
+      if (typeof window.loadSavedContent === 'function') {
+        window.loadSavedContent();
+      }
+    } catch (e) {
+      console.error('Error cargando contenido guardado:', e);
     }
 
-    // Eventos de plantillas y colores
-    if (typeof window.setupSettingsBar === 'function') {
-      window.setupSettingsBar();
+    // 3. Eventos de barra de herramientas estilo Word
+    try {
+      if (typeof window.setupWordToolbar === 'function') {
+        window.setupWordToolbar();
+      }
+    } catch (e) {
+      console.error('Error configurando barra Word:', e);
     }
 
-    // Control de Densidad y Espaciado (Fase 1)
-    if (typeof window.setupDensityControls === 'function') {
-      window.setupDensityControls();
+    // 4. Eventos de plantillas y colores
+    try {
+      if (typeof window.setupSettingsBar === 'function') {
+        window.setupSettingsBar();
+      }
+    } catch (e) {
+      console.error('Error configurando selector de plantillas:', e);
     }
 
-    // Drag & Drop modular (Fase 1)
-    if (typeof window.setupDragAndDrop === 'function') {
-      window.setupDragAndDrop();
+    // 5. Control de Densidad y Espaciado (Fase 1)
+    try {
+      if (typeof window.setupDensityControls === 'function') {
+        window.setupDensityControls();
+      }
+    } catch (e) {
+      console.error('Error configurando controles de densidad:', e);
     }
 
-    // Paginación y medición en vivo A4 (Fase 1)
-    if (typeof window.setupPageBreakObserver === 'function') {
-      window.setupPageBreakObserver();
+    // 6. Drag & Drop modular (Fase 1)
+    try {
+      if (typeof window.setupDragAndDrop === 'function') {
+        window.setupDragAndDrop();
+      }
+    } catch (e) {
+      console.error('Error configurando drag and drop:', e);
     }
 
-    // Auditor ATS & Comparador de Vacante (Fase 2)
-    if (typeof window.setupAtsEngine === 'function') {
-      window.setupAtsEngine();
+    // 7. Paginación y medición en vivo A4 (Fase 1)
+    try {
+      if (typeof window.setupPageBreakObserver === 'function') {
+        window.setupPageBreakObserver();
+      }
+    } catch (e) {
+      console.error('Error configurando observador de paginación:', e);
     }
 
-    // Eventos de carga de imagen de avatar
-    if (typeof window.setupAvatarUpload === 'function') {
-      window.setupAvatarUpload();
+    // 8. Auditor ATS & Comparador de Vacante (Fase 2)
+    try {
+      if (typeof window.setupAtsEngine === 'function') {
+        window.setupAtsEngine();
+      }
+    } catch (e) {
+      console.error('Error configurando motor ATS:', e);
     }
 
-    // Atajos de teclado (Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+S, Ctrl+P)
-    if (typeof window.setupKeyboardShortcuts === 'function') {
-      window.setupKeyboardShortcuts();
+    // 9. Eventos de carga de imagen de avatar
+    try {
+      if (typeof window.setupAvatarUpload === 'function') {
+        window.setupAvatarUpload();
+      }
+    } catch (e) {
+      console.error('Error configurando avatar:', e);
     }
 
-    // Escuchar cambios para autoguardado
-    if (typeof window.setupAutoSave === 'function') {
-      window.setupAutoSave();
+    // 10. Atajos de teclado (Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+S, Ctrl+P)
+    try {
+      if (typeof window.setupKeyboardShortcuts === 'function') {
+        window.setupKeyboardShortcuts();
+      }
+    } catch (e) {
+      console.error('Error configurando atajos de teclado:', e);
     }
 
-    // Botones de acción principales
-    setupMainActions();
+    // 11. Escuchar cambios para autoguardado
+    try {
+      if (typeof window.setupAutoSave === 'function') {
+        window.setupAutoSave();
+      }
+    } catch (e) {
+      console.error('Error configurando autoguardado:', e);
+    }
 
-    // Soporte PWA Offline (Fase 3)
-    if (typeof window.setupPwa === 'function') {
-      window.setupPwa();
+    // 12. Soporte PWA Offline (Fase 3)
+    try {
+      if (typeof window.setupPwa === 'function') {
+        window.setupPwa();
+      }
+    } catch (e) {
+      console.error('Error configurando PWA:', e);
     }
   }
 

@@ -70,23 +70,31 @@
     'the', 'and', 'with', 'for', 'you', 'are', 'this', 'that', 'our', 'will', 'have', 'from', 'team'
   ]);
 
+  function getCvDocument() {
+    return document.getElementById('cv-document');
+  }
+
+  function openDrawer() {
+    const drawer = document.getElementById('atsDrawer');
+    const backdrop = document.getElementById('atsDrawerBackdrop');
+    if (drawer) drawer.classList.add('show');
+    if (backdrop) backdrop.classList.add('show');
+    runAtsAudit();
+    runJobMatch();
+  }
+
+  function closeDrawer() {
+    const drawer = document.getElementById('atsDrawer');
+    const backdrop = document.getElementById('atsDrawerBackdrop');
+    if (drawer) drawer.classList.remove('show');
+    if (backdrop) backdrop.classList.remove('show');
+  }
+
   function setupAtsEngine() {
     const btnToggle = document.getElementById('btnToggleAts');
     const drawer = document.getElementById('atsDrawer');
     const backdrop = document.getElementById('atsDrawerBackdrop');
     const btnClose = document.getElementById('btnCloseAts');
-
-    function openDrawer() {
-      if (drawer) drawer.classList.add('show');
-      if (backdrop) backdrop.classList.add('show');
-      runAtsAudit();
-      runJobMatch();
-    }
-
-    function closeDrawer() {
-      if (drawer) drawer.classList.remove('show');
-      if (backdrop) backdrop.classList.remove('show');
-    }
 
     if (btnToggle) {
       btnToggle.addEventListener('click', function () {
@@ -130,8 +138,9 @@
 
     // Input en vivo de descripción de vacante
     const jobInput = document.getElementById('jobDescriptionInput');
+    const debounceFn = window.debounce || ((fn) => fn);
     if (jobInput) {
-      jobInput.addEventListener('input', debounce(runJobMatch, 250));
+      jobInput.addEventListener('input', debounceFn(runJobMatch, 250));
     }
 
     // Ejecutar auditoría inicial
@@ -153,6 +162,7 @@
   }
 
   function runAtsAudit() {
+    const cvDocument = getCvDocument();
     if (!cvDocument) return;
 
     const docText = (cvDocument.innerText || cvDocument.textContent || '').trim();
@@ -375,6 +385,7 @@
   }
 
   function runJobMatch() {
+    const cvDocument = getCvDocument();
     const jobInput = document.getElementById('jobDescriptionInput');
     const resultsContainer = document.getElementById('jobMatchResults');
     if (!jobInput || !resultsContainer || !cvDocument) return;
@@ -466,25 +477,25 @@
     }
   }
 
-  const debouncedAudit = debounce(function () {
+  const debounceFn = window.debounce || ((fn) => fn);
+  const debouncedAudit = debounceFn(function () {
     runAtsAudit();
     runJobMatch();
   }, 200);
 
-
   // Exportar funciones
   window.setupAtsEngine = setupAtsEngine;
-  window.openAtsDrawer = openAtsDrawer;
-  window.closeAtsDrawer = closeAtsDrawer;
-  window.auditCvForAts = auditCvForAts;
-  window.auditKeywordsAgainstJob = auditKeywordsAgainstJob;
+  window.openAtsDrawer = openDrawer;
+  window.closeAtsDrawer = closeDrawer;
+  window.runAtsAudit = runAtsAudit;
+  window.runJobMatch = runJobMatch;
   window.debouncedAudit = debouncedAudit;
 
   window.miVit3.setupAtsEngine = setupAtsEngine;
-  window.miVit3.openAtsDrawer = openAtsDrawer;
-  window.miVit3.closeAtsDrawer = closeAtsDrawer;
-  window.miVit3.auditCvForAts = auditCvForAts;
-  window.miVit3.auditKeywordsAgainstJob = auditKeywordsAgainstJob;
+  window.miVit3.openAtsDrawer = openDrawer;
+  window.miVit3.closeAtsDrawer = closeDrawer;
+  window.miVit3.runAtsAudit = runAtsAudit;
+  window.miVit3.runJobMatch = runJobMatch;
   window.miVit3.debouncedAudit = debouncedAudit;
 
 })();

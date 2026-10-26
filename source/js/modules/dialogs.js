@@ -143,10 +143,12 @@
 
       document.addEventListener('keydown', onKeyDown);
 
-      confirmBtn.addEventListener('click', () => {
-        const val = input ? input.value : true;
-        cleanup(val);
-      });
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', () => {
+          const val = input ? input.value : true;
+          cleanup(val);
+        });
+      }
 
       if (cancelBtn) {
         cancelBtn.addEventListener('click', () => {

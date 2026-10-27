@@ -3,7 +3,7 @@
  * Cero dependencias externas
  */
 
-const CACHE_NAME = 'mivit3-cache-v2.7.0';
+const CACHE_NAME = 'mivit3-cache-v2.7.1';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -34,7 +34,9 @@ const ASSETS_TO_CACHE = [
   './source/js/modules/templates.js',
   './source/js/modules/pagination.js',
   './source/js/modules/drag-drop.js',
-  './source/js/modules/ats-engine.js',
+  './source/js/modules/ats/ats-lexicon.js',
+  './source/js/modules/ats/ats-scorer.js',
+  './source/js/modules/ats/ats-drawer-ui.js',
   './source/js/modules/storage.js',
   './source/js/modules/web-exporter.js',
   './source/js/modules/pwa.js',

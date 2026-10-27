@@ -1,0 +1,133 @@
+/* --------------------------------------------------------------------------
+   8. PLANTILLA: NORDIC SWISS (Contemporary Product Minimal)
+   Geometría limpia, alto contraste y estética de diseño escandinavo/suizo
+   -------------------------------------------------------------------------- */
+.template-nordic {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  color: #0f172a;
+}
+
+.template-nordic .cv-profile-header {
+  border-bottom: 3px solid #0f172a;
+  padding-bottom: 18px;
+  margin-bottom: 22px;
+}
+
+.template-nordic .cv-header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.template-nordic .cv-avatar-wrap {
+  width: 82px;
+  height: 82px;
+  border-radius: 6px;
+  border: 1px solid #0f172a;
+  flex-shrink: 0;
+}
+
+.template-nordic .cv-avatar {
+  border-radius: 5px;
+}
+
+.template-nordic .cv-name {
+  font-size: 30px;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -1.2px;
+  line-height: 1.05;
+}
+
+.template-nordic .cv-role {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cv-accent);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-top: 4px;
+}
+
+.template-nordic .cv-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  color: #334155;
+  margin-top: 10px;
+}
+
+.template-nordic .cv-contact-item svg {
+  stroke: #0f172a;
+  width: 12px;
+  height: 12px;
+}
+
+.template-nordic .cv-section {
+  margin-bottom: 20px;
+}
+
+.template-nordic .cv-section-header {
+  border-bottom: 1.5px solid #0f172a;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+
+.template-nordic .cv-section-title {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.template-nordic .cv-section-title::before {
+  content: "// ";
+  color: var(--cv-accent);
+  font-family: ui-monospace, monospace;
+  font-weight: 800;
+}
+
+.template-nordic .cv-item {
+  margin-bottom: 15px;
+}
+
+.template-nordic .cv-item-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.2px;
+}
+
+.template-nordic .cv-item-subtitle {
+  color: var(--cv-accent);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.template-nordic .cv-item-date {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.template-nordic .cv-tag {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1.5px solid #0f172a;
+  font-weight: 700;
+  border-radius: 4px;
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  transition: all 0.15s ease;
+}
+
+.template-nordic .cv-tag:hover {
+  background: var(--cv-accent);
+  color: #ffffff;
+  border-color: var(--cv-accent);
+}

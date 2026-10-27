@@ -1,0 +1,139 @@
+/* --------------------------------------------------------------------------
+   7. PLANTILLA: LÍNEA DE TIEMPO (Visual Career Path)
+   Destaca progresión profesional, promociones y continuidad en el puesto
+   -------------------------------------------------------------------------- */
+.template-timeline {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1e293b;
+}
+
+.template-timeline .cv-profile-header {
+  background: #f8fafc;
+  margin: -16mm -18mm 20px -18mm;
+  padding: 16mm 18mm 16px 18mm;
+  border-bottom: 2px solid var(--cv-accent);
+}
+
+.template-timeline .cv-header-main {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.template-timeline .cv-avatar-wrap {
+  width: 86px;
+  height: 86px;
+  border-radius: 12px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+
+.template-timeline .cv-avatar {
+  border-radius: 10px;
+}
+
+.template-timeline .cv-name {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+}
+
+.template-timeline .cv-role {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--cv-accent);
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+.template-timeline .cv-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 11.5px;
+  color: #475569;
+}
+
+.template-timeline .cv-contact-item svg {
+  stroke: var(--cv-accent);
+}
+
+.template-timeline .cv-section {
+  margin-bottom: 22px;
+}
+
+.template-timeline .cv-section-header {
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 5px;
+  margin-bottom: 14px;
+}
+
+.template-timeline .cv-section-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--cv-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Conector vertical continuo estilo Timeline */
+.template-timeline .cv-section[data-section-type="experience"] .cv-section-body,
+.template-timeline .cv-section[data-section-type="education"] .cv-section-body {
+  position: relative;
+  padding-left: 20px;
+  margin-left: 10px;
+  border-left: 2px solid #e2e8f0;
+}
+
+.template-timeline .cv-section[data-section-type="experience"] .cv-item,
+.template-timeline .cv-section[data-section-type="education"] .cv-item {
+  position: relative;
+  margin-bottom: 18px;
+}
+
+.template-timeline .cv-section[data-section-type="experience"] .cv-item::before,
+.template-timeline .cv-section[data-section-type="education"] .cv-item::before {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2.5px solid var(--cv-accent);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04);
+  z-index: 2;
+}
+
+.template-timeline .cv-item-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.template-timeline .cv-item-subtitle {
+  color: var(--cv-accent);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.template-timeline .cv-item-date {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 600;
+  background: #f1f5f9;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.template-timeline .cv-tag {
+  background: #ffffff;
+  border: 1px solid var(--cv-accent);
+  color: var(--cv-accent);
+  font-weight: 600;
+  font-size: 11.5px;
+  border-radius: 6px;
+}

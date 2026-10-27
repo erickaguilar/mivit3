@@ -3,7 +3,7 @@
  * Cero dependencias externas
  */
 
-const CACHE_NAME = 'mivit3-cache-v2.6.1';
+const CACHE_NAME = 'mivit3-cache-v2.7.0';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -17,6 +17,14 @@ const ASSETS_TO_CACHE = [
   './source/css/modules/desk.css',
   './source/css/modules/cv-sections.css',
   './source/css/modules/templates.css',
+  './source/css/templates/alpha-00-bicolor.css',
+  './source/css/templates/alpha-01-columns.css',
+  './source/css/templates/alpha-02-banner.css',
+  './source/css/templates/alpha-03-monogram.css',
+  './source/css/templates/template-tech.css',
+  './source/css/templates/template-executive.css',
+  './source/css/templates/template-timeline.css',
+  './source/css/templates/template-nordic.css',
   './source/css/modules/ats-drawer.css',
   './source/css/modules/dialogs.css',
   './source/css/modules/print.css',

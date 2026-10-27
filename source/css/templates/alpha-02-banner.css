@@ -1,0 +1,75 @@
+/* --------------------------------------------------------------------------
+   3. PLANTILLA ALPHA 02 — Banner Card & Credencial
+   -------------------------------------------------------------------------- */
+.template-alpha02 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.template-alpha02 .cv-profile-header {
+  position: relative;
+  display: block;
+  margin: -16mm -18mm 24px -18mm;
+  padding: 0;
+  border-bottom: none;
+}
+
+.template-alpha02 .cv-header-main {
+  background: var(--cv-accent);
+  border-bottom: 8px solid rgba(0, 0, 0, 0.25);
+  padding: 18px 24px 18px 165px;
+  position: relative;
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+}
+
+.template-alpha02 .cv-avatar-wrap {
+  position: absolute;
+  top: 14px;
+  left: 24px;
+  width: 120px;
+  height: 120px;
+  background: #ffffff;
+  padding: 4px;
+  border: 1px solid #cbd5e1;
+  box-shadow: var(--shadow-md);
+  border-radius: 4px;
+  z-index: 10;
+}
+
+.template-alpha02 .cv-avatar {
+  border-radius: 2px;
+  border: none;
+}
+
+.template-alpha02 .cv-name {
+  color: #ffffff;
+  font-size: 26px;
+  margin-bottom: 2px;
+}
+
+.template-alpha02 .cv-role {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.template-alpha02 .cv-contact-list {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.template-alpha02 .cv-contact-item svg {
+  stroke: #ffffff;
+}
+
+.template-alpha02 .cv-section-header {
+  border-bottom: 2px solid var(--cv-accent-light);
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+
+.template-alpha02 .cv-section-title {
+  color: var(--cv-accent);
+  font-size: 20px;
+  font-weight: 700;
+}

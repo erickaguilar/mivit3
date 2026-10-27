@@ -1,0 +1,92 @@
+/* --------------------------------------------------------------------------
+   4. PLANTILLA ALPHA 03 — Monograma & Títulos Laterales
+   -------------------------------------------------------------------------- */
+.template-alpha03 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.template-alpha03 .cv-profile-header {
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--border-ui);
+  margin-bottom: 24px;
+}
+
+.template-alpha03 .cv-header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.template-alpha03 .cv-avatar-wrap {
+  width: 90px;
+  height: 90px;
+}
+
+.template-alpha03 .cv-name-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.template-alpha03 .cv-name {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--cv-accent);
+  letter-spacing: -0.5px;
+}
+
+.template-alpha03 .cv-monogram-badge {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: var(--cv-accent);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 22px;
+  border-radius: 6px;
+  box-shadow: var(--shadow-sm);
+  text-transform: uppercase;
+  flex-shrink: 0;
+  outline: none;
+}
+
+.template-alpha03 .cv-section {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 20px;
+  margin-bottom: 22px;
+  border-bottom: 1px dashed var(--border-ui);
+  padding-bottom: 16px;
+}
+
+.template-alpha03 .cv-section:last-child {
+  border-bottom: none;
+}
+
+.template-alpha03 .cv-section-header {
+  border-bottom: none;
+  text-align: right;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0;
+}
+
+.template-alpha03 .cv-section-title {
+  color: var(--cv-accent);
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.template-alpha03 .cv-section-body,
+.template-alpha03 .cv-tags-wrap {
+  grid-column: 2;
+}
+
+.template-alpha03 .cv-item-date {
+  color: var(--cv-accent);
+  font-weight: 600;
+}

@@ -1,0 +1,183 @@
+/* --------------------------------------------------------------------------
+   5. PLANTILLA: TECH MINIMALISTA (Silicon Valley Style)
+   Optimizado para perfiles de Tecnología, Producto, Ingeniería y Startups
+   -------------------------------------------------------------------------- */
+.template-tech {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #1e293b;
+}
+
+.template-tech .cv-profile-header {
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 20px;
+  margin-bottom: 22px;
+  position: relative;
+}
+
+.template-tech .cv-profile-header::before {
+  content: "";
+  position: absolute;
+  top: -16mm;
+  left: -18mm;
+  right: -18mm;
+  height: 4px;
+  background: var(--cv-accent);
+}
+
+.template-tech .cv-header-main {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.template-tech .cv-avatar-wrap {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.template-tech .cv-avatar {
+  border-radius: 50%;
+  border: none;
+}
+
+.template-tech .cv-name {
+  font-size: 27px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+}
+
+.template-tech .cv-role {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--cv-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 3px;
+  margin-bottom: 8px;
+}
+
+.template-tech .cv-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.template-tech .cv-contact-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11.5px;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.15s ease;
+}
+
+.template-tech .cv-contact-item svg {
+  stroke: var(--cv-accent);
+  width: 13px;
+  height: 13px;
+}
+
+.template-tech .cv-section {
+  margin-bottom: 20px;
+}
+
+.template-tech .cv-section-header {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+}
+
+.template-tech .cv-section-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.template-tech .cv-section-title::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 15px;
+  background: var(--cv-accent);
+  border-radius: 2px;
+}
+
+.template-tech .cv-item {
+  margin-bottom: 15px;
+  padding-left: 2px;
+}
+
+.template-tech .cv-item-side {
+  margin-bottom: 3px;
+}
+
+.template-tech .cv-item-date {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.template-tech .cv-item-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.template-tech .cv-item-subtitle {
+  color: var(--cv-accent);
+  font-weight: 600;
+  font-size: 13.5px;
+}
+
+.template-tech .cv-item-desc {
+  font-size: 12.5px;
+  color: #334155;
+  line-height: 1.55;
+  margin-top: 4px;
+}
+
+.template-tech .cv-item-desc ul {
+  padding-left: 18px;
+  margin: 4px 0 0 0;
+}
+
+.template-tech .cv-item-desc li {
+  margin-bottom: 4px;
+}
+
+.template-tech .cv-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.template-tech .cv-tag {
+  background: var(--cv-accent-light);
+  color: var(--cv-accent);
+  font-weight: 600;
+  font-size: 11.5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}

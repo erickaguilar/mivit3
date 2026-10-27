@@ -18,8 +18,9 @@
     print-color-adjust: exact !important;
   }
 
-  /* Ocultar barra superior, ribbon, botones de acción, modales, guías y botones de borrado de etiquetas */
+  /* Ocultar barra superior, contenedor sticky, ribbon, botones de acción, modales, guías y botones de borrado */
   .app-header,
+  .sticky-toolbars-wrapper,
   .word-toolbar-container,
   .cv-settings-bar,
   .section-actions,
@@ -48,25 +49,33 @@
   .cv-paper {
     box-shadow: none !important;
     border: none !important;
-    border-radius: 0 !important;
-    width: 100% !important;
-    min-height: auto !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
   }
 
   .cv-document {
-    padding: 12mm 15mm !important;
-  }
-
-  /* Evitar saltos de página partidos en medio de elementos */
-  .cv-section,
-  .cv-item {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  [contenteditable="true"] {
-    background: none !important;
     box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Evitar saltos de página inapropiados dentro de elementos clave */
+  .cv-section,
+  .cv-item,
+  .cv-profile,
+  .cv-header-bicolor,
+  .cv-columns-layout,
+  .cv-col-sidebar,
+  .cv-col-main {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Enlaces impresos en negro sin decoraciones molestas */
+  a {
+    text-decoration: none !important;
+    color: inherit !important;
   }
 }

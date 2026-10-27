@@ -17,6 +17,7 @@
   <!-- =========================================================================
        Cabecera Principal (App Header)
        ========================================================================= -->
+
   <header class="app-header">
     <div class="header-inner">
       <a href="index.html" class="brand">
@@ -34,65 +35,42 @@
           <div class="brand-tagline"><b>e</b>scoge · <b>e</b>dita · <b>e</b>nvía</div>
         </div>
       </a>
-
-      <!-- Acciones Globales del Documento -->
-      <div class="header-actions">
-        <button id="btnSampleData" class="btn btn-default" title="Llenar con currículum de muestra">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-          Ejemplo
-        </button>
-
-        <button id="btnClearData" class="btn btn-default" title="Empezar con una plantilla vacía">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-          Limpiar
-        </button>
-
-        <button id="btnExportJson" class="btn btn-default" title="Descargar respaldo en archivo JSON">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          Guardar JSON
-        </button>
-
-        <button id="btnImportJson" class="btn btn-default" title="Cargar currículum desde archivo JSON">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-          Cargar JSON
-        </button>
-        <input type="file" id="jsonFileInput" accept=".json,application/json" style="display:none">
-
-        <button id="btnExportWeb" class="btn btn-default" title="Exportar como Portafolio Web interactivo (.html) para publicar o compartir">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-          Exportar Web
-        </button>
-
-        <button id="btnShowTips" class="btn btn-default" title="Consejos y mejores prácticas para tu CV">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          Tips
-        </button>
-
-        <button id="btnShowPublishGuide" class="btn btn-default" title="Guía para publicar tu CV gratis en la web (GitHub Pages, Netlify)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-          Publicar
-        </button>
-
-        <button id="btnToggleAts" class="btn btn-default btn-ats" title="Auditoría ATS en tiempo real y optimizador de vacante">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline><path d="M22 12h-4"></path><path d="M6 12H2"></path><path d="M12 6V2"></path><path d="M12 22v-4"></path></svg>
-          Auditoría ATS
-          <span id="headerAtsBadge" class="ats-badge-score">--</span>
-        </button>
-
-        <button id="btnPrintPdf" class="btn btn-primary" title="Imprimir o guardar en PDF (Ctrl+P)" onclick="window.print()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-          Exportar a PDF
-        </button>
+      <!-- Insignia de Privacidad Local -->
+      <div class="header-right-meta">
+        <span class="badge-privacy" title="Tus datos nunca salen de tu navegador. 100% privado y seguro.">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          100% Privado &amp; Local
+        </span>
       </div>
     </div>
   </header>
 
   <!-- =========================================================================
-       Barra de Herramientas Estilo Word (Word Ribbon Toolbar)
+       Barras de Herramientas Fijadas (Sticky Toolbars Container)
        ========================================================================= -->
-  <div class="word-toolbar-container">
-    <div class="word-toolbar">
-      <!-- Grupo: Historial -->
+
+  <div class="sticky-toolbars-wrapper">
+    <!-- Barra de Herramientas Estilo Word (Word Ribbon Toolbar) -->
+    <div class="word-toolbar-container">
+      <div class="word-toolbar">
+        <!-- Grupo: Archivo / Documento -->
+        <div class="toolbar-group">
+          <span class="toolbar-label">Archivo:</span>
+          <button id="btnSampleData" class="tool-btn" title="Llenar con currículum de muestra">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+          </button>
+          <button id="btnClearData" class="tool-btn" title="Empezar con una plantilla vacía / Limpiar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
+          <button id="btnExportJson" class="tool-btn" title="Descargar respaldo en archivo JSON">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          </button>
+          <button id="btnImportJson" class="tool-btn" title="Cargar currículum desde archivo JSON">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          </button>
+          <input type="file" id="jsonFileInput" accept=".json,application/json" style="display:none">
+        </div>
+        <!-- Grupo: Historial -->
       <div class="toolbar-group">
         <button class="tool-btn" data-command="undo" title="Deshacer (Ctrl+Z)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"></path></svg>
@@ -101,7 +79,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 7v6h-6"></path><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"></path></svg>
         </button>
       </div>
-
       <!-- Grupo: Tipografía & Tamaño -->
       <div class="toolbar-group">
         <select id="fontFamilySelect" class="tool-select" title="Familia tipográfica">
@@ -111,7 +88,6 @@
           <option value="Arial, Helvetica, sans-serif">Arial</option>
           <option value="'Courier New', Courier, monospace">Courier (Monospace)</option>
         </select>
-
         <select id="fontSizeSelect" class="tool-select" title="Tamaño de fuente">
           <option value="11px">11 px</option>
           <option value="12px">12 px</option>
@@ -122,7 +98,6 @@
           <option value="22px">22 px</option>
           <option value="28px">28 px</option>
         </select>
-
         <select id="blockFormatSelect" class="tool-select" title="Estilo de párrafo">
           <option value="<p>">Normal</option>
           <option value="<h1>">Título H1</option>
@@ -130,7 +105,6 @@
           <option value="<h3>">Subtítulo H3</option>
         </select>
       </div>
-
       <!-- Grupo: Formato de Texto (Negrita, Cursiva, etc.) -->
       <div class="toolbar-group">
         <button class="tool-btn" data-command="bold" title="Negrita (Ctrl+B)">
@@ -146,7 +120,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.3 4.9c-2.3-.6-4.4-1-6.2-.7-2.6.4-4.5 2-4.5 4.3 0 1.9 1.3 3.4 3.7 4.1"></path><path d="M16 16c0 2.2-2.1 3.9-5.2 3.9-2.2 0-4.3-.8-5.8-2.1"></path><line x1="4" y1="12" x2="20" y2="12"></line></svg>
         </button>
       </div>
-
       <!-- Grupo: Colores & Resaltador -->
       <div class="toolbar-group">
         <label class="color-picker-wrap" title="Color de texto">
@@ -154,18 +127,15 @@
           <span id="textColorIndicator" class="color-bar-indicator" style="background:#0f172a;"></span>
           <input type="color" id="textColorPicker" value="#0f172a">
         </label>
-
         <label class="color-picker-wrap" title="Color de resaltado / fondo">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 11-6 6v3h3l6-6"></path><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"></path></svg>
           <span id="highlightColorIndicator" class="color-bar-indicator" style="background:#fef08a;"></span>
           <input type="color" id="highlightColorPicker" value="#fef08a">
         </label>
-
         <button class="tool-btn" data-command="removeFormat" title="Limpiar formato">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
-
       <!-- Grupo: Alineación & Listas -->
       <div class="toolbar-group">
         <button class="tool-btn" data-command="justifyLeft" title="Alinear a la izquierda">
@@ -180,7 +150,6 @@
         <button class="tool-btn" data-command="justifyFull" title="Justificar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="12" x2="3" y2="12"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
         </button>
-
         <button class="tool-btn" data-command="insertUnorderedList" title="Lista con viñetas">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
         </button>
@@ -188,7 +157,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="6" x2="21" y2="6"></line><line x1="10" y1="12" x2="21" y2="12"></line><line x1="10" y1="18" x2="21" y2="18"></line><path d="M4 6h1v4"></path><path d="M4 10h2"></path><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg>
         </button>
       </div>
-
       <!-- Grupo: Insertar Elementos -->
       <div class="toolbar-group">
         <button class="tool-btn" data-command="createLink" title="Insertar enlace">
@@ -207,6 +175,7 @@
   <!-- =========================================================================
        Barra Secundaria: Plantillas & Paletas de Color
        ========================================================================= -->
+
   <div class="cv-settings-bar">
     <div class="cv-settings-inner">
       <div class="settings-left">
@@ -222,9 +191,7 @@
             <button type="button" class="template-menu-item" data-template="template-executive" role="menuitem">Ejecutivo Harvard</button>
             <button type="button" class="template-menu-item" data-template="template-timeline" role="menuitem">Línea de Tiempo</button>
             <button type="button" class="template-menu-item" data-template="template-nordic" role="menuitem">Nordic Clean</button>
-
             <div class="template-menu-divider"></div>
-
             <div class="template-menu-group-label">Clásicas y Estructuradas</div>
             <button type="button" class="template-menu-item active" data-template="template-alpha00" role="menuitem">Bicolor Moderno</button>
             <button type="button" class="template-menu-item" data-template="template-alpha01" role="menuitem">Columnas ATS</button>
@@ -232,7 +199,6 @@
             <button type="button" class="template-menu-item" data-template="template-alpha03" role="menuitem">Editorial Monograma</button>
           </div>
         </div>
-
         <span class="toolbar-label" style="margin-left: 10px;">Color:</span>
         <div class="color-palette">
           <button class="palette-swatch active" style="background:#6400c8;" data-accent="#6400c8" data-light="#f3e8ff" title="Púrpura miVIT3"></button>
@@ -241,7 +207,6 @@
           <button class="palette-swatch" style="background:#334155;" data-accent="#334155" data-light="#f1f5f9" title="Grafito Oscuro"></button>
           <button class="palette-swatch" style="background:#881337;" data-accent="#881337" data-light="#ffe4e6" title="Borgoña Elegante"></button>
         </div>
-
         <span class="toolbar-label" style="margin-left: 10px;">Densidad:</span>
         <div class="pill-selector">
           <button class="pill-btn" data-density="density-compact" title="Márgenes estrechos y espaciado compacto (ideal para 1 página)">Compacto</button>
@@ -249,27 +214,51 @@
           <button class="pill-btn" data-density="density-spacious" title="Márgenes amplios y mayor interlineado">Espacioso</button>
         </div>
       </div>
-
       <div class="settings-right">
+        <!-- Acciones de Revisión y Exportación -->
+        <div class="settings-actions-group">
+          <button id="btnShowTips" class="btn btn-sm btn-default" title="Consejos y mejores prácticas para tu CV">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Tips
+          </button>
+          <button id="btnShowPublishGuide" class="btn btn-sm btn-default" title="Guía para publicar tu CV gratis en la web (GitHub Pages, Netlify)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            Publicar
+          </button>
+          <button id="btnToggleAts" class="btn btn-sm btn-default btn-ats" title="Auditoría ATS en tiempo real y optimizador de vacante">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline><path d="M22 12h-4"></path><path d="M6 12H2"></path><path d="M12 6V2"></path><path d="M12 22v-4"></path></svg>
+            ATS
+            <span id="headerAtsBadge" class="ats-badge-score">--</span>
+          </button>
+          <button id="btnExportWeb" class="btn btn-sm btn-default" title="Exportar como Portafolio Web interactivo (.html) para publicar o compartir">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            Web
+          </button>
+          <button id="btnPrintPdf" class="btn btn-sm btn-primary" title="Imprimir o guardar en PDF (Ctrl+P)" onclick="window.print()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            PDF
+          </button>
+        </div>
+        <div class="settings-divider"></div>
         <div id="pageBadge" class="page-badge" title="Espacio ocupado en hoja A4">
           <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
           <span id="pageBadgeText">1 pág. (0%)</span>
         </div>
-
         <div class="save-status">
           <span id="saveStatusDot" class="status-dot"></span>
-          <span id="saveStatusText">Guardado en el navegador</span>
+          <span id="saveStatusText">Guardado</span>
         </div>
       </div>
     </div>
   </div>
-
+  </div>
   <!-- Input de carga de imagen de avatar (oculto) -->
   <input type="file" id="avatarFileInput" accept="image/*" style="display: none;">
 
   <!-- =========================================================================
        Lienzo de Escritura tipo Word (Document Desk & A4 Paper)
        ========================================================================= -->
+
   <main class="document-desk">
     <div style="display: flex; flex-direction: column; align-items: center;">
       <!-- Banner de advertencia si el contenido sobrepasa una página por poco -->
@@ -277,7 +266,6 @@
         <span>⚠️ Tu CV sobrepasa 1 página por poco (<strong id="overflowPercent">106%</strong>).</span>
         <button id="btnAutoFitCompact" class="btn-fit-action">Ajustar a 1 página (Compacto)</button>
       </div>
-
       <div id="cv-paper" class="cv-paper">
         <div id="cv-document" class="cv-document template-alpha00 density-normal">
           <!-- El contenido editable es renderizado o restaurado por script.js -->
@@ -289,6 +277,7 @@
   <!-- =========================================================================
        Modal de Consejos / Tips de Redacción de CV
        ========================================================================= -->
+
   <div id="tipsModal" class="modal-backdrop">
     <div class="modal-card">
       <div class="modal-header">
@@ -301,13 +290,10 @@
       <div class="modal-body">
         <h3>1. Fórmula STAR para Logros</h3>
         <p>En lugar de listar tareas cotidianas, enfócate en tus resultados concretos: <em>Situación, Tarea, Acción y Resultado</em> medible (ej: <i>"Rediseñé el flujo de pagos, reduciendo la tasa de abandono en un 28%"</i>).</p>
-
         <h3>2. Verbos de Acción Fuertes</h3>
         <p>Inicia cada viñeta con un verbo dinámico: <strong>Lideré, Desarrollé, Implementé, Diseñé, Optimizé, Coordiné</strong>.</p>
-
         <h3>3. Extensión Recomendada</h3>
         <p>Mantén tu currículum en <strong>1 o máximo 2 páginas</strong>. Los reclutadores dedican un promedio de 6 a 10 segundos al primer escaneo visual.</p>
-
         <h3>4. Atajos de Teclado del Editor</h3>
         <ul>
           <li><strong>Ctrl + B:</strong> Activar / desactivar Negrita</li>
@@ -323,6 +309,7 @@
   <!-- =========================================================================
        Modal de Guía de Publicación Web (Fase 3: GitHub Pages, Netlify Drop, Vercel)
        ========================================================================= -->
+
   <div id="publishModal" class="modal-backdrop">
     <div class="modal-card">
       <div class="modal-header">
@@ -334,7 +321,6 @@
       </div>
       <div class="modal-body">
         <p style="margin-bottom:14px;color:#475569;">Al hacer clic en <strong>"Exportar Web"</strong> descargas un archivo <code>cv-web.html</code> 100% responsivo, con selector de modo oscuro y ligero (~25 KB). Puedes compartirlo o publicarlo gratis en internet en 2 minutos:</p>
-
         <div class="publish-cards-grid">
           <div class="publish-card">
             <div class="publish-badge">Opción 1 · Más Rápida</div>
@@ -346,7 +332,6 @@
               <li>¡Listo! Obtendrás un enlace público instantáneo con HTTPS (ej: <code>tu-nombre.netlify.app</code>).</li>
             </ol>
           </div>
-
           <div class="publish-card">
             <div class="publish-badge">Opción 2 · Profesional</div>
             <h4>GitHub Pages</h4>
@@ -357,7 +342,6 @@
               <li>Tu CV estará online en <code>https://usuario.github.io/mi-cv</code>.</li>
             </ol>
           </div>
-
           <div class="publish-card">
             <div class="publish-badge" style="background:#e0f2fe;color:#0369a1;">Opción Vercel · Alto Rendimiento</div>
             <h4>Vercel (Recomendado para producción)</h4>
@@ -368,14 +352,12 @@
               <li>¡Listo! Obtendrás una URL con HTTPS ultrarrápida (ej: <code>mivit3.vercel.app</code>) y soporte PWA offline inmediato.</li>
             </ol>
           </div>
-
           <div class="publish-card">
             <div class="publish-badge">Opción 3 · Directa</div>
             <h4>Adjunto Interactivo para Reclutadores</h4>
             <p>Puedes adjuntar <code>cv-web.html</code> directamente en un correo a empresas o clientes. Cualquier persona puede abrirlo con doble clic en su navegador, con diseño moderno adaptado a móviles y sin conexión a internet.</p>
           </div>
         </div>
-
         <div style="margin-top:16px;text-align:right;">
           <button id="btnQuickExportFromModal" class="btn btn-primary">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
@@ -389,6 +371,7 @@
   <!-- =========================================================================
        Panel Lateral Desplegable: Auditoría ATS & Comparador de Vacante (Fase 2)
        ========================================================================= -->
+
   <div id="atsDrawerBackdrop" class="drawer-backdrop"></div>
   <aside id="atsDrawer" class="drawer-panel" aria-label="Auditoría ATS">
     <div class="drawer-header">
@@ -403,7 +386,6 @@
       </div>
       <button id="btnCloseAts" class="modal-close" title="Cerrar panel">✕</button>
     </div>
-
     <div class="drawer-body">
       <!-- Tarjeta de Puntaje Global -->
       <div class="ats-score-card">
@@ -416,13 +398,11 @@
           <p id="atsScoreDesc">Calculando métricas de legibilidad y compatibilidad con filtros ATS.</p>
         </div>
       </div>
-
       <!-- Pestañas del Panel: Diagnóstico vs Vacante -->
       <div class="ats-tabs">
         <button id="tabBtnAudit" class="ats-tab-btn active">Diagnóstico del CV</button>
         <button id="tabBtnJobMatch" class="ats-tab-btn">Comparador de Vacante</button>
       </div>
-
       <!-- Contenido 1: Diagnóstico del CV -->
       <div id="tabContentAudit" class="ats-tab-pane active">
         <!-- Diagnóstico: Contacto & Datos -->
@@ -432,7 +412,6 @@
             <!-- Rellenado dinámicamente por script.js -->
           </ul>
         </div>
-
         <!-- Diagnóstico: Secciones Críticas -->
         <div class="ats-audit-group">
           <h4>Secciones Fundamentales</h4>
@@ -440,7 +419,6 @@
             <!-- Rellenado dinámicamente por script.js -->
           </ul>
         </div>
-
         <!-- Diagnóstico: Redacción & Fórmula STAR -->
         <div class="ats-audit-group">
           <h4>Impacto de Redacción (Fórmula STAR)</h4>
@@ -449,20 +427,17 @@
             <strong id="atsActionVerbsCount">0</strong>
           </div>
           <div class="ats-tags-preview" id="atsActionVerbsList"></div>
-
           <div class="ats-metric-row" style="margin-top: 10px;">
             <span>Logros cuantificables (%, $, cifras):</span>
             <strong id="atsMetricsCount">0</strong>
           </div>
           <p class="ats-hint-text" id="atsMetricsHint">Procura que al menos 2 empleos incluyan resultados numéricos medibles.</p>
-
           <div class="ats-metric-row" style="margin-top: 10px;">
             <span>Frases pasivas o débiles a mejorar:</span>
             <strong id="atsWeakWordsCount">0</strong>
           </div>
           <div class="ats-tags-preview" id="atsWeakWordsList"></div>
         </div>
-
         <!-- Diagnóstico: Longitud -->
         <div class="ats-audit-group">
           <h4>Extensión y Densidad</h4>
@@ -476,23 +451,19 @@
           <p class="ats-hint-text" id="atsWordCountHint">Rango sugerido para 1 página: 350 - 650 palabras.</p>
         </div>
       </div>
-
       <!-- Contenido 2: Comparador de Vacante (Keyword Matcher) -->
       <div id="tabContentJobMatch" class="ats-tab-pane">
         <p class="ats-tab-desc">Pega la descripción o requisitos del empleo que te interesa para comparar palabras clave en tiempo real:</p>
         <textarea id="jobDescriptionInput" class="job-desc-textarea" rows="4" placeholder="Pega aquí el texto de la vacante (ej: 'Buscamos Ingeniero de Software con experiencia en JavaScript, React, CSS3, APIs REST, metodologías ágiles...')..."></textarea>
-
         <div class="job-match-results" id="jobMatchResults" style="display: none;">
           <div class="match-rate-card">
             <span>Coincidencia de Palabras Clave:</span>
             <strong id="matchRatePercent">0%</strong>
           </div>
-
           <div class="ats-audit-group">
             <h4 style="color:#0f766e;">Palabras Clave Encontradas (<span id="matchedKeywordsCount">0</span>)</h4>
             <div class="ats-tags-preview" id="matchedKeywordsList"></div>
           </div>
-
           <div class="ats-audit-group">
             <h4 style="color:#b45309;">Palabras Clave Sugeridas Faltantes (<span id="missingKeywordsCount">0</span>)</h4>
             <div class="ats-tags-preview" id="missingKeywordsList"></div>
@@ -532,7 +503,6 @@
       </div>
     </div>
   </template>
-
   <!-- Plantilla: Nuevo Elemento de Educación -->
   <template id="tpl-education-item">
     <div class="cv-item" draggable="true">
@@ -554,7 +524,6 @@
       </div>
     </div>
   </template>
-
   <!-- Plantilla: Tag de Habilidad / Competencia -->
   <template id="tpl-skill-tag">
     <span class="cv-tag">
@@ -562,7 +531,6 @@
       <span class="cv-tag-del" onclick="this.parentElement.remove(); if (window.triggerAutoSave) window.triggerAutoSave();">✕</span>
     </span>
   </template>
-
   <!-- Plantilla: Sección Personalizada Dinámica -->
   <template id="tpl-custom-section">
     <section class="cv-section" draggable="true">
@@ -592,7 +560,6 @@
       </div>
     </section>
   </template>
-
   <!-- Módulos JavaScript Vanilla (Separación por Funcionalidad) -->
   <script src="source/js/modules/dialogs.js"></script>
   <script src="source/js/modules/sample-data.js"></script>

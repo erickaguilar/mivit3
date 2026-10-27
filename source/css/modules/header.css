@@ -1,14 +1,13 @@
 /* ==========================================================================
    Cabecera Principal (App Header)
+   Desacoplada del sticky: se desplaza de forma natural permitiendo más área de edición
    ========================================================================== */
 
 .app-header {
   background: #ffffff;
   border-bottom: 1px solid var(--border-ui);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: var(--shadow-sm);
+  position: relative;
+  z-index: 10;
 }
 
 .header-inner {
@@ -77,14 +76,33 @@
   color: var(--primary);
 }
 
-/* Acciones en la cabecera */
-.header-actions {
+/* Insignia de Privacidad Local en cabecera */
+.header-right-meta {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
 }
 
+.badge-privacy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #0f766e;
+  background: #ccfbf1;
+  border: 1px solid #99f6e4;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.2px;
+  cursor: default;
+  transition: var(--transition);
+}
+
+.badge-privacy svg {
+  stroke: #0f766e;
+}
+
+/* Botones genéricos de interfaz */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -95,11 +113,25 @@
   font-weight: 500;
   transition: var(--transition);
   text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .btn svg {
   width: 16px;
   height: 16px;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+
+.btn-sm svg {
+  width: 14px;
+  height: 14px;
 }
 
 .btn-default {
@@ -116,6 +148,7 @@
 .btn-primary {
   background: var(--primary);
   color: #ffffff;
+  border: 1px solid transparent;
 }
 
 .btn-primary:hover {
@@ -131,25 +164,9 @@
   background: #115e59;
 }
 
-
-
 @media (max-width: 860px) {
   .header-inner {
     padding: 8px 12px;
-    gap: 10px;
-  }
-  .header-actions {
-    gap: 6px;
-    overflow-x: auto;
-    width: 100%;
-    padding-bottom: 4px;
-    scrollbar-width: thin;
-    flex-wrap: nowrap;
-  }
-  .header-actions .btn {
-    white-space: nowrap;
-    padding: 6px 10px;
-    font-size: 12px;
-    flex-shrink: 0;
+    gap: 8px;
   }
 }

@@ -1,6 +1,5 @@
 /* ==========================================================================
-   PLANTILLAS miVIT3 — Índice y Reglas Generales
-   Colección Fundacional Alpha (00, 01, 02, 03) y Alto Impacto (Tech, Harvard, Timeline, Nordic)
+   PLANTILLAS miVIT3 — Reglas Generales y Elementos Decorativos Compartidos
    ========================================================================== */
 
 /* Elementos decorativos por defecto (ocultos hasta que su plantilla los active) */
@@ -9,13 +8,3 @@
 .cv-item-location {
   display: none;
 }
-
-/* Importación modular de plantillas individuales */
-@import "../templates/alpha-00-bicolor.css";
-@import "../templates/alpha-01-columns.css";
-@import "../templates/alpha-02-banner.css";
-@import "../templates/alpha-03-monogram.css";
-@import "../templates/template-tech.css";
-@import "../templates/template-executive.css";
-@import "../templates/template-timeline.css";
-@import "../templates/template-nordic.css";

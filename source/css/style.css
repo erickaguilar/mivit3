@@ -11,6 +11,14 @@
 @import "./modules/desk.css";
 @import "./modules/cv-sections.css";
 @import "./modules/templates.css";
+@import "./templates/alpha-00-bicolor.css";
+@import "./templates/alpha-01-columns.css";
+@import "./templates/alpha-02-banner.css";
+@import "./templates/alpha-03-monogram.css";
+@import "./templates/template-tech.css";
+@import "./templates/template-executive.css";
+@import "./templates/template-timeline.css";
+@import "./templates/template-nordic.css";
 @import "./modules/ats-drawer.css";
 @import "./modules/dialogs.css";
 @import "./modules/print.css";

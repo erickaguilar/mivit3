@@ -21,8 +21,13 @@
     const roleEl = cvDocument.querySelector('.cv-role');
     const personRole = (roleEl ? roleEl.textContent.trim() : '') || 'Profesional';
 
+    const DEFAULT_AVATAR_DATA_URI = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" fill="none"><circle cx="64" cy="64" r="62" fill="%23F1F5F9" stroke="%23CBD5E1" stroke-width="2"/><circle cx="64" cy="48" r="22" fill="%2364748B"/><path d="M26 108c4-22 20-34 38-34s34 12 38 34" fill="%2364748B"/></svg>';
+
     const avatarEl = cvDocument.querySelector('#cvAvatar');
-    const avatarSrc = (avatarEl ? avatarEl.src : '') || 'source/img/user.svg';
+    let avatarSrc = (avatarEl ? avatarEl.getAttribute('src') || avatarEl.src : '').trim();
+    if (!avatarSrc || avatarSrc.includes('user.svg') || (!avatarSrc.startsWith('data:image/') && !avatarSrc.startsWith('http://') && !avatarSrc.startsWith('https://'))) {
+      avatarSrc = DEFAULT_AVATAR_DATA_URI;
+    }
 
     const accent = getComputedStyle(document.documentElement).getPropertyValue('--cv-accent').trim() || '#6400c8';
     const accentLight = getComputedStyle(document.documentElement).getPropertyValue('--cv-accent-light').trim() || '#f3e8ff';

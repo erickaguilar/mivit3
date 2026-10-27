@@ -179,26 +179,45 @@
 
     cvDoc.innerHTML = `
       <header class="cv-profile-header">
-        <div class="cv-avatar-wrap">
-          <img id="cvAvatar" class="cv-avatar" src="source/img/user.svg" alt="Foto de perfil">
-          <label for="avatarFileInput" class="avatar-upload-btn" title="Cambiar foto">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-          </label>
+        <div class="cv-bicolor-decor">
+          <div class="cv-bicolor-darkbar"></div>
+          <div class="cv-bicolor-stripes">
+            <div class="stripe-1"></div>
+            <div class="stripe-2"></div>
+          </div>
         </div>
-        <div class="cv-personal-details">
-          <h1 class="cv-name" contenteditable="true" data-placeholder="Tu Nombre Completo"></h1>
-          <div class="cv-role" contenteditable="true" data-placeholder="Tu Profesión o Título"></div>
-          <ul class="cv-contact-list">
-            <li class="cv-contact-item">
-              <span contenteditable="true" data-placeholder="correo@ejemplo.com"></span>
-            </li>
-            <li class="cv-contact-item">
-              <span contenteditable="true" data-placeholder="Teléfono"></span>
-            </li>
-            <li class="cv-contact-item">
-              <span contenteditable="true" data-placeholder="Ciudad, País"></span>
-            </li>
-          </ul>
+
+        <div class="cv-header-main">
+          <div class="cv-avatar-wrap">
+            <img id="cvAvatar" class="cv-avatar" src="source/img/user.svg" alt="Foto de perfil">
+            <label for="avatarFileInput" class="avatar-upload-btn" title="Cambiar foto de perfil">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                <circle cx="12" cy="13" r="4"></circle>
+              </svg>
+            </label>
+          </div>
+          <div class="cv-personal-details">
+            <div class="cv-name-row">
+              <h1 class="cv-name" contenteditable="true" data-placeholder="Tu Nombre Completo"></h1>
+              <div class="cv-monogram-badge" contenteditable="true" title="Monograma / Iniciales">CV</div>
+            </div>
+            <div class="cv-role" contenteditable="true" data-placeholder="Tu Profesión o Título"></div>
+            <ul class="cv-contact-list">
+              <li class="cv-contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <span contenteditable="true" data-placeholder="correo@ejemplo.com"></span>
+              </li>
+              <li class="cv-contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span contenteditable="true" data-placeholder="Teléfono"></span>
+              </li>
+              <li class="cv-contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span contenteditable="true" data-placeholder="Ciudad, País"></span>
+              </li>
+            </ul>
+          </div>
         </div>
       </header>
 

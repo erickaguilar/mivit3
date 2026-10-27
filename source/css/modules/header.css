@@ -131,3 +131,25 @@
   background: #115e59;
 }
 
+
+
+@media (max-width: 860px) {
+  .header-inner {
+    padding: 8px 12px;
+    gap: 10px;
+  }
+  .header-actions {
+    gap: 6px;
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+    flex-wrap: nowrap;
+  }
+  .header-actions .btn {
+    white-space: nowrap;
+    padding: 6px 10px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+}

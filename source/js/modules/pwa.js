@@ -14,6 +14,18 @@
         navigator.serviceWorker.register('./sw.js')
           .then((reg) => {
             console.log('miVIT3 PWA ServiceWorker registrado con alcance:', reg.scope);
+            reg.addEventListener('updatefound', () => {
+              const newWorker = reg.installing;
+              if (newWorker) {
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    if (window.showToast) {
+                      window.showToast('Nueva versión de miVIT3 disponible. Recarga para actualizar.');
+                    }
+                  }
+                });
+              }
+            });
           })
           .catch((err) => {
             console.warn('Error al registrar ServiceWorker PWA:', err);

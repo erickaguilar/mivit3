@@ -18,7 +18,7 @@
     print-color-adjust: exact !important;
   }
 
-  /* Ocultar barra superior, ribbon, botones de acción, modales y guías */
+  /* Ocultar barra superior, ribbon, botones de acción, modales, guías y botones de borrado de etiquetas */
   .app-header,
   .word-toolbar-container,
   .cv-settings-bar,
@@ -34,7 +34,8 @@
   .drawer-backdrop,
   .drawer-panel,
   .btn-add-section,
-  .btn-add-item {
+  .btn-add-item,
+  .cv-tag-del {
     display: none !important;
   }
 

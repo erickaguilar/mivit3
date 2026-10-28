@@ -17,7 +17,7 @@
   }
 
   function setupWordToolbar() {
-    const toolbar = document.querySelector('.word-toolbar');
+    const toolbar = document.querySelector('.sticky-toolbars-wrapper') || document.querySelector('.word-toolbar');
     if (!toolbar) return;
 
     // Delegación de clics en la barra de herramientas (botones y dropdowns)

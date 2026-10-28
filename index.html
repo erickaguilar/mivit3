@@ -299,39 +299,114 @@
         </div>
       </div>
       <div class="settings-right">
-        <!-- Acciones de Revisión y Exportación -->
+        <!-- Acciones de Revisión, Idioma y Exportación -->
         <div class="settings-actions-group">
+          <!-- Tips -->
           <button id="btnShowTips" class="btn btn-sm btn-default" title="Consejos y mejores prácticas para tu CV">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
             Tips
           </button>
-          <button id="btnShowPublishGuide" class="btn btn-sm btn-default" title="Guía para publicar tu CV gratis en la web (GitHub Pages, Netlify)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            Publicar
-          </button>
+
+          <!-- Auditoría ATS -->
           <button id="btnToggleAts" class="btn btn-sm btn-default btn-ats" title="Auditoría ATS en tiempo real y optimizador de vacante">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline><path d="M22 12h-4"></path><path d="M6 12H2"></path><path d="M12 6V2"></path><path d="M12 22v-4"></path></svg>
             ATS
             <span id="headerAtsBadge" class="ats-badge-score">--</span>
           </button>
-          <button id="btnExportWeb" class="btn btn-sm btn-default" title="Exportar como Portafolio Web interactivo (.html) para publicar o compartir">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-            Web
+
+          <!-- NUEVO: Modo Vista Previa -->
+          <button id="btnTogglePreview" class="btn btn-sm btn-default" title="Modo Vista Previa (ver cómo lucirá sin controles de edición)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Vista Previa
           </button>
+
+          <!-- UNIFICACIÓN: Menú Desplegable "Compartir Web ▾" -->
+          <div class="ribbon-dropdown" id="webShareDropdown">
+            <button type="button" class="btn btn-sm btn-default ribbon-dropdown-btn" id="webShareDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Compartir y publicar tu CV en la web">
+              <svg class="icon-main" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span>Web</span>
+              <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="ribbon-menu" id="webShareMenu" role="menu" style="min-width: 220px;">
+              <button type="button" class="ribbon-menu-item" id="btnExportWeb" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Descargar Portafolio Web (.html)
+              </button>
+              <button type="button" class="ribbon-menu-item" id="btnPreviewWebTab" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                Vista Previa en Pestaña Nueva
+              </button>
+              <button type="button" class="ribbon-menu-item" id="btnShowPublishGuide" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                Guía: Publicar Gratis en la Web
+              </button>
+              <div class="ribbon-menu-divider"></div>
+              <button type="button" class="ribbon-menu-item" id="btnExportPlainText" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+                Copiar Texto Plano (ATS Puro)
+              </button>
+            </div>
+          </div>
+
+          <!-- NUEVO: Gestor de Variantes / Versiones del CV -->
+          <div class="ribbon-dropdown" id="cvVariantsDropdown">
+            <button type="button" class="btn btn-sm btn-default ribbon-dropdown-btn" id="cvVariantsDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Gestionar versiones y variantes del CV">
+              <svg class="icon-main" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+              <span>Versiones</span>
+              <svg class="icon-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="ribbon-menu" id="cvVariantsMenu" role="menu" style="min-width: 210px;">
+              <button type="button" class="ribbon-menu-item" id="btnSaveCurrentVariant" role="menuitem">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                Guardar Versión Actual...
+              </button>
+              <div class="ribbon-menu-divider"></div>
+              <div class="template-menu-group-label" style="padding: 4px 8px 2px;">Mis Versiones Guardadas</div>
+              <div id="variantsListContainer"></div>
+            </div>
+          </div>
+
+          <!-- NUEVO: Selector Rápido de Idioma del CV (ES / EN) -->
+          <button id="btnToggleLanguage" class="btn btn-sm btn-default" title="Traducir encabezados estándar a Inglés / Español">
+            <span id="cvLangFlag" style="font-size: 13px;">🇪🇸</span>
+            <span id="cvLangCode" style="font-weight: 700; font-size: 11px;">ES</span>
+          </button>
+
+          <!-- Exportar a PDF (CTA Principal) -->
           <button id="btnPrintPdf" class="btn btn-sm btn-primary" title="Imprimir o guardar en PDF (Ctrl+P)" onclick="window.print()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
             PDF
           </button>
         </div>
+
         <div class="settings-divider"></div>
+
+        <!-- NUEVO: Control de Zoom del Lienzo (🔍 Zoom) -->
+        <div class="zoom-control-group" title="Nivel de zoom del lienzo (Clic para 100%)">
+          <button type="button" class="zoom-btn" id="btnZoomOut" title="Reducir zoom">-</button>
+          <span class="zoom-level" id="zoomLevelText" title="Restablecer al 100%">100%</span>
+          <button type="button" class="zoom-btn" id="btnZoomIn" title="Aumentar zoom">+</button>
+        </div>
+
+        <!-- NUEVO: Checklist de Completitud del CV -->
+        <div id="completenessBadge" class="completeness-badge score-good" title="Completitud de tu CV (Clic para ver checklist)">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span id="completenessPercentText">85% Listo</span>
+        </div>
+
+        <!-- Indicador de Páginas A4 -->
         <div id="pageBadge" class="page-badge" title="Espacio ocupado en hoja A4">
           <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
           <span id="pageBadgeText">1 pág. (0%)</span>
         </div>
+
+        <!-- Contador Dinámico de Palabras -->
         <div id="wordCountBadge" class="word-count-badge" title="Palabras en el CV">
           <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
           <span id="wordCountText">0 pal.</span>
         </div>
+
+        <!-- Estado de Guardado -->
         <div class="save-status">
           <span id="saveStatusDot" class="status-dot"></span>
           <span id="saveStatusText">Guardado</span>
@@ -658,6 +733,12 @@
   <script src="source/js/modules/search-replace.js"></script>
   <script src="source/js/modules/focus-mode.js"></script>
   <script src="source/js/modules/word-counter.js"></script>
+  <script src="source/js/modules/preview-mode.js"></script>
+  <script src="source/js/modules/plain-text-exporter.js"></script>
+  <script src="source/js/modules/zoom-controller.js"></script>
+  <script src="source/js/modules/cv-language.js"></script>
+  <script src="source/js/modules/cv-variants.js"></script>
+  <script src="source/js/modules/cv-completeness.js"></script>
   <script src="source/js/modules/templates.js"></script>
   <script src="source/js/modules/pagination.js"></script>
   <script src="source/js/modules/drag-drop.js"></script>

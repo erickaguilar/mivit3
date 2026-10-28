@@ -598,3 +598,191 @@
   background: var(--primary) !important;
   color: #ffffff !important;
 }
+
+
+/* ==========================================================================
+   Estilos de Vista Previa, Zoom, Variantes y Completitud
+   ========================================================================== */
+
+/* Píldora flotante para salir del Modo Vista Previa */
+.preview-exit-floating-pill {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 10px 25px -5px rgba(100, 0, 200, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 2px solid #ffffff;
+}
+
+.preview-exit-floating-pill:hover {
+  background: var(--primary-hover);
+  transform: translateX(-50%) scale(1.05);
+}
+
+/* Modo Vista Previa en el lienzo */
+body.cv-preview-mode .item-actions,
+body.cv-preview-mode .section-actions,
+body.cv-preview-mode .cv-tag-del,
+body.cv-preview-mode .avatar-upload-btn,
+body.cv-preview-mode .cv-table-actions,
+body.cv-preview-mode .page-warning-banner,
+body.cv-preview-mode .drag-handle {
+  display: none !important;
+}
+
+body.cv-preview-mode .cv-paper {
+  box-shadow: 0 15px 35px -5px rgba(15, 23, 42, 0.15) !important;
+}
+
+/* Grupo de Control de Zoom */
+.zoom-control-group {
+  display: inline-flex;
+  align-items: center;
+  background: #f1f5f9;
+  border: 1px solid var(--border-ui);
+  border-radius: var(--radius-sm);
+  padding: 1px 3px;
+  gap: 2px;
+}
+
+.zoom-btn {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+  border-radius: 3px;
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.zoom-btn:hover {
+  background: #e2e8f0;
+  color: var(--primary);
+}
+
+.zoom-level {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 32px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.zoom-level:hover {
+  color: var(--primary);
+}
+
+/* Badge de Completitud del CV */
+.completeness-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.completeness-badge.score-good {
+  background: #ecfdf5;
+  color: #059669;
+  border-color: #a7f3d0;
+}
+
+.completeness-badge.score-mid {
+  background: #fffbeb;
+  color: #d97706;
+  border-color: #fde68a;
+}
+
+.completeness-badge.score-low {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.completeness-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Filas del Menú de Variantes */
+.variant-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-radius: 4px;
+  transition: background 0.12s ease;
+  padding: 2px 4px;
+}
+
+.variant-item-row:hover {
+  background: #f8fafc;
+}
+
+.variant-load-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.variant-name-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.variant-date-text {
+  font-size: 10px;
+  color: var(--text-light);
+}
+
+.variant-del-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 6px;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+}
+
+.variant-del-btn:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}

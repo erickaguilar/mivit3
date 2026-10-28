@@ -3,7 +3,7 @@
  * Cero dependencias externas
  */
 
-const CACHE_NAME = 'mivit3-cache-v2.8.3';
+const CACHE_NAME = 'mivit3-cache-v2.8.4';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -39,6 +39,12 @@ const ASSETS_TO_CACHE = [
   './source/js/modules/search-replace.js',
   './source/js/modules/focus-mode.js',
   './source/js/modules/word-counter.js',
+  './source/js/modules/preview-mode.js',
+  './source/js/modules/plain-text-exporter.js',
+  './source/js/modules/zoom-controller.js',
+  './source/js/modules/cv-language.js',
+  './source/js/modules/cv-variants.js',
+  './source/js/modules/cv-completeness.js',
   './source/js/modules/templates.js',
   './source/js/modules/pagination.js',
   './source/js/modules/drag-drop.js',
@@ -106,11 +112,10 @@ self.addEventListener('fetch', (event) => {
           return networkResponse;
         })
         .catch(() => {
-          // Si falla la red (offline), cachedResponse cubrirá la petición
+          // Si la red falla y no hay cache, fallback básico offline
           return cachedResponse;
         });
 
-      // Retornar de inmediato el cache si existe, mientras la red actualiza en segundo plano
       return cachedResponse || fetchPromise;
     })
   );

@@ -1,6 +1,6 @@
 /**
  * miVIT3 — Módulo de Exportación a Portafolio Web (Fase 4)
- * Extrae los datos semánticos del CV, invoca el generador de plantilla desacoplado y gestiona la descarga.
+ * Extrae los datos semánticos del CV, invoca el generador de plantilla desacoplado y gestiona la descarga y vista previa.
  */
 
 (function () {
@@ -25,9 +25,9 @@
     return temp.innerHTML;
   }
 
-  function exportToWebHtml() {
+  function buildWebPortfolioHtml() {
     const cvDocument = document.getElementById('cv-document');
-    if (!cvDocument) return;
+    if (!cvDocument) return null;
 
     // 1. Datos Personales
     const nameEl = cvDocument.querySelector('.cv-name');
@@ -83,7 +83,7 @@
       let bodyHtml = '';
 
       if (tagsWrap) {
-        // Etiquetas de habilidades
+        // Habilidades
         const tags = Array.from(tagsWrap.querySelectorAll('.cv-tag')).map(t => {
           const editable = t.querySelector('[contenteditable]') || t;
           return editable.textContent.replace('✕', '').trim();
@@ -91,7 +91,7 @@
 
         bodyHtml = `<div class="skills-grid">${tags.map(t => `<span class="skill-badge">${escapeHtml(t)}</span>`).join('')}</div>`;
       } else if (items.length > 0) {
-        // Elementos estructurados (Empleo / Educación)
+        // Elementos estructurados
         bodyHtml = Array.from(items).map(item => {
           const itemTitle = (item.querySelector('.cv-item-title') || {}).textContent || '';
           const itemSubtitle = (item.querySelector('.cv-item-subtitle') || {}).textContent || '';
@@ -115,7 +115,7 @@
           `;
         }).join('');
       } else if (descEl) {
-        // Texto general (Perfil, Idiomas)
+        // Texto general
         bodyHtml = `<div class="web-desc">${cleanHtmlContent(descEl.innerHTML)}</div>`;
       }
 
@@ -133,7 +133,7 @@
     const generateFn = (window.miVit3 && window.miVit3.generateWebPortfolioHtml) || window.generateWebPortfolioHtml;
     if (!generateFn) {
       console.error('El generador de plantilla web no está cargado');
-      return;
+      return null;
     }
 
     const htmlOutput = generateFn({
@@ -146,11 +146,18 @@
       sectionsHtml
     });
 
-    // 5. Descargar archivo cv-web.html
-    const blob = new Blob([htmlOutput], { type: 'text/html;charset=utf-8' });
+    return { htmlOutput, personName };
+  }
+
+  function exportToWebHtml() {
+    const data = buildWebPortfolioHtml();
+    if (!data) return;
+
+    // Descargar archivo cv-web.html
+    const blob = new Blob([data.htmlOutput], { type: 'text/html;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    const slug = personName.toLowerCase().replace(/[^a-záéíóúüñ0-9]+/g, '-').replace(/^-|-$/g, '') || 'cv';
+    const slug = data.personName.toLowerCase().replace(/[^a-záéíóúüñ0-9]+/g, '-').replace(/^-|-$/g, '') || 'cv';
     a.href = url;
     a.download = `cv-web-${slug}.html`;
     document.body.appendChild(a);
@@ -171,8 +178,33 @@
     }
   }
 
+  function previewWebPortfolioInTab() {
+    const data = buildWebPortfolioHtml();
+    if (!data) return;
+
+    const blob = new Blob([data.htmlOutput], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+
+    if (window.showToast) {
+      window.showToast('Vista previa abierta en una nueva pestaña');
+    }
+  }
+
+  // Inicialización de escuchadores al cargar el DOM
+  document.addEventListener('DOMContentLoaded', function () {
+    const btnPreviewWebTab = document.getElementById('btnPreviewWebTab');
+    if (btnPreviewWebTab) {
+      btnPreviewWebTab.addEventListener('click', previewWebPortfolioInTab);
+    }
+  });
+
   // Exportar funciones
+  window.buildWebPortfolioHtml = buildWebPortfolioHtml;
   window.exportToWebHtml = exportToWebHtml;
+  window.previewWebPortfolioInTab = previewWebPortfolioInTab;
+  window.miVit3.buildWebPortfolioHtml = buildWebPortfolioHtml;
   window.miVit3.exportToWebHtml = exportToWebHtml;
+  window.miVit3.previewWebPortfolioInTab = previewWebPortfolioInTab;
 
 })();

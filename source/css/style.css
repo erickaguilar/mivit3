@@ -21,4 +21,5 @@
 @import "./templates/template-nordic.css";
 @import "./modules/ats-drawer.css";
 @import "./modules/dialogs.css";
+@import "./modules/ribbon-popovers.css";
 @import "./modules/print.css";

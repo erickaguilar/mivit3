@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Modales y Popovers de Herramientas del Ribbon (Símbolos, Tabla, etc.)
+   ========================================================================== */
+
+/* Modal Selector de Símbolos & Emojis para CV */
+.symbol-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 250;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease-out;
+}
+
+.symbol-modal-backdrop.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.symbol-picker-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+  width: 90%;
+  max-width: 440px;
+  overflow: hidden;
+  border: 1px solid var(--border-ui);
+  transform: translateY(12px) scale(0.98);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.symbol-modal-backdrop.show .symbol-picker-card {
+  transform: translateY(0) scale(1);
+}
+
+.symbol-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-ui);
+  background: #f8fafc;
+}
+
+.symbol-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.symbol-header h3 svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--primary);
+}
+
+.symbol-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.symbol-close-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.symbol-body {
+  padding: 14px 18px 18px;
+  max-height: 380px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.symbol-category {
+  margin-bottom: 14px;
+}
+
+.symbol-category:last-child {
+  margin-bottom: 0;
+}
+
+.symbol-category-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.symbol-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.symbol-btn {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  background: #f8fafc;
+  border: 1px solid var(--border-ui);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  color: #0f172a;
+}
+
+.symbol-btn:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: scale(1.18);
+  box-shadow: var(--shadow-sm);
+  z-index: 2;
+}
+
+.symbol-footer {
+  padding: 8px 18px;
+  background: #f8fafc;
+  border-top: 1px solid var(--border-ui);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+}

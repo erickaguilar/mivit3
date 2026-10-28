@@ -74,6 +74,23 @@
       }
     });
 
+    // Soporte de tecla Tab / Shift+Tab para Sangría en el documento editable
+    const cvDoc = document.getElementById('cv-document');
+    if (cvDoc) {
+      cvDoc.addEventListener('keydown', function (e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          if (e.shiftKey) {
+            document.execCommand('outdent', false, null);
+          } else {
+            document.execCommand('indent', false, null);
+          }
+          triggerAutoSave();
+          updateToolbarState();
+        }
+      });
+    }
+
     // Selector de tipografía
     const fontSelect = document.getElementById('fontFamilySelect');
     if (fontSelect) {
@@ -144,7 +161,18 @@
     }
 
     if (command === 'insertQuote') {
-      document.execCommand('formatBlock', false, '<blockquote>');
+      const selection = window.getSelection();
+      let isInsideQuote = false;
+      if (selection && selection.rangeCount) {
+        let node = selection.anchorNode;
+        if (node && node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+        if (node && node.closest('blockquote')) isInsideQuote = true;
+      }
+      if (isInsideQuote) {
+        document.execCommand('formatBlock', false, '<p>');
+      } else {
+        document.execCommand('formatBlock', false, '<blockquote>');
+      }
       triggerAutoSave();
       return;
     }

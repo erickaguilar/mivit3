@@ -3,7 +3,7 @@
  * Cero dependencias externas
  */
 
-const CACHE_NAME = 'mivit3-cache-v2.8.0';
+const CACHE_NAME = 'mivit3-cache-v2.8.1';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -31,6 +31,7 @@ const ASSETS_TO_CACHE = [
   './source/js/modules/dialogs.js',
   './source/js/modules/sample-data.js',
   './source/js/modules/toolbar.js',
+  './source/js/modules/format-painter.js',
   './source/js/modules/templates.js',
   './source/js/modules/pagination.js',
   './source/js/modules/drag-drop.js',

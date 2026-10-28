@@ -583,3 +583,18 @@
     flex-shrink: 0;
   }
 }
+
+
+/* ==========================================================================
+   Modo Brocha de Copiar Formato (Format Painter)
+   ========================================================================== */
+
+.format-painter-active,
+.format-painter-active * {
+  cursor: copy !important;
+}
+
+.tool-btn.painter-persistent {
+  background: var(--primary) !important;
+  color: #ffffff !important;
+}

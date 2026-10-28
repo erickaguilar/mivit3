@@ -309,3 +309,35 @@
   opacity: 1;
 }
 
+
+
+/* ==========================================================================
+   Citas / Bloques Destacados (Blockquote) y Sub/Superíndice
+   ========================================================================== */
+
+.cv-document blockquote {
+  border-left: 3px solid var(--cv-accent);
+  margin: 8px 0 8px 12px;
+  padding: 5px 12px;
+  font-style: italic;
+  color: #334155;
+  background: rgba(15, 23, 42, 0.02);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  line-height: 1.5;
+}
+
+.cv-document sub,
+.cv-document sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.cv-document sup {
+  top: -0.5em;
+}
+
+.cv-document sub {
+  bottom: -0.25em;
+}

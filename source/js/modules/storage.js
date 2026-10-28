@@ -123,9 +123,18 @@
           document.documentElement.style.setProperty('--cv-accent', settings.accent);
           document.documentElement.style.setProperty('--cv-accent-light', settings.accentLight);
 
-          document.querySelectorAll('.palette-swatch').forEach(s => {
-            s.classList.toggle('active', s.dataset.accent.toLowerCase() === settings.accent.toLowerCase());
+          const norm = settings.accent.toLowerCase();
+          document.querySelectorAll('.palette-swatch, .palette-popover-item').forEach(s => {
+            const acc = (s.dataset.accent || '').toLowerCase();
+            s.classList.toggle('active', acc === norm);
           });
+
+          const customPicker = document.getElementById('customAccentPicker');
+          const customPreview = document.getElementById('customColorPreview');
+          const customHexInput = document.getElementById('customColorHexInput');
+          if (customPicker && /^#[0-9a-f]{6}$/i.test(settings.accent)) customPicker.value = settings.accent;
+          if (customPreview) customPreview.style.backgroundColor = settings.accent;
+          if (customHexInput) customHexInput.value = settings.accent.toUpperCase();
         }
       } catch (e) {
         console.error('Error al restaurar configuración:', e);

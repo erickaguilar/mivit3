@@ -296,6 +296,84 @@
           <button class="palette-swatch" style="background:#0f766e;" data-accent="#0f766e" data-light="#ccfbf1" title="Verde Esmeralda"></button>
           <button class="palette-swatch" style="background:#334155;" data-accent="#334155" data-light="#f1f5f9" title="Grafito Oscuro"></button>
           <button class="palette-swatch" style="background:#881337;" data-accent="#881337" data-light="#ffe4e6" title="Borgoña Elegante"></button>
+
+          <!-- Menú Desplegable: Estudio de Color & Selector Libre -->
+          <div class="ribbon-dropdown palette-dropdown" id="colorPaletteDropdown">
+            <button type="button" class="palette-more-btn ribbon-dropdown-btn" id="btnMoreColors" aria-haspopup="true" aria-expanded="false" title="Más paletas profesionales y selector de color libre">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <div class="ribbon-menu color-popover-menu" id="colorPopoverMenu" role="menu">
+              <!-- Selector Libre Personalizado -->
+              <div class="color-popover-section">
+                <div class="template-menu-group-label" style="padding: 2px 0 6px 0;">Color Personalizado Libre</div>
+                <div class="color-custom-row">
+                  <label class="color-custom-picker-wrap" title="Clic para elegir cualquier color con la rueda nativa">
+                    <input type="color" id="customAccentPicker" value="#6400c8">
+                    <span class="color-custom-preview-circle" id="customColorPreview" style="background:#6400c8;"></span>
+                  </label>
+                  <input type="text" id="customColorHexInput" class="color-hex-input" value="#6400C8" maxlength="7" spellcheck="false" title="Código hexadecimal del color (ej. #2563EB)">
+                  <span class="color-custom-label">Cualquier Color Hex</span>
+                </div>
+              </div>
+
+              <div class="ribbon-menu-divider"></div>
+
+              <!-- Paletas Profesionales Curadas -->
+              <div class="color-popover-section">
+                <div class="template-menu-group-label" style="padding: 2px 0 6px 0;">Paletas Profesionales Curadas</div>
+                <div class="color-grid-presets">
+                  <button type="button" class="palette-popover-item active" data-accent="#6400c8" data-light="#f3e8ff" title="Púrpura miVIT3">
+                    <span class="grid-swatch-dot" style="background:#6400c8;"></span>
+                    <span class="grid-swatch-name">Púrpura miVIT3</span>
+                  </button>
+                  <button type="button" class="palette-popover-item" data-accent="#1e40af" data-light="#dbeafe" title="Azul Ejecutivo Harvard">
+                    <span class="grid-swatch-dot" style="background:#1e40af;"></span>
+                    <span class="grid-swatch-name">Azul Ejecutivo</span>
+                  </button>
+                  <button type="button" class="palette-popover-item" data-accent="#2563eb" data-light="#eff6ff" title="Azul Silicon Valley / Tech">
+                    <span class="grid-swatch-dot" style="background:#2563eb;"></span>
+                    <span class="grid-swatch-name">Azul Silicon Valley</span>
+                  </button>
+                  <button type="button" class="palette-popover-item" data-accent="#0f766e" data-light="#ccfbf1" title="Verde Esmeralda">
+                    <span class="grid-swatch-dot" style="background:#0f766e;"></span>
+                    <span class="grid-swatch-name">Verde Esmeralda</span>
+                  </button>
+                  <button type="button" class="palette-popover-item" data-accent="#15803d" data-light="#dcfce7" title="Verde Forestal / Sostenible">
+                    <span class="grid-swatch-dot" style="background:#15803d;"></span>
+                    <span class="grid-swatch-name">Verde Bosque</span>
+                  </button>
+                  <button type="button" class="palette-popover-item" data-accent="#0284c7" data-light="#e0f2fe" title="Turquesa Océano">
+                    <span class="grid-swatch-dot" style="background:#0284c7;"></span>
+                    <span class="grid-swatch-name">Cian / Océano</span>
+                  </button>
+                  <button type="button" class="palette-popover-item" data-accent="#c2410c" data-light="#ffedd5" title="Terracota / Ámbar Cálido">
+                    <span class="grid-swatch-dot" style="background:#c2410c;"></span>
+                    <span class="grid-swatch-name">Terracota Ámbar</span>
+                  </button>
+                  <button type="button" class="palette-popover-item" data-accent="#881337" data-light="#ffe4e6" title="Borgoña / Vino Elegante">
+                    <span class="grid-swatch-dot" style="background:#881337;"></span>
+                    <span class="grid-swatch-name">Borgoña Vino</span>
+                  </button>
+                  <button type="button" class="palette-popover-item" data-accent="#78350f" data-light="#fef3c7" title="Moca / Café Ejecutivo">
+                    <span class="grid-swatch-dot" style="background:#78350f;"></span>
+                    <span class="grid-swatch-name">Moca Ejecutivo</span>
+                  </button>
+                  <button type="button" class="palette-popover-item" data-accent="#9d174d" data-light="#fce7f3" title="Malva / Frambuesa">
+                    <span class="grid-swatch-dot" style="background:#9d174d;"></span>
+                    <span class="grid-swatch-name">Frambuesa Malva</span>
+                  </button>
+                  <button type="button" class="palette-popover-item" data-accent="#334155" data-light="#f1f5f9" title="Slate / Grafito Oscuro">
+                    <span class="grid-swatch-dot" style="background:#334155;"></span>
+                    <span class="grid-swatch-name">Grafito Slate</span>
+                  </button>
+                  <button type="button" class="palette-popover-item" data-accent="#0f172a" data-light="#f1f5f9" title="Monocromo Negro ATS 100%">
+                    <span class="grid-swatch-dot" style="background:#0f172a;"></span>
+                    <span class="grid-swatch-name">Negro ATS Puro</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <span class="toolbar-label" style="margin-left: 10px;">Densidad:</span>
         <div class="pill-selector">

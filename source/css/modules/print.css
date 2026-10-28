@@ -36,6 +36,10 @@
   .drawer-panel,
   .btn-add-section,
   .btn-add-item,
+  .cv-table-actions,
+  .zen-exit-pill,
+  .search-replace-bar,
+  .symbol-modal-backdrop,
   .cv-tag-del {
     display: none !important;
   }

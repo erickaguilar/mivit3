@@ -341,3 +341,87 @@
 .cv-document sub {
   bottom: -0.25em;
 }
+
+
+/* ==========================================================================
+   Tablas Editables para CV (Skills, Idiomas, Métricas)
+   ========================================================================== */
+
+.cv-table-wrapper {
+  position: relative;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.cv-table-actions {
+  position: absolute;
+  top: -26px;
+  right: 0;
+  display: none;
+  gap: 4px;
+  background: #ffffff;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-ui);
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+}
+
+.cv-table-wrapper:hover .cv-table-actions {
+  display: flex;
+}
+
+.table-action-btn {
+  height: 22px;
+  padding: 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 3px;
+  border: 1px solid var(--border-ui);
+  background: #f8fafc;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.table-action-btn:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.table-action-btn.btn-del-table {
+  color: #ef4444;
+}
+
+.table-action-btn.btn-del-table:hover {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.cv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  background: #ffffff;
+}
+
+.cv-table th {
+  background: var(--cv-accent-light);
+  color: var(--cv-accent);
+  font-weight: 700;
+  padding: 6px 10px;
+  border: 1px solid var(--border-ui);
+  text-align: left;
+}
+
+.cv-table td {
+  padding: 6px 10px;
+  border: 1px solid var(--border-ui);
+  color: #334155;
+}
+
+.cv-table tr:hover td {
+  background: rgba(15, 23, 42, 0.015);
+}

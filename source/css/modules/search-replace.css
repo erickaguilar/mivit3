@@ -1,0 +1,152 @@
+/* ==========================================================================
+   Barra Flotante de Búsqueda y Reemplazo (Search & Replace)
+   ========================================================================== */
+
+.search-replace-bar {
+  position: fixed;
+  top: 92px;
+  right: 24px;
+  background: #ffffff;
+  border: 1px solid var(--border-ui);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 220;
+  animation: searchBarSlideIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  max-width: calc(100vw - 32px);
+  flex-wrap: wrap;
+}
+
+@keyframes searchBarSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #f8fafc;
+  border: 1px solid var(--border-ui);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  height: 28px;
+}
+
+.search-input-wrap svg {
+  width: 13px;
+  height: 13px;
+  stroke: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.search-input-wrap input {
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  outline: none;
+  width: 125px;
+  color: #0f172a;
+}
+
+.search-input-wrap input::placeholder {
+  color: var(--text-light);
+}
+
+.search-counter {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  padding: 0 4px;
+  min-width: 40px;
+  text-align: center;
+}
+
+.search-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.search-btn {
+  height: 28px;
+  padding: 0 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid var(--border-ui);
+  background: #f1f5f9;
+  color: #334155;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.search-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.search-btn.btn-replace-action {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.search-btn.btn-replace-action:hover {
+  background: var(--primary-hover);
+}
+
+.search-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+.search-close-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: var(--transition);
+  line-height: 1;
+}
+
+.search-close-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* Resaltado de coincidencias en el documento editable */
+mark.cv-search-highlight {
+  background: #fef08a !important;
+  color: #0f172a !important;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+mark.cv-search-highlight.current {
+  background: #f97316 !important;
+  color: #ffffff !important;
+  outline: 2px solid #ea580c;
+}

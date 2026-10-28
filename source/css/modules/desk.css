@@ -171,3 +171,57 @@
     padding: 16px 8px 40px;
   }
 }
+
+
+/* ==========================================================================
+   Modo Enfoque / Pantalla Completa (Zen Focus Mode)
+   ========================================================================== */
+
+body.zen-focus-mode .app-header {
+  display: none !important;
+}
+
+body.zen-focus-mode .document-desk {
+  background: #090d16 !important;
+  padding-top: 20px;
+}
+
+body.zen-focus-mode .cv-settings-bar {
+  opacity: 0.2;
+  transition: opacity 0.2s ease;
+}
+
+body.zen-focus-mode .cv-settings-bar:hover {
+  opacity: 1;
+}
+
+body.zen-focus-mode .word-toolbar-container {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.zen-exit-pill {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.85);
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-lg);
+}
+
+.zen-exit-pill:hover {
+  background: #0f172a;
+  transform: translateX(-50%) scale(1.05);
+}

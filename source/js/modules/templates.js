@@ -21,6 +21,10 @@
     'template-executive': 'Ejecutivo Harvard',
     'template-timeline': 'Línea de Tiempo',
     'template-nordic': 'Nordic Clean',
+    'template-swiss': 'Swiss Minimal Grid',
+    'template-sidebar': 'Sidebar Ejecutivo',
+    'template-compact-ats': 'Compact ATS (1 Pág.)',
+    'template-corporate-duo': 'Corporate Duo-Tone',
     'template-alpha00': 'Bicolor Moderno',
     'template-alpha01': 'Columnas ATS',
     'template-alpha02': 'Banner Credencial',
@@ -85,6 +89,7 @@
 
     cvDoc.classList.remove(
       'template-tech', 'template-executive', 'template-timeline', 'template-nordic',
+      'template-swiss', 'template-sidebar', 'template-compact-ats', 'template-corporate-duo',
       'template-alpha00', 'template-alpha01', 'template-alpha02', 'template-alpha03',
       'template-moderna', 'template-clasica', 'template-columnas', 'template-creativa'
     );

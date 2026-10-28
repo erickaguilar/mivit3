@@ -19,6 +19,10 @@
 @import "./templates/template-executive.css";
 @import "./templates/template-timeline.css";
 @import "./templates/template-nordic.css";
+@import "./templates/template-swiss.css";
+@import "./templates/template-sidebar.css";
+@import "./templates/template-compact-ats.css";
+@import "./templates/template-corporate-duo.css";
 @import "./modules/ats-drawer.css";
 @import "./modules/dialogs.css";
 @import "./modules/ribbon-popovers.css";

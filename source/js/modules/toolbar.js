@@ -20,19 +20,58 @@
     const toolbar = document.querySelector('.word-toolbar');
     if (!toolbar) return;
 
-    // Delegación de clics en botones de la barra
+    // Delegación de clics en la barra de herramientas (botones y dropdowns)
     toolbar.addEventListener('click', function (e) {
-      const btn = e.target.closest('.tool-btn');
+      // 1. Manejo de botones de apertura/cierre de menús desplegables del ribbon
+      const dropdownBtn = e.target.closest('.ribbon-dropdown-btn');
+      if (dropdownBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const dropdown = dropdownBtn.closest('.ribbon-dropdown');
+        if (!dropdown) return;
+        const wasOpen = dropdown.classList.contains('open');
+
+        // Cerrar otros dropdowns del ribbon
+        document.querySelectorAll('.ribbon-dropdown.open').forEach(d => {
+          if (d !== dropdown) d.classList.remove('open');
+        });
+
+        if (wasOpen) {
+          dropdown.classList.remove('open');
+        } else {
+          dropdown.classList.add('open');
+        }
+        return;
+      }
+
+      // 2. Manejo de ítems de menú del dropdown o botones de herramientas
+      const btn = e.target.closest('.tool-btn') || e.target.closest('.ribbon-menu-item');
       if (!btn) return;
 
       const command = btn.dataset.command;
       const value = btn.dataset.value || null;
+
+      // Cerrar cualquier dropdown abierto al ejecutar acción
+      document.querySelectorAll('.ribbon-dropdown.open').forEach(d => d.classList.remove('open'));
 
       if (!command) return;
 
       e.preventDefault();
       executeFormatCommand(command, value);
       updateToolbarState();
+    });
+
+    // Cerrar menús desplegables al hacer clic fuera o presionar Escape
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.ribbon-dropdown')) {
+        document.querySelectorAll('.ribbon-dropdown.open').forEach(d => d.classList.remove('open'));
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.ribbon-dropdown.open').forEach(d => d.classList.remove('open'));
+      }
     });
 
     // Selector de tipografía
@@ -104,6 +143,12 @@
       return;
     }
 
+    if (command === 'insertQuote') {
+      document.execCommand('formatBlock', false, '<blockquote>');
+      triggerAutoSave();
+      return;
+    }
+
     document.execCommand(command, false, value);
     triggerAutoSave();
   }
@@ -125,7 +170,12 @@
   }
 
   function updateToolbarState() {
-    const commands = ['bold', 'italic', 'underline', 'strikeThrough', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'insertUnorderedList', 'insertOrderedList'];
+    const commands = [
+      'bold', 'italic', 'underline', 'strikeThrough',
+      'subscript', 'superscript',
+      'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull',
+      'insertUnorderedList', 'insertOrderedList'
+    ];
     commands.forEach(cmd => {
       const btn = document.querySelector(`.tool-btn[data-command="${cmd}"]`);
       if (btn) {
@@ -157,71 +207,50 @@
         const alertFn = window.customAlert || (window.miVit3 && window.miVit3.alert);
         if (alertFn) {
           alertFn('Archivo de imagen no válido', 'Por favor selecciona un archivo con formato de imagen válido (PNG, JPG, SVG o WebP).', 'warning');
+        } else {
+          alert('Por favor selecciona un archivo de imagen válido.');
         }
         return;
       }
 
       const reader = new FileReader();
       reader.onload = function (event) {
-        const avatarImg = document.getElementById('cvAvatar');
+        const avatarImg = document.getElementById('cvAvatarImg');
+        const avatarPlaceholder = document.getElementById('cvAvatarPlaceholder');
+
         if (avatarImg) {
           avatarImg.src = event.target.result;
-          triggerAutoSave();
-          if (window.showToast) window.showToast('Foto de perfil actualizada');
+          avatarImg.style.display = 'block';
         }
+        if (avatarPlaceholder) {
+          avatarPlaceholder.style.display = 'none';
+        }
+
+        triggerAutoSave();
+        const toastFn = window.showToast || (window.miVit3 && window.miVit3.showToast);
+        if (toastFn) toastFn('Foto de perfil actualizada correctamente.');
       };
+
       reader.readAsDataURL(file);
     });
   }
 
-  /**
-   * Atajos de Teclado Estilo Word
-   */
-  function setupKeyboardShortcuts() {
-    document.addEventListener('keydown', function (e) {
-      const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      const cmdOrCtrl = isMac ? e.metaKey : e.ctrlKey;
-
-      if (!cmdOrCtrl) return;
-
-      switch (e.key.toLowerCase()) {
-        case 'b': // Negrita
-          e.preventDefault();
-          executeFormatCommand('bold');
-          updateToolbarState();
-          break;
-        case 'i': // Cursiva
-          e.preventDefault();
-          executeFormatCommand('italic');
-          updateToolbarState();
-          break;
-        case 'u': // Subrayado
-          e.preventDefault();
-          executeFormatCommand('underline');
-          updateToolbarState();
-          break;
-        case 's': // Guardar manual
-          e.preventDefault();
-          triggerAutoSave();
-          if (window.showToast) window.showToast('Guardado en el navegador');
-          break;
-        case 'p': // Imprimir / Exportar PDF
-          e.preventDefault();
-          window.print();
-          break;
-      }
-    });
+  // Inicialización cuando el DOM esté listo
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 
-  // Exportar funciones
-  window.setupWordToolbar = setupWordToolbar;
-  window.setupAvatarUpload = setupAvatarUpload;
-  window.setupKeyboardShortcuts = setupKeyboardShortcuts;
-  window.executeFormatCommand = executeFormatCommand;
-  window.updateToolbarState = updateToolbarState;
+  function init() {
+    setupWordToolbar();
+    setupAvatarUpload();
+  }
 
+  // Exportar al namespace global miVit3
   window.miVit3.setupWordToolbar = setupWordToolbar;
   window.miVit3.setupAvatarUpload = setupAvatarUpload;
-  window.miVit3.setupKeyboardShortcuts = setupKeyboardShortcuts;
+  window.miVit3.executeFormatCommand = executeFormatCommand;
+  window.miVit3.updateToolbarState = updateToolbarState;
 
 })();

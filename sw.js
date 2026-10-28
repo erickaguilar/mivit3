@@ -3,7 +3,7 @@
  * Cero dependencias externas
  */
 
-const CACHE_NAME = 'mivit3-cache-v2.7.5';
+const CACHE_NAME = 'mivit3-cache-v2.8.0';
 
 const ASSETS_TO_CACHE = [
   './',

@@ -13,6 +13,7 @@
 
 /* ==========================================================================
    Barra de Herramientas Estilo Word (Word Ribbon Toolbar)
+   Optimizada sin scroll horizontal en pantallas >=1024px
    ========================================================================== */
 
 .word-toolbar-container {
@@ -23,19 +24,31 @@
 .word-toolbar {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 6px 16px;
+  padding: 4px 12px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  overflow-x: auto;
-  scrollbar-width: thin;
+  gap: 3px;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .word-toolbar {
+    overflow-x: visible;
+  }
+}
+
+@media (max-width: 1023px) {
+  .word-toolbar {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
 }
 
 .toolbar-group {
   display: flex;
   align-items: center;
-  gap: 2px;
-  padding: 0 4px;
+  gap: 1.5px;
+  padding: 0 3px;
   border-right: 1px solid var(--border-ui);
   flex-shrink: 0;
 }
@@ -45,17 +58,25 @@
 }
 
 .toolbar-label {
-  font-size: 10px;
+  font-size: 9.5px;
   text-transform: uppercase;
   color: var(--text-light);
-  margin-right: 4px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  margin-right: 2px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
 }
 
+@media (max-width: 1240px) {
+  .toolbar-label {
+    display: none;
+  }
+}
+
+/* Micro-botones del ribbon (28x28px de alta densidad visual) */
 .tool-btn {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -66,6 +87,8 @@
   background: transparent;
   border: none;
   cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
 }
 
 .tool-btn:hover {
@@ -80,39 +103,60 @@
 }
 
 .tool-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
 }
 
+/* Selectores compactos */
 .tool-select {
-  height: 32px;
-  padding: 0 8px;
+  height: 28px;
+  padding: 0 4px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-ui);
   background: #ffffff;
-  font-size: 13px;
+  font-size: 11.5px;
   color: var(--text-main);
   outline: none;
+  flex-shrink: 0;
+  transition: border-color var(--transition);
 }
 
 .tool-select:focus {
   border-color: var(--primary);
 }
 
-/* Color pickers */
+#fontFamilySelect {
+  max-width: 130px;
+}
+
+#fontSizeSelect {
+  width: 58px;
+}
+
+#blockFormatSelect {
+  width: 90px;
+}
+
+/* Selectores de color integrados */
 .color-picker-wrap {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: var(--radius-sm);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .color-picker-wrap:hover {
   background: #f1f5f9;
+}
+
+.color-picker-wrap svg {
+  width: 15px;
+  height: 15px;
 }
 
 .color-picker-wrap input[type="color"] {
@@ -125,15 +169,132 @@
 
 .color-bar-indicator {
   position: absolute;
-  bottom: 4px;
-  left: 6px;
-  right: 6px;
-  height: 3px;
+  bottom: 3px;
+  left: 5px;
+  right: 5px;
+  height: 2.5px;
   border-radius: 2px;
   background: var(--cv-accent);
 }
 
-/* Barra secundaria de configuración de CV */
+/* ==========================================================================
+   Menús Desplegables del Ribbon (Ribbon Dropdowns: Insertar, Aa, Interlineado)
+   ========================================================================== */
+
+.ribbon-dropdown {
+  position: relative;
+  display: inline-flex;
+}
+
+.ribbon-dropdown-btn {
+  height: 28px;
+  padding: 0 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.ribbon-dropdown-btn:hover {
+  background: #f1f5f9;
+  color: var(--primary);
+  border-color: var(--border-ui);
+}
+
+.ribbon-dropdown.open .ribbon-dropdown-btn {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.ribbon-dropdown-btn svg.icon-main {
+  width: 15px;
+  height: 15px;
+}
+
+.ribbon-dropdown-btn svg.icon-chevron {
+  width: 10px;
+  height: 10px;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.ribbon-dropdown.open svg.icon-chevron {
+  transform: rotate(180deg);
+}
+
+.ribbon-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: #ffffff;
+  border: 1px solid var(--border-ui);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+  padding: 4px;
+  z-index: 120;
+  display: none;
+  flex-direction: column;
+  min-width: 185px;
+  animation: dropdownFadeIn 0.15s ease-out forwards;
+}
+
+.ribbon-dropdown.open .ribbon-menu {
+  display: flex;
+}
+
+.ribbon-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-main);
+  border-radius: 4px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+  white-space: nowrap;
+}
+
+.ribbon-menu-item svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  stroke: var(--text-muted);
+}
+
+.ribbon-menu-item:hover {
+  background: #f8fafc;
+  color: var(--primary);
+}
+
+.ribbon-menu-item:hover svg {
+  stroke: var(--primary);
+}
+
+.ribbon-menu-divider {
+  height: 1px;
+  background: #f1f5f9;
+  margin: 3px 4px;
+}
+
+/* ==========================================================================
+   Barra Secundaria: Plantillas, Paletas, Conteo y Exportación
+   ========================================================================== */
+
 .cv-settings-bar {
   background: #f8fafc;
   border-bottom: 1px solid var(--border-ui);
@@ -232,7 +393,7 @@
   color: var(--text-main);
   box-shadow: var(--shadow-sm);
   cursor: pointer;
-  min-width: 175px;
+  min-width: 170px;
   transition: var(--transition);
 }
 
@@ -369,6 +530,21 @@
 .palette-swatch.active {
   border-color: #ffffff;
   box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* Indicadores de estado y contador de palabras */
+.word-count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: #f1f5f9;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-ui);
+  cursor: default;
 }
 
 .save-status {

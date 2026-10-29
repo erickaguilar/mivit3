@@ -1,0 +1,244 @@
+/* ==========================================================================
+   miVIT3 — Módulo de Código QR Dinámico
+   Estilos del badge en el CV, modal de configuración y vista de impresión.
+   ========================================================================== */
+
+/* Badge del QR dentro del CV (Cabecera y Pie) */
+.cv-qr-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cv-qr-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-color: var(--cv-accent);
+}
+
+.cv-qr-header {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+}
+
+.cv-qr-footer {
+  margin: 18px auto 0 auto;
+  align-self: center;
+}
+
+.cv-qr-svg-wrap {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cv-qr-svg-wrap svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cv-qr-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #475569;
+  text-align: center;
+  margin-top: 4px;
+  max-width: 80px;
+  line-height: 1.15;
+}
+
+/* Modal de Configuración QR */
+.modal-card-qr {
+  max-width: 580px;
+  width: 92%;
+  padding: 22px 24px;
+}
+
+.qr-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+/* Toggle Switch */
+.qr-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.qr-toggle-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.qr-toggle-desc {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+.qr-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.qr-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.qr-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #cbd5e1;
+  transition: 0.2s;
+  border-radius: 24px;
+}
+
+.qr-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.2s;
+  border-radius: 50%;
+}
+
+.qr-switch input:checked + .qr-slider {
+  background-color: var(--primary);
+}
+
+.qr-switch input:checked + .qr-slider:before {
+  transform: translateX(20px);
+}
+
+/* Selector de Destino del QR */
+.qr-preset-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.qr-chip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: 20px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.qr-chip-btn:hover {
+  border-color: var(--cv-accent);
+  background: #f8fafc;
+}
+
+.qr-chip-btn.active {
+  border-color: var(--cv-accent);
+  background: var(--cv-accent-light);
+  color: var(--cv-accent);
+  font-weight: 700;
+}
+
+.qr-preview-split {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.qr-preview-box {
+  width: 110px;
+  height: 110px;
+  background: #ffffff;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-preview-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.qr-url-text {
+  font-size: 11px;
+  color: #64748b;
+  word-break: break-all;
+  font-family: monospace;
+  background: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Opciones de Posición */
+.qr-radio-group {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.qr-radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #334155;
+  cursor: pointer;
+}
+
+/* Impresión */
+@media print {
+  .cv-qr-badge {
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+}

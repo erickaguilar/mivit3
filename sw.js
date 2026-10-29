@@ -3,7 +3,7 @@
  * Cero dependencias externas
  */
 
-const CACHE_NAME = 'mivit3-cache-v2.8.6';
+const CACHE_NAME = 'mivit3-cache-v2.8.7';
 
 const ASSETS_TO_CACHE = [
   './',
@@ -34,6 +34,7 @@ const ASSETS_TO_CACHE = [
   './source/css/modules/ribbon-popovers.css',
   './source/css/modules/search-replace.css',
   './source/css/modules/cover-letter.css',
+  './source/css/modules/qr-code.css',
   './source/css/modules/print.css',
   './source/js/modules/dialogs.js',
   './source/js/modules/sample-data.js',
@@ -62,6 +63,7 @@ const ASSETS_TO_CACHE = [
   './source/js/modules/pwa.js',
   './source/js/modules/section-manager.js',
   './source/js/modules/cover-letter.js',
+  './source/js/modules/qr-code.js',
   './source/js/app.js',
   './source/img/home.svg',
   './source/img/menu.svg',

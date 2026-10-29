@@ -410,6 +410,12 @@
             Carta
           </button>
 
+          <!-- NUEVO: Código QR Dinámico -->
+          <button id="btnToggleQr" class="btn btn-sm btn-default" title="Insertar o configurar Código QR en tu CV (Portafolio, LinkedIn, WhatsApp)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><line x1="7" y1="7" x2="7.01" y2="7"></line><line x1="17" y1="17" x2="17.01" y2="17"></line><line x1="7" y1="17" x2="7.01" y2="17"></line><line x1="17" y1="17" x2="17.01" y2="17"></line></svg>
+            QR
+          </button>
+
           <!-- UNIFICACIÓN: Menú Desplegable "Compartir Web ▾" -->
           <div class="ribbon-dropdown" id="webShareDropdown">
             <button type="button" class="btn btn-sm btn-default ribbon-dropdown-btn" id="webShareDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Compartir y publicar tu CV en la web">
@@ -740,6 +746,139 @@
   </div>
 
   <!-- =========================================================================
+       Modal de Configuración de Código QR Dinámico
+       ========================================================================= -->
+
+  <div id="qrConfigModal" class="modal-backdrop">
+    <div class="modal-card modal-card-qr">
+      <div class="qr-modal-header">
+        <h2>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><line x1="7" y1="7" x2="7.01" y2="7"></line><line x1="17" y1="17" x2="17.01" y2="17"></line><line x1="7" y1="17" x2="7.01" y2="7"></line><line x1="17" y1="17" x2="17.01" y2="17"></line></svg>
+          Código QR Dinámico
+          <span class="qr-header-badge">Vectorial SVG</span>
+        </h2>
+        <button id="btnCloseQrModal" class="modal-close" title="Cerrar modal">✕</button>
+      </div>
+
+      <div class="qr-modal-layout">
+        <!-- Columna Izquierda: Configuración -->
+        <div class="qr-controls-pane">
+          <!-- Switch de Activación -->
+          <div class="qr-switch-row">
+            <div>
+              <span class="qr-switch-title">Mostrar Código QR en el CV</span>
+              <p class="qr-switch-desc">Permite a los reclutadores escanear tu portafolio o perfil desde el PDF o CV impreso.</p>
+            </div>
+            <label class="qr-toggle-switch">
+              <input type="checkbox" id="qrEnableSwitch" checked>
+              <span class="qr-toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- Selector Rápido de Destino -->
+          <div>
+            <div class="qr-field-label">Destino Rápido (Autodetectado de tu CV)</div>
+            <div class="qr-chips-grid">
+              <button type="button" class="qr-chip-btn active" data-target="linkedin">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                LinkedIn
+              </button>
+              <button type="button" class="qr-chip-btn" data-target="github">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                GitHub
+              </button>
+              <button type="button" class="qr-chip-btn" data-target="web">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                Portafolio
+              </button>
+              <button type="button" class="qr-chip-btn" data-target="whatsapp">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                WhatsApp
+              </button>
+            </div>
+          </div>
+
+          <!-- URL / Destino -->
+          <div>
+            <label class="qr-field-label" for="qrUrlInput">Enlace de Destino (URL o Teléfono)</label>
+            <input type="url" id="qrUrlInput" class="qr-field-input" placeholder="https://linkedin.com/in/tu-perfil">
+          </div>
+
+          <!-- Texto descriptivo debajo del QR -->
+          <div>
+            <label class="qr-field-label" for="qrLabelInput">Etiqueta del Código</label>
+            <input type="text" id="qrLabelInput" class="qr-field-input" placeholder="ej. Ver Portafolio / LinkedIn" value="Ver Portafolio">
+          </div>
+
+          <!-- Posición en el documento -->
+          <div>
+            <div class="qr-field-label">Ubicación en el CV</div>
+            <div class="qr-radio-group">
+              <label class="qr-radio-card">
+                <input type="radio" name="qrPos" id="qrPosHeader" value="header" checked>
+                <div>
+                  <span class="qr-radio-title">Encabezado Superior</span>
+                  <span class="qr-radio-desc">Junto a tus datos personales</span>
+                </div>
+              </label>
+              <label class="qr-radio-card">
+                <input type="radio" name="qrPos" id="qrPosFooter" value="footer">
+                <div>
+                  <span class="qr-radio-title">Pie de Documento</span>
+                  <span class="qr-radio-desc">Al final de la página</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Color del QR -->
+          <div>
+            <div class="qr-field-label">Estilo y Color</div>
+            <div class="qr-radio-group">
+              <label class="qr-radio-card">
+                <input type="radio" name="qrColor" id="qrColorAccent" value="accent" checked>
+                <div>
+                  <span class="qr-radio-title">Color de Acento del CV</span>
+                  <span class="qr-radio-desc">Armoniza con tu plantilla activa</span>
+                </div>
+              </label>
+              <label class="qr-radio-card">
+                <input type="radio" name="qrColor" id="qrColorMono" value="mono">
+                <div>
+                  <span class="qr-radio-title">Negro Clásico</span>
+                  <span class="qr-radio-desc">Máximo contraste y lectura ATS</span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Vista Previa y Descarga -->
+        <div class="qr-preview-pane">
+          <div class="qr-preview-card">
+            <div class="qr-preview-canvas" id="qrModalPreviewSvg">
+              <!-- SVG generado dinámicamente -->
+            </div>
+            <div class="qr-preview-meta">
+              <div class="qr-preview-url" id="qrModalPreviewUrl">https://mivit3.com</div>
+              <div class="qr-preview-tech">SVG Vectorial Puro (Reed-Solomon EC-M)</div>
+            </div>
+            <button type="button" id="btnDownloadQrSvg" class="qr-download-btn" title="Descargar archivo .svg para tus redes, folletos o tarjeta de presentación">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Descargar Código en SVG
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="qr-modal-footer">
+        <button type="button" id="btnCloseQrModalFooter" class="btn btn-sm btn-default">Cancelar</button>
+        <button type="button" id="btnSaveQrConfig" class="btn btn-sm btn-primary">Aplicar en CV</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
        Panel Lateral Desplegable: Auditoría ATS & Comparador de Vacante (Fase 2)
        ========================================================================= -->
 
@@ -959,6 +1098,7 @@
   <script src="source/js/modules/pwa.js"></script>
   <script src="source/js/modules/section-manager.js"></script>
   <script src="source/js/modules/cover-letter.js"></script>
+  <script src="source/js/modules/qr-code.js"></script>
   <script src="source/js/app.js"></script>
 </body>
 </html>

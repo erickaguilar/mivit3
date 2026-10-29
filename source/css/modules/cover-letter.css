@@ -1,0 +1,366 @@
+/* ==========================================================================
+   miVIT3 — Generador de Carta de Presentación Membretada (Cover Letter)
+   ========================================================================== */
+
+.modal-card-cover-letter {
+  max-width: 1040px;
+  width: 96%;
+  height: 90vh;
+  max-height: 90vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.22);
+}
+
+.cl-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-ui);
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.cl-modal-header h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.cl-header-badge {
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--cv-accent-light);
+  color: var(--cv-accent);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* Cuerpo dividido en 2 columnas */
+.cl-modal-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+/* Columna Izquierda: Parámetros y Presets */
+.cl-controls-sidebar {
+  width: 320px;
+  min-width: 300px;
+  max-width: 340px;
+  background: #ffffff;
+  border-right: 1px solid var(--border-ui);
+  padding: 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cl-section-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+/* Selector de Tono de Carta */
+.cl-preset-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cl-preset-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.cl-preset-btn:hover {
+  border-color: var(--cv-accent);
+  background: #f8fafc;
+}
+
+.cl-preset-btn.active {
+  border-color: var(--cv-accent);
+  background: var(--cv-accent-light);
+}
+
+.cl-preset-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--cv-accent);
+  flex-shrink: 0;
+}
+
+.cl-preset-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.cl-preset-desc {
+  display: block;
+  font-size: 10.5px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* Inputs del Destinatario */
+.cl-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cl-form-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.cl-form-input {
+  width: 100%;
+  height: 32px;
+  padding: 4px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #0f172a;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.cl-form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(100, 0, 200, 0.12);
+}
+
+.cl-btn-regenerate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px;
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.cl-btn-regenerate:hover {
+  background: #1e293b;
+}
+
+/* Tarjeta de Consejos */
+.cl-tips-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 11px;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.cl-tips-card strong {
+  color: #0f172a;
+}
+
+/* Columna Derecha: Vista Previa de Hoja Membretada */
+.cl-preview-pane {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+  background: #e2e8f0;
+}
+
+.cl-sheet {
+  width: 100%;
+  max-width: 650px;
+  min-height: 780px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  padding: 38px 44px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Membrete del Candidato */
+.cl-sheet-header {
+  border-bottom: 2.5px solid var(--cv-accent);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+}
+
+.cl-sheet-name {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.15;
+}
+
+.cl-sheet-role {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cv-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 3px;
+  margin-bottom: 8px;
+}
+
+.cl-sheet-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 11px;
+  color: #475569;
+}
+
+.cl-sheet-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cl-sheet-contact-item svg {
+  width: 12px;
+  height: 12px;
+  stroke: var(--cv-accent);
+}
+
+/* Bloque Destinatario & Saludo */
+.cl-sheet-meta {
+  margin-bottom: 18px;
+  font-size: 12.5px;
+  color: #334155;
+  line-height: 1.4;
+}
+
+.cl-sheet-date {
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+.cl-sheet-recipient-name {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.cl-sheet-company-name {
+  font-weight: 600;
+  color: #475569;
+}
+
+.cl-sheet-salutation {
+  margin-top: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Cuerpo Editable de la Carta */
+.cl-sheet-body {
+  flex: 1;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: #1e293b;
+  outline: none;
+  min-height: 280px;
+}
+
+.cl-sheet-body p {
+  margin-bottom: 12px;
+}
+
+.cl-sheet-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Despedida y Firma */
+.cl-sheet-footer {
+  margin-top: 24px;
+  padding-top: 14px;
+  font-size: 12.5px;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.cl-sheet-signature-name {
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 14px;
+  font-size: 14px;
+}
+
+.cl-sheet-signature-role {
+  color: #64748b;
+  font-size: 11.5px;
+}
+
+/* Pie del Modal */
+.cl-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border-ui);
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.cl-footer-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Responsive Móvil */
+@media (max-width: 768px) {
+  .cl-modal-layout {
+    flex-direction: column;
+  }
+  .cl-controls-sidebar {
+    width: 100%;
+    max-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-ui);
+    max-height: 40vh;
+  }
+  .cl-preview-pane {
+    padding: 12px;
+  }
+  .cl-sheet {
+    padding: 20px;
+  }
+}

@@ -404,6 +404,12 @@
             Vista Previa
           </button>
 
+          <!-- NUEVO: Generador de Carta de Presentación Membretada -->
+          <button id="btnOpenCoverLetter" class="btn btn-sm btn-default" title="Crear Carta de Presentación membretada en sintonía con tu CV">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            Carta
+          </button>
+
           <!-- UNIFICACIÓN: Menú Desplegable "Compartir Web ▾" -->
           <div class="ribbon-dropdown" id="webShareDropdown">
             <button type="button" class="btn btn-sm btn-default ribbon-dropdown-btn" id="webShareDropdownBtn" aria-haspopup="true" aria-expanded="false" title="Compartir y publicar tu CV en la web">
@@ -609,6 +615,124 @@
           <button id="btnQuickExportFromModal" class="btn btn-primary">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
             Descargar cv-web.html ahora
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       Modal de Carta de Presentación Membretada (Cover Letter Builder)
+       ========================================================================= -->
+
+  <div id="coverLetterModal" class="modal-backdrop">
+    <div class="modal-card modal-card-cover-letter">
+      <div class="cl-modal-header">
+        <h2>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Carta de Presentación Membretada
+          <span class="cl-header-badge">Sintonizada con tu CV</span>
+        </h2>
+        <button id="btnCloseCoverLetter" class="modal-close" title="Cerrar modal">✕</button>
+      </div>
+
+      <div class="cl-modal-layout">
+        <!-- Columna Izquierda: Configuración de la Carta -->
+        <aside class="cl-controls-sidebar">
+          <div>
+            <div class="cl-section-title">1. Tono y Enfoque</div>
+            <div class="cl-preset-group">
+              <button type="button" class="cl-preset-btn active" data-preset="ejecutiva">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <div>
+                  <span class="cl-preset-label">Ejecutiva &amp; Estratégica</span>
+                  <span class="cl-preset-desc">Liderazgo, visión y valor de negocio</span>
+                </div>
+              </button>
+              <button type="button" class="cl-preset-btn" data-preset="tecnica">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                <div>
+                  <span class="cl-preset-label">Técnica &amp; Métricas (STAR)</span>
+                  <span class="cl-preset-desc">Logros, resolución técnica y stack</span>
+                </div>
+              </button>
+              <button type="button" class="cl-preset-btn" data-preset="startup">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <div>
+                  <span class="cl-preset-label">Startup &amp; Dinámica</span>
+                  <span class="cl-preset-desc">Cultura, proactividad e innovación</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div class="cl-section-title">2. Datos de la Vacante</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="cl-form-group">
+                <label class="cl-form-label" for="clInputCompany">Empresa Objetivo</label>
+                <input type="text" id="clInputCompany" class="cl-form-input" placeholder="ej. Google México / Mercado Libre" value="Empresa Destino">
+              </div>
+              <div class="cl-form-group">
+                <label class="cl-form-label" for="clInputRecipient">Destinatario / Cargo</label>
+                <input type="text" id="clInputRecipient" class="cl-form-input" placeholder="ej. Equipo de Atracción de Talento" value="Equipo de Selección y Contratación">
+              </div>
+              <div class="cl-form-group">
+                <label class="cl-form-label" for="clInputRole">Puesto al que Postulas</label>
+                <input type="text" id="clInputRole" class="cl-form-input" placeholder="ej. Senior Full-Stack Engineer">
+              </div>
+              <div class="cl-form-group">
+                <label class="cl-form-label" for="clInputDate">Fecha de la Carta</label>
+                <input type="text" id="clInputDate" class="cl-form-input">
+              </div>
+              <button type="button" id="clBtnRegenerate" class="cl-btn-regenerate" title="Regenerar el texto con la plantilla y datos actuales">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Regenerar Texto
+              </button>
+            </div>
+          </div>
+
+          <div class="cl-tips-card">
+            <strong>💡 Consejo Pro:</strong> Puedes editar o reescribir cualquier párrafo directamente en la hoja de la derecha como si fuera Word.
+          </div>
+        </aside>
+
+        <!-- Columna Derecha: Hoja Membretada A4 en Vivo -->
+        <main class="cl-preview-pane">
+          <div class="cl-sheet" id="clSheet">
+            <header class="cl-sheet-header" id="clSheetHeader">
+              <!-- Renderizado dinámicamente con los datos del CV -->
+            </header>
+
+            <div class="cl-sheet-meta" id="clSheetMeta">
+              <!-- Renderizado dinámicamente -->
+            </div>
+
+            <div class="cl-sheet-body" id="clSheetBody" contenteditable="true" spellcheck="true">
+              <!-- Contenido editable de la carta -->
+            </div>
+
+            <footer class="cl-sheet-footer" id="clSheetFooter">
+              <div>Atentamente,</div>
+              <div class="cl-sheet-signature-name" id="clSheetSignatureName">Mi Nombre</div>
+              <div class="cl-sheet-signature-role" id="clSheetSignatureRole">Profesional</div>
+            </footer>
+          </div>
+        </main>
+      </div>
+
+      <div class="cl-modal-footer">
+        <button type="button" id="btnCloseCoverLetterFooter" class="btn btn-sm btn-default">
+          Cerrar
+        </button>
+        <div class="cl-footer-actions">
+          <button type="button" id="btnCopyCoverLetterText" class="btn btn-sm btn-default" title="Copiar texto plano al portapapeles para emails o formularios">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copiar Texto
+          </button>
+          <button type="button" id="btnPrintCoverLetter" class="btn btn-sm btn-primary" title="Imprimir o guardar como PDF membretado en hoja A4">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            Imprimir / Guardar en PDF
           </button>
         </div>
       </div>
@@ -834,6 +958,7 @@
   <script src="source/js/modules/web-exporter.js"></script>
   <script src="source/js/modules/pwa.js"></script>
   <script src="source/js/modules/section-manager.js"></script>
+  <script src="source/js/modules/cover-letter.js"></script>
   <script src="source/js/app.js"></script>
 </body>
 </html>

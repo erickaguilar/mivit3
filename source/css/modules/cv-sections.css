@@ -15,10 +15,15 @@
 .cv-section-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 8px;
   margin-bottom: 12px;
   border-bottom: 2px solid var(--cv-accent);
   padding-bottom: 4px;
+}
+
+.cv-section-header .section-actions {
+  margin-left: auto;
 }
 
 .cv-section-title-wrap {

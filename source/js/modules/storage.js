@@ -30,6 +30,19 @@
     });
   }
 
+  /**
+   * Obtiene el HTML limpio del documento eliminando márgenes temporales de salto de página
+   */
+  function getCleanCvHtml(doc) {
+    if (!doc) return '';
+    const clone = doc.cloneNode(true);
+    clone.querySelectorAll('[data-page-break-margin]').forEach(el => {
+      el.style.marginTop = '';
+      el.removeAttribute('data-page-break-margin');
+    });
+    return clone.innerHTML;
+  }
+
   function triggerAutoSave() {
     clearTimeout(saveTimeout);
     updateSaveIndicator(false);
@@ -38,7 +51,7 @@
       const cvDoc = document.getElementById('cv-document');
       if (!cvDoc) return;
 
-      localStorage.setItem(STORAGE_KEY, cvDoc.innerHTML);
+      localStorage.setItem(STORAGE_KEY, getCleanCvHtml(cvDoc));
       saveSettings();
       updateSaveIndicator(true);
       debouncedAudit();
@@ -58,7 +71,8 @@
       template: currentTemplate,
       density: currentDensity,
       accent: accent,
-      accentLight: accentLight
+      accentLight: accentLight,
+      margins: (window.miVit3 && window.miVit3.getMargins) ? window.miVit3.getMargins() : null
     };
     localStorage.setItem(STORAGE_SETTINGS, JSON.stringify(settings));
   }
@@ -118,6 +132,10 @@
           document.querySelectorAll('.pill-btn[data-density]').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.density === settings.density);
           });
+        }
+        if (settings.margins && typeof window.setCustomMargins === 'function') {
+          const m = settings.margins;
+          window.setCustomMargins(m.top, m.bottom, m.left, m.right, m.preset || null, false);
         }
         if (settings.accent && settings.accentLight) {
           document.documentElement.style.setProperty('--cv-accent', settings.accent);
@@ -289,7 +307,8 @@
       density: currentDensity,
       accent: accent,
       accentLight: accentLight,
-      html: cvDoc.innerHTML
+      margins: (window.miVit3 && window.miVit3.getMargins) ? window.miVit3.getMargins() : null,
+      html: getCleanCvHtml(cvDoc)
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -329,6 +348,10 @@
         if (data.density && typeof window.setDensity === 'function') window.setDensity(data.density);
         if (data.accent && data.accentLight && typeof window.setAccentColor === 'function') {
           window.setAccentColor(data.accent, data.accentLight);
+        }
+        if (data.margins && typeof window.setCustomMargins === 'function') {
+          const m = data.margins;
+          window.setCustomMargins(m.top, m.bottom, m.left, m.right, m.preset || null, false);
         }
 
         if (typeof window.ensureDragHandles === 'function') window.ensureDragHandles();

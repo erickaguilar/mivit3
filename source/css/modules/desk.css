@@ -16,13 +16,122 @@
   max-width: 100%;
   box-sizing: border-box;
   min-height: var(--paper-min-height);
+  position: relative;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modo Hojas Divididas (A4 Real - Por Defecto) */
+.cv-paper.mode-divided-pages {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+/* Modo Continuo (Lineal Clásico) */
+.cv-paper.mode-continuous {
   background: #ffffff;
   box-shadow: var(--shadow-paper);
   border-radius: 2px;
-  position: relative;
-  transition: var(--transition);
+}
+
+/* Telón de Hojas Físicas A4 (Backdrop) */
+.cv-pages-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cv-paper.mode-continuous .cv-pages-backdrop {
+  display: none !important;
+}
+
+/* Tarjeta de Hoja A4 Individual */
+.cv-sheet-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.15), 0 4px 10px -2px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.cv-sheet-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--cv-accent, #6400c8), var(--cv-accent-light, #f3e8ff));
+  opacity: 0.6;
+}
+
+.cv-sheet-footer {
+  position: absolute;
+  bottom: 8px;
+  left: 18mm;
+  right: 18mm;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 4px;
+  user-select: none;
+}
+
+/* Divisor de Corte entre Hojas */
+.cv-sheet-cut {
+  position: absolute;
+  left: -20px;
+  right: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.cv-sheet-cut-line {
+  flex: 1;
+  height: 1px;
+  background: #cbd5e1;
+  border-top: 1px dashed #94a3b8;
+}
+
+.cv-sheet-cut-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #ffffff;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  margin: 0 10px;
+  user-select: none;
+}
+
+.cv-sheet-cut-pill svg {
+  color: var(--primary, #6400c8);
+  stroke-width: 2.2;
 }
 
 /* Densidades de hoja (Fase 1) */
@@ -60,6 +169,7 @@
   flex: 1;
   outline: none;
   position: relative;
+  z-index: 2;
 }
 
 /* Reglas generales para contenido editable */
@@ -87,7 +197,7 @@
 
 
 /* ==========================================================================
-   Paginación Dinámica A4 & Guía de Corte (Fase 1)
+   Paginación Dinámica A4 & Guía de Corte (Modo Continuo)
    ========================================================================== */
 
 .page-break-guide {
@@ -137,6 +247,27 @@
   color: #b45309;
 }
 
+/* Botón Selector de Vista (Dividida / Continua) */
+.view-mode-btn {
+  cursor: pointer;
+  background: #f8fafc;
+  border: 1px solid var(--border-ui);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.view-mode-btn:hover {
+  background: #f3e8ff;
+  border-color: var(--primary-border);
+  color: var(--primary);
+}
+
+.view-mode-btn.active-divided {
+  background: #f5f3ff;
+  border-color: #c4b5fd;
+  color: #5b21b6;
+}
+
 .page-warning-banner {
   background: #fffbeb;
   border: 1px solid #fde68a;
@@ -164,14 +295,11 @@
   transition: var(--transition);
 }
 
-
-
 @media (max-width: 768px) {
   .document-desk {
     padding: 16px 8px 40px;
   }
 }
-
 
 /* ==========================================================================
    Modo Enfoque / Pantalla Completa (Zen Focus Mode)

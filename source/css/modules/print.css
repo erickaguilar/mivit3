@@ -18,7 +18,7 @@
     print-color-adjust: exact !important;
   }
 
-  /* Ocultar barra superior, contenedor sticky, ribbon, botones de acción, modales, guías y botones de borrado */
+  /* Ocultar barra superior, contenedor sticky, ribbon, botones de acción, modales, guías y telón de páginas */
   .app-header,
   .sticky-toolbars-wrapper,
   .word-toolbar-container,
@@ -27,6 +27,8 @@
   .item-actions,
   .drag-handle,
   .page-break-guide,
+  .cv-pages-backdrop,
+  .cv-sheet-cut,
   .page-warning-banner,
   .avatar-upload-btn,
   .toast-notification,
@@ -40,8 +42,14 @@
   .zen-exit-pill,
   .search-replace-bar,
   .symbol-modal-backdrop,
-  .cv-tag-del {
+  .cv-tag-del,
+  .view-mode-btn {
     display: none !important;
+  }
+
+  /* Reset de márgenes artificiales de pantalla para que la paginación de impresión sea natural */
+  [data-page-break-margin] {
+    margin-top: 0 !important;
   }
 
   .document-desk {
@@ -63,6 +71,7 @@
   .cv-document {
     box-shadow: none !important;
     border: none !important;
+    background: #ffffff !important;
   }
 
   /* Evitar saltos de página inapropiados dentro de elementos clave */

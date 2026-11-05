@@ -23,6 +23,10 @@
 @import "./templates/template-sidebar.css";
 @import "./templates/template-compact-ats.css";
 @import "./templates/template-corporate-duo.css";
+@import "./templates/template-tech-lead.css";
+@import "./templates/template-editorial-ny.css";
+@import "./templates/template-wall-street.css";
+@import "./templates/template-creative-ux.css";
 @import "./modules/ats-drawer.css";
 @import "./modules/dialogs.css";
 @import "./modules/ribbon-popovers.css";

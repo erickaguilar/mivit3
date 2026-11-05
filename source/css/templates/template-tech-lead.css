@@ -1,0 +1,179 @@
+/* --------------------------------------------------------------------------
+   PLANTILLA: TECH LEAD & DATA SCIENCE (Vercel / Linear / Tech Architecture)
+   Tipografía combinada Sans + Mono, badges técnicos, prompt markers y estética Cloud.
+   -------------------------------------------------------------------------- */
+
+.template-tech-lead {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+  line-height: 1.5;
+}
+
+/* Cabecera Técnica */
+.template-tech-lead .cv-profile-header {
+  border-bottom: 2px solid var(--cv-accent);
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.template-tech-lead .cv-header-main {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.template-tech-lead .cv-avatar-wrap {
+  width: 86px;
+  height: 86px;
+  border-radius: 14px;
+  border: 2px solid var(--cv-accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f8fafc;
+}
+
+.template-tech-lead .cv-avatar {
+  border-radius: 12px;
+}
+
+.template-tech-lead .cv-name {
+  font-size: 27px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+}
+
+.template-tech-lead .cv-role {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cv-accent);
+  margin-top: 4px;
+  margin-bottom: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.template-tech-lead .cv-role::before {
+  content: "$";
+  color: var(--cv-accent);
+  font-weight: 900;
+  opacity: 0.7;
+}
+
+.template-tech-lead .cv-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.template-tech-lead .cv-contact-item {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 3px 8px;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.template-tech-lead .cv-contact-item svg {
+  stroke: var(--cv-accent);
+  width: 12px;
+  height: 12px;
+}
+
+/* Secciones con Prompt Marker */
+.template-tech-lead .cv-section {
+  margin-bottom: 20px;
+}
+
+.template-tech-lead .cv-section-header {
+  border-bottom: 1.5px solid #e2e8f0;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.template-tech-lead .cv-section-title {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #0f172a;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.template-tech-lead .cv-section-title::before {
+  content: "//";
+  color: var(--cv-accent);
+  font-weight: 900;
+}
+
+/* Items Cronológicos */
+.template-tech-lead .cv-item {
+  margin-bottom: 14px;
+}
+
+.template-tech-lead .cv-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 3px;
+}
+
+.template-tech-lead .cv-item-title {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: #0f172a;
+}
+
+.template-tech-lead .cv-item-subtitle {
+  font-weight: 600;
+  color: var(--cv-accent);
+  font-size: 12.5px;
+}
+
+.template-tech-lead .cv-item-date {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  background: var(--cv-accent-light);
+  color: var(--cv-accent);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.template-tech-lead .cv-item-desc {
+  font-size: 12px;
+  color: #334155;
+}
+
+/* Badges de Habilidades tipo Tags de Código */
+.template-tech-lead .cv-tag,
+.template-tech-lead .cv-skills-list li {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  background: #f8fafc;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+  border-left: 3px solid var(--cv-accent);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+}

@@ -1,0 +1,160 @@
+/* --------------------------------------------------------------------------
+   PLANTILLA: WALL STREET & MCKINSEY (Banca de Inversión & Consultoría Senior)
+   Máxima densidad de 1 página, diseño centrado formal, líneas sólidas y 100% ATS.
+   -------------------------------------------------------------------------- */
+
+.template-wall-street {
+  font-family: "Times New Roman", "Cambria", "Georgia", serif;
+  color: #0f172a;
+  line-height: 1.38;
+}
+
+/* Cabecera Centrada de Alta Densidad */
+.template-wall-street .cv-profile-header {
+  text-align: center;
+  border-bottom: 2px solid #0f172a;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+
+.template-wall-street .cv-header-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* En el estándar Wall Street el avatar se hace sutil o compacto */
+.template-wall-street .cv-avatar-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 4px;
+  border: 1px solid #cbd5e1;
+}
+
+.template-wall-street .cv-avatar {
+  border-radius: 50%;
+}
+
+.template-wall-street .cv-name {
+  font-size: 24px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #0f172a;
+  line-height: 1.1;
+}
+
+.template-wall-street .cv-role {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--cv-accent);
+  margin-top: 2px;
+  margin-bottom: 4px;
+}
+
+.template-wall-street .cv-contact-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 11px;
+  color: #334155;
+  margin-top: 2px;
+}
+
+.template-wall-street .cv-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.template-wall-street .cv-contact-item svg {
+  display: none; /* Wall Street prescinde de iconos para máxima sobriedad ATS */
+}
+
+/* Divisor entre contactos */
+.template-wall-street .cv-contact-item + .cv-contact-item::before {
+  content: "•";
+  margin-right: 8px;
+  color: #64748b;
+}
+
+/* Secciones de 1 Línea Sólida */
+.template-wall-street .cv-section {
+  margin-bottom: 14px;
+}
+
+.template-wall-street .cv-section-header {
+  border-bottom: 1px solid #0f172a;
+  padding-bottom: 2px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.template-wall-street .cv-section-title {
+  font-size: 12.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #0f172a;
+}
+
+/* Items Compactos */
+.template-wall-street .cv-item {
+  margin-bottom: 10px;
+}
+
+.template-wall-street .cv-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px;
+}
+
+.template-wall-street .cv-item-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.template-wall-street .cv-item-subtitle {
+  font-size: 12.5px;
+  font-style: italic;
+  color: #334155;
+}
+
+.template-wall-street .cv-item-date {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.template-wall-street .cv-item-desc {
+  font-size: 12px;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+/* Habilidades en Texto En línea */
+.template-wall-street .cv-tag,
+.template-wall-street .cv-skills-list li {
+  background: transparent;
+  color: #0f172a;
+  border: none;
+  font-size: 11.5px;
+  padding: 0;
+  font-weight: 600;
+}
+
+.template-wall-street .cv-tag + .cv-tag::before {
+  content: " | ";
+  color: #94a3b8;
+  padding: 0 4px;
+}

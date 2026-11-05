@@ -1,0 +1,164 @@
+/* --------------------------------------------------------------------------
+   PLANTILLA: CREATIVO & UX DESIGNER (Figma / Dribbble / Digital Product)
+   Tarjeta flotante con degradado suave, acentos laterales y badges contemporáneos.
+   -------------------------------------------------------------------------- */
+
+.template-creative-ux {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+  color: #1e293b;
+  line-height: 1.5;
+}
+
+/* Cabecera Tarjeta Contemporánea */
+.template-creative-ux .cv-profile-header {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, var(--cv-accent-light) 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.04);
+}
+
+.template-creative-ux .cv-header-main {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.template-creative-ux .cv-avatar-wrap {
+  width: 90px;
+  height: 90px;
+  border-radius: 20px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #ffffff;
+}
+
+.template-creative-ux .cv-avatar {
+  border-radius: 16px;
+}
+
+.template-creative-ux .cv-name {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.6px;
+  line-height: 1.15;
+}
+
+.template-creative-ux .cv-role {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--cv-accent);
+  margin-top: 3px;
+  margin-bottom: 8px;
+}
+
+.template-creative-ux .cv-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.template-creative-ux .cv-contact-item {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.template-creative-ux .cv-contact-item svg {
+  stroke: var(--cv-accent);
+  width: 12px;
+  height: 12px;
+}
+
+/* Secciones con Acento Vertical Redondeado */
+.template-creative-ux .cv-section {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.template-creative-ux .cv-section-header {
+  border-left: 4px solid var(--cv-accent);
+  padding-left: 12px;
+  border-bottom: none;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.template-creative-ux .cv-section-title {
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #0f172a;
+}
+
+/* Items */
+.template-creative-ux .cv-item {
+  margin-bottom: 14px;
+  padding-left: 16px;
+  border-left: 1px dashed #e2e8f0;
+}
+
+.template-creative-ux .cv-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 3px;
+}
+
+.template-creative-ux .cv-item-title {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: #0f172a;
+}
+
+.template-creative-ux .cv-item-subtitle {
+  font-weight: 600;
+  color: var(--cv-accent);
+  font-size: 12.5px;
+}
+
+.template-creative-ux .cv-item-date {
+  background: var(--cv-accent-light);
+  color: var(--cv-accent);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.template-creative-ux .cv-item-desc {
+  font-size: 12px;
+  color: #334155;
+}
+
+/* Tags de Habilidades estilo Chips de Diseño */
+.template-creative-ux .cv-tag,
+.template-creative-ux .cv-skills-list li {
+  background: var(--cv-accent-light);
+  color: var(--cv-accent);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  transition: transform 0.15s ease;
+}
+
+.template-creative-ux .cv-tag:hover {
+  transform: translateY(-1px);
+}

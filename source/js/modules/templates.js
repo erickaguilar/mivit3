@@ -28,7 +28,11 @@
     'template-alpha00': 'Bicolor Moderno',
     'template-alpha01': 'Columnas ATS',
     'template-alpha02': 'Banner Credencial',
-    'template-alpha03': 'Editorial Monograma'
+    'template-alpha03': 'Editorial Monograma',
+    'template-tech-lead': 'Tech Lead & Data Science',
+    'template-editorial-ny': 'Editorial New York',
+    'template-wall-street': 'Wall Street & McKinsey',
+    'template-creative-ux': 'Creativo UX Designer'
   };
 
   /**
@@ -188,7 +192,7 @@
       'template-tech', 'template-executive', 'template-timeline', 'template-nordic',
       'template-swiss', 'template-sidebar', 'template-compact-ats', 'template-corporate-duo',
       'template-alpha00', 'template-alpha01', 'template-alpha02', 'template-alpha03',
-      'template-moderna', 'template-clasica', 'template-columnas', 'template-creativa'
+      'template-tech-lead', 'template-editorial-ny', 'template-wall-street', 'template-creative-ux', 'template-moderna', 'template-clasica', 'template-columnas', 'template-creativa'
     );
     cvDoc.classList.add(templateClass);
     saveSettings();

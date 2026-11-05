@@ -1,0 +1,149 @@
+/* --------------------------------------------------------------------------
+   PLANTILLA: EDITORIAL NEW YORK (Serif Moderno & Periodismo de Prestigio)
+   Inspirada en cabeceras editoriales clásicas (The New York Times / Medium).
+   Tipografía con serifa distinguida, gran formato y elegancia atemporal.
+   -------------------------------------------------------------------------- */
+
+.template-editorial-ny {
+  font-family: "Charter", "Georgia", "Cambria", "Times New Roman", serif;
+  color: #1c1917;
+  line-height: 1.55;
+}
+
+/* Cabecera Editorial */
+.template-editorial-ny .cv-profile-header {
+  border-bottom: 3px double #1c1917;
+  padding-bottom: 16px;
+  margin-bottom: 22px;
+}
+
+.template-editorial-ny .cv-header-main {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.template-editorial-ny .cv-avatar-wrap {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 1px solid #78716c;
+  padding: 3px;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.template-editorial-ny .cv-avatar {
+  border-radius: 50%;
+  filter: grayscale(20%);
+}
+
+.template-editorial-ny .cv-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1c1917;
+  letter-spacing: -0.4px;
+  line-height: 1.1;
+  font-family: "Charter", "Georgia", serif;
+}
+
+.template-editorial-ny .cv-role {
+  font-size: 14.5px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--cv-accent);
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.template-editorial-ny .cv-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 11.5px;
+  color: #57534e;
+}
+
+.template-editorial-ny .cv-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.template-editorial-ny .cv-contact-item svg {
+  stroke: var(--cv-accent);
+  width: 12px;
+  height: 12px;
+}
+
+/* Secciones con Divisores Finos de Imprenta */
+.template-editorial-ny .cv-section {
+  margin-bottom: 20px;
+}
+
+.template-editorial-ny .cv-section-header {
+  border-bottom: 1px solid #1c1917;
+  padding-bottom: 3px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.template-editorial-ny .cv-section-title {
+  font-family: "Charter", "Georgia", serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: #1c1917;
+}
+
+/* Items */
+.template-editorial-ny .cv-item {
+  margin-bottom: 14px;
+}
+
+.template-editorial-ny .cv-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2px;
+}
+
+.template-editorial-ny .cv-item-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1c1917;
+}
+
+.template-editorial-ny .cv-item-subtitle {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--cv-accent);
+}
+
+.template-editorial-ny .cv-item-date {
+  font-size: 11.5px;
+  font-style: italic;
+  color: #78716c;
+  font-weight: 600;
+}
+
+.template-editorial-ny .cv-item-desc {
+  font-size: 12.5px;
+  color: #292524;
+}
+
+/* Etiquetas de Habilidades Sobrias */
+.template-editorial-ny .cv-tag,
+.template-editorial-ny .cv-skills-list li {
+  background: #f5f5f4;
+  color: #1c1917;
+  border: 1px solid #d6d3d1;
+  border-radius: 2px;
+  font-size: 11px;
+  padding: 2px 8px;
+  font-style: italic;
+}
